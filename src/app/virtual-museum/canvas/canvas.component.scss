@@ -1,4 +1,4 @@
-canvas {
+.map {
   background-image: url('../../../assets/svg/museo.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -6,4 +6,9 @@ canvas {
   height: 700px;
   display: block;
   margin: auto;
+}
+
+.pin {
+  position: absolute;
+  cursor: pointer;
 }
