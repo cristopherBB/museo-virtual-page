@@ -1,9 +1,11 @@
-<div class="map">
-  <div class="pin" *ngFor="let pin of pins; let i = index"
-    [style.left]="pin.x + '%'"
-    [style.top]="pin.y + '%'"
-    (click)="onClick.emit(i)"
-  >
-    <mat-icon>location_on</mat-icon>
+<div class="map-size">
+  <div class="map">
+    <div class="pin" *ngFor="let pin of pins; let i = index"
+      [style.left]="pin.x + '%'"
+      [style.top]="pin.y + '%'"
+      (click)="onClick.emit(i)"
+    >
+      <mat-icon>location_on</mat-icon>
+    </div>
   </div>
 </div>

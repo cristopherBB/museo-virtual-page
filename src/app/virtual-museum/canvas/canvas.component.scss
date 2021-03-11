@@ -2,13 +2,23 @@
   background-image: url('../../../assets/svg/HaciendaTrinidad.svg');
   background-repeat: no-repeat;
   background-position: center;
-  width: 1050px;
-  height: 700px;
+  width: 350px;
+  height: 420px;
   display: block;
   margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-size: 350px 350px;
+
 }
 
 .pin {
   position: absolute;
   cursor: pointer;
+}
+
+.map-size {
+  position: relative; 
+
 }
