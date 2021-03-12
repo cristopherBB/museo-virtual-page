@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/alvddjri/public_html/angular/
+    - /bin/cp -R dist $DEPLOYPATH
