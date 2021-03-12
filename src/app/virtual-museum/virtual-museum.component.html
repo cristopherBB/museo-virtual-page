@@ -1,8 +1,8 @@
-<mat-grid-list cols="1" rowHeight="700px">
+<mat-grid-list cols="1" rowHeight="90vh">
   <mat-grid-tile>
     <app-virtual-view [viewId]='selectedView' #virtualView></app-virtual-view>
   </mat-grid-tile>
-  <mat-grid-tile>
-    <app-canvas [pins]="tour.pins" (onClick)="onPinClick($event)"></app-canvas>
-  </mat-grid-tile>
+  <div class="croquis-content">
+    <app-canvas [pins]="tour.pins" (onClick)="onPinClick($event)" class="croquis"></app-canvas>
+  </div>
 </mat-grid-list>
