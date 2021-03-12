@@ -4,13 +4,14 @@ app-canvas {
 
 .croquis {
   position: absolute;
-  bottom: 0; 
-  right: 0; 
-  width: 350px; 
+  bottom: 0;
+  right: 0;
+  width: 350px;
   height: 450px;
 }
 
 .croquis-content {
   height: 90vh;
   position: relative;
+  z-index: -10;
 }
