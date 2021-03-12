@@ -845,8 +845,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       inputs: {
         viewId: "viewId"
       },
-      decls: 2,
+      decls: 3,
       vars: 1,
+      consts: [["src", "https://alvdeveloper.com/pannellum", "width", "680", "height", "480", "allowfullscreen", ""]],
       template: function VirtualViewComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
@@ -854,6 +855,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "iframe", 0);
         }
 
         if (rf & 2) {
