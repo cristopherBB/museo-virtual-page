@@ -871,8 +871,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         viewId: "viewId"
       },
       decls: 3,
-      vars: 1,
-      consts: [["src", "https://alvdeveloper.com/pannellum", "width", "780", "height", "580", "allowfullscreen", ""]],
+      vars: 2,
+      consts: [["width", "780", "height", "580", "allowfullscreen", "", 3, "src"]],
       template: function VirtualViewComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
@@ -888,6 +888,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Showing ", ctx.viewId, "");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", ctx.getMuseumUrl(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeResourceUrl"]);
         }
       },
       styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3ZpcnR1YWwtbXVzZXVtL3ZpcnR1YWwtdmlldy92aXJ0dWFsLXZpZXcuY29tcG9uZW50LnNjc3MifQ== */"]
