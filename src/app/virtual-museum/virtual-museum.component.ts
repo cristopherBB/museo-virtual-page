@@ -14,24 +14,28 @@ export class VirtualMuseumComponent implements OnInit {
 
   ngOnInit(): void {
     const pins = [];
-    pins.push({ x: 25, y: 38.5 });
-    pins.push({ x: 37, y: 38.5 });
-    pins.push({ x: 49.5, y: 38.5 });
-    pins.push({ x: 61.5, y: 38.5 });
-    pins.push({ x: 74, y: 38.5 });
-    pins.push({ x: 85, y: 38.5 });
-    pins.push({ x: 83.5, y: 56 });
-    pins.push({ x: 35, y: 60 });
+    pins.push({ x: 16, y: 53 });
+    pins.push({ x: 26, y: 53 });
+    pins.push({ x: 36, y: 53 });
+    pins.push({ x: 46, y: 53 });
+    pins.push({ x: 56, y: 53 });
+    pins.push({ x: 66, y: 53 });
+    pins.push({ x: 76, y: 53 });
+    pins.push({ x: 36.6, y: 41.5 });
+    pins.push({ x: 62, y: 41.5 });
+    pins.push({ x: 84, y: 57 });
     this.tour.pins = pins;
     const views = [];
-    views.push('View 1');
-    views.push('View 2');
-    views.push('View 3');
-    views.push('View 4');
-    views.push('View 5');
-    views.push('View 6');
-    views.push('View 7');
-    views.push('View 8');
+    views.push('pasillo-1');
+    views.push('pasillo-2');
+    views.push('pasillo-3');
+    views.push('pasillo-4');
+    views.push('pasillo-5');
+    views.push('pasillo-6');
+    views.push('pasillo-7');
+    views.push('sala-2');
+    views.push('tienda-chocolate');
+    views.push('sala-fotografia');
     this.tour.views = views;
     this.selectedView = this.tour.views[0];
   }
