@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-virtual-museum',
@@ -8,22 +8,27 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class VirtualMuseumComponent implements OnInit {
   tour = { pins: [], views: [] };
   selectedView: string;
+  @Input() selectedPin: number;
   @ViewChild('virtualView') virtualView: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
     const pins = [];
-    pins.push({ x: 16, y: 53 });
-    pins.push({ x: 26, y: 53 });
-    pins.push({ x: 36, y: 53 });
-    pins.push({ x: 46, y: 53 });
-    pins.push({ x: 56, y: 53 });
-    pins.push({ x: 66, y: 53 });
-    pins.push({ x: 76, y: 53 });
-    pins.push({ x: 36.6, y: 41.5 });
-    pins.push({ x: 62, y: 41.5 });
-    pins.push({ x: 84, y: 57 });
+    // caminadora
+    pins.push({ x: 15.5, y: 51.5 });
+    pins.push({ x: 23.5, y: 51.5 });
+    pins.push({ x: 33, y: 51.5 });
+    pins.push({ x: 44.5, y: 51.5 });
+    pins.push({ x: 56.5, y: 51.5 });
+    pins.push({ x: 66, y: 51.5 });
+    pins.push({ x: 75.8, y: 52.3 });
+    // Puesto 2
+    pins.push({ x: 36.7, y: 40 });
+    // Puesto 4
+    pins.push({ x: 62, y: 40});
+    // puesto 7
+    pins.push({ x: 84, y: 56 });
     this.tour.pins = pins;
     const views = [];
     views.push('pasillo-1');
@@ -38,9 +43,12 @@ export class VirtualMuseumComponent implements OnInit {
     views.push('sala-fotografia');
     this.tour.views = views;
     this.selectedView = this.tour.views[0];
+    
+   
   }
 
   onPinClick = (viewPosition: number): void => {
+    this.selectedPin = viewPosition;
     this.selectedView = this.tour.views[viewPosition];
   };
 

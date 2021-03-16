@@ -3,6 +3,6 @@
     <app-virtual-view [viewId]='selectedView' #virtualView></app-virtual-view>
   </mat-grid-tile>
   <div class="croquis-content">
-    <app-canvas [pins]="tour.pins" (onClick)="onPinClick($event)" class="croquis"></app-canvas>
+    <app-canvas [pins]="tour.pins" [selectedPin]="selectedPin" (onClick)="onPinClick($event)" class="croquis"></app-canvas>
   </div>
 </mat-grid-list>

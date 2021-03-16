@@ -8,6 +8,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 export class CanvasComponent implements OnInit {
   @ViewChild('map') canvas: ElementRef;
   @Input() pins: any[];
+  @Input() selectedPin: number;
   @Output() onClick = new EventEmitter<number>();
 
   constructor() { }
