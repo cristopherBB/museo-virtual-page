@@ -489,7 +489,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return ctx_r3.onClick.emit(i_r2);
         });
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-icon");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-icon", 4);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "location_on");
 
@@ -500,8 +500,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
       if (rf & 2) {
         var pin_r1 = ctx.$implicit;
+        var i_r2 = ctx.index;
+
+        var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("left", pin_r1.x + "%")("top", pin_r1.y + "%");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("id", "pin-" + i_r2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("font-size", i_r2 === ctx_r0.selectedPin ? "28px" : "24px");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("color", i_r2 === ctx_r0.selectedPin ? "warn" : "primary");
       }
     }
 
@@ -539,21 +550,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       },
       inputs: {
-        pins: "pins"
+        pins: "pins",
+        selectedPin: "selectedPin"
       },
       outputs: {
         onClick: "onClick"
       },
       decls: 3,
       vars: 1,
-      consts: [[1, "map-size"], [1, "map"], ["class", "pin", 3, "left", "top", "click", 4, "ngFor", "ngForOf"], [1, "pin", 3, "click"]],
+      consts: [[1, "map-size"], [1, "map"], ["class", "pin", 3, "id", "left", "top", "click", 4, "ngFor", "ngForOf"], [1, "pin", 3, "id", "click"], [3, "color"]],
       template: function CanvasComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, CanvasComponent_div_2_Template, 3, 4, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, CanvasComponent_div_2_Template, 3, 8, "div", 2);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -567,7 +579,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       },
       directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgForOf"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_2__["MatIcon"]],
-      styles: [".map[_ngcontent-%COMP%] {\n  background-image: url('HaciendaTrinidad.svg');\n  background-repeat: no-repeat;\n  background-position: center;\n  width: 350px;\n  height: 460px;\n  display: block;\n  margin: auto;\n  position: absolute;\n  top: 0;\n  right: 0;\n  background-size: 350px 350px;\n}\n\n.pin[_ngcontent-%COMP%] {\n  position: absolute;\n  cursor: pointer;\n}\n\n.map-size[_ngcontent-%COMP%] {\n  position: relative;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlydHVhbC1tdXNldW0vY2FudmFzL0M6XFxVc2Vyc1xcYWx2YXJvXFxEb2N1bWVudHNcXGFuZ3VsYXJcXG11c2V1bS9zcmNcXGFwcFxcdmlydHVhbC1tdXNldW1cXGNhbnZhc1xcY2FudmFzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC92aXJ0dWFsLW11c2V1bS9jYW52YXMvY2FudmFzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsNkNBQUE7RUFDQSw0QkFBQTtFQUNBLDJCQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtFQUNBLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLFFBQUE7RUFDQSw0QkFBQTtBQ0NGOztBREdBO0VBQ0Usa0JBQUE7RUFDQSxlQUFBO0FDQUY7O0FER0E7RUFDRSxrQkFBQTtBQ0FGIiwiZmlsZSI6InNyYy9hcHAvdmlydHVhbC1tdXNldW0vY2FudmFzL2NhbnZhcy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYXAge1xyXG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnLi4vLi4vLi4vYXNzZXRzL3N2Zy9IYWNpZW5kYVRyaW5pZGFkLnN2ZycpO1xyXG4gIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XHJcbiAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyO1xyXG4gIHdpZHRoOiAzNTBweDtcclxuICBoZWlnaHQ6IDQ2MHB4O1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIG1hcmdpbjogYXV0bztcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAwO1xyXG4gIHJpZ2h0OiAwO1xyXG4gIGJhY2tncm91bmQtc2l6ZTogMzUwcHggMzUwcHg7XHJcblxyXG59XHJcblxyXG4ucGluIHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG4ubWFwLXNpemUge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTsgXHJcblxyXG59IiwiLm1hcCB7XG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi4uLy4uLy4uL2Fzc2V0cy9zdmcvSGFjaWVuZGFUcmluaWRhZC5zdmdcIik7XG4gIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgd2lkdGg6IDM1MHB4O1xuICBoZWlnaHQ6IDQ2MHB4O1xuICBkaXNwbGF5OiBibG9jaztcbiAgbWFyZ2luOiBhdXRvO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMDtcbiAgcmlnaHQ6IDA7XG4gIGJhY2tncm91bmQtc2l6ZTogMzUwcHggMzUwcHg7XG59XG5cbi5waW4ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLm1hcC1zaXplIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xufSJdfQ== */"]
+      styles: [".map[_ngcontent-%COMP%] {\n  background-image: url('HaciendaTrinidad.svg');\n  background-repeat: no-repeat;\n  background-position: center;\n  width: 350px;\n  height: 460px;\n  display: block;\n  margin: auto;\n  background-size: 350px 350px;\n}\n\n.pin[_ngcontent-%COMP%] {\n  position: absolute;\n  cursor: pointer;\n}\n\n.map-size[_ngcontent-%COMP%] {\n  position: relative;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlydHVhbC1tdXNldW0vY2FudmFzL0M6XFxVc2Vyc1xcYWx2YXJvXFxEb2N1bWVudHNcXGFuZ3VsYXJcXG11c2V1bS9zcmNcXGFwcFxcdmlydHVhbC1tdXNldW1cXGNhbnZhc1xcY2FudmFzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC92aXJ0dWFsLW11c2V1bS9jYW52YXMvY2FudmFzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsNkNBQUE7RUFDQSw0QkFBQTtFQUNBLDJCQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtFQUNBLDRCQUFBO0FDQ0Y7O0FERUE7RUFDRSxrQkFBQTtFQUNBLGVBQUE7QUNDRjs7QURFQTtFQUNFLGtCQUFBO0FDQ0YiLCJmaWxlIjoic3JjL2FwcC92aXJ0dWFsLW11c2V1bS9jYW52YXMvY2FudmFzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1hcCB7XHJcbiAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi8uLi9hc3NldHMvc3ZnL0hhY2llbmRhVHJpbmlkYWQuc3ZnJyk7XHJcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgd2lkdGg6IDM1MHB4O1xyXG4gIGhlaWdodDogNDYwcHg7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgbWFyZ2luOiBhdXRvO1xyXG4gIGJhY2tncm91bmQtc2l6ZTogMzUwcHggMzUwcHg7XHJcbn1cclxuXHJcbi5waW4ge1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi5tYXAtc2l6ZSB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG5cclxufVxyXG4iLCIubWFwIHtcbiAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4vLi4vLi4vYXNzZXRzL3N2Zy9IYWNpZW5kYVRyaW5pZGFkLnN2Z1wiKTtcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcbiAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyO1xuICB3aWR0aDogMzUwcHg7XG4gIGhlaWdodDogNDYwcHg7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBtYXJnaW46IGF1dG87XG4gIGJhY2tncm91bmQtc2l6ZTogMzUwcHggMzUwcHg7XG59XG5cbi5waW4ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLm1hcC1zaXplIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xufSJdfQ== */"]
     });
     /*@__PURE__*/
 
@@ -587,6 +599,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           args: ['map']
         }],
         pins: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }],
+        selectedPin: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }],
         onClick: [{
@@ -626,19 +641,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/material/grid-list */
-    "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/grid-list.js");
-    /* harmony import */
-
-
-    var _virtual_view_virtual_view_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _virtual_view_virtual_view_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! ./virtual-view/virtual-view.component */
     "./src/app/virtual-museum/virtual-view/virtual-view.component.ts");
     /* harmony import */
 
 
-    var _canvas_canvas_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _canvas_canvas_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ./canvas/canvas.component */
     "./src/app/virtual-museum/canvas/canvas.component.ts");
 
@@ -654,8 +663,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           pins: [],
           views: []
         };
+        this.selectedPin = 0;
 
         this.onPinClick = function (viewPosition) {
+          _this.selectedPin = viewPosition;
           _this.selectedView = _this.tour.views[viewPosition];
         };
       }
@@ -663,46 +674,50 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(VirtualMuseumComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var pins = [];
+          var pins = []; // caminadora
+
           pins.push({
-            x: 16,
-            y: 53
+            x: 15.5,
+            y: 51.5
           });
           pins.push({
-            x: 26,
-            y: 53
+            x: 23.5,
+            y: 51.5
           });
           pins.push({
-            x: 36,
-            y: 53
+            x: 33,
+            y: 51.5
           });
           pins.push({
-            x: 46,
-            y: 53
+            x: 44.5,
+            y: 51.5
           });
           pins.push({
-            x: 56,
-            y: 53
+            x: 56.5,
+            y: 51.5
           });
           pins.push({
             x: 66,
-            y: 53
+            y: 51.5
           });
           pins.push({
-            x: 76,
-            y: 53
-          });
+            x: 75.8,
+            y: 52.3
+          }); // Puesto 2
+
           pins.push({
-            x: 36.6,
-            y: 41.5
-          });
+            x: 36.7,
+            y: 40
+          }); // Puesto 4
+
           pins.push({
             x: 62,
-            y: 41.5
-          });
+            y: 40
+          }); // puesto 7
+
           pins.push({
             x: 84,
-            y: 57
+            y: 56
           });
           this.tour.pins = pins;
           var views = [];
@@ -742,24 +757,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.virtualView = _t.first);
         }
       },
-      decls: 6,
-      vars: 2,
-      consts: [["cols", "1", "rowHeight", "90vh"], [3, "viewId"], ["virtualView", ""], [1, "croquis-content"], [1, "croquis", 3, "pins", "onClick"]],
+      decls: 5,
+      vars: 3,
+      consts: [[1, "container"], [3, "viewId"], ["virtualView", ""], [1, "croquis-content"], [1, "croquis", 3, "pins", "selectedPin", "onClick"]],
       template: function VirtualMuseumComponent_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-grid-list", 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-grid-tile");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-virtual-view", 1, 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "app-virtual-view", 1, 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "app-canvas", 4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "app-canvas", 4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("onClick", function VirtualMuseumComponent_Template_app_canvas_onClick_5_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("onClick", function VirtualMuseumComponent_Template_app_canvas_onClick_4_listener($event) {
             return ctx.onPinClick($event);
           });
 
@@ -771,17 +782,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("viewId", ctx.selectedView);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("pins", ctx.tour.pins);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("pins", ctx.tour.pins)("selectedPin", ctx.selectedPin);
         }
       },
-      directives: [_angular_material_grid_list__WEBPACK_IMPORTED_MODULE_1__["MatGridList"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_1__["MatGridTile"], _virtual_view_virtual_view_component__WEBPACK_IMPORTED_MODULE_2__["VirtualViewComponent"], _canvas_canvas_component__WEBPACK_IMPORTED_MODULE_3__["CanvasComponent"]],
-      styles: ["app-canvas[_ngcontent-%COMP%] {\n  width: 100%;\n}\n\n.croquis[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 350px;\n  height: 450px;\n}\n\n.croquis-content[_ngcontent-%COMP%] {\n  height: 90vh;\n  position: relative;\n  z-index: -10;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlydHVhbC1tdXNldW0vQzpcXFVzZXJzXFxhbHZhcm9cXERvY3VtZW50c1xcYW5ndWxhclxcbXVzZXVtL3NyY1xcYXBwXFx2aXJ0dWFsLW11c2V1bVxcdmlydHVhbC1tdXNldW0uY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3ZpcnR1YWwtbXVzZXVtL3ZpcnR1YWwtbXVzZXVtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBQTtBQ0NGOztBREVBO0VBQ0Usa0JBQUE7RUFDQSxTQUFBO0VBQ0EsUUFBQTtFQUNBLFlBQUE7RUFDQSxhQUFBO0FDQ0Y7O0FERUE7RUFDRSxZQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FDQ0YiLCJmaWxlIjoic3JjL2FwcC92aXJ0dWFsLW11c2V1bS92aXJ0dWFsLW11c2V1bS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImFwcC1jYW52YXMge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4uY3JvcXVpcyB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGJvdHRvbTogMDtcclxuICByaWdodDogMDtcclxuICB3aWR0aDogMzUwcHg7XHJcbiAgaGVpZ2h0OiA0NTBweDtcclxufVxyXG5cclxuLmNyb3F1aXMtY29udGVudCB7XHJcbiAgaGVpZ2h0OiA5MHZoO1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICB6LWluZGV4OiAtMTA7XHJcbn1cclxuIiwiYXBwLWNhbnZhcyB7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uY3JvcXVpcyB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgYm90dG9tOiAwO1xuICByaWdodDogMDtcbiAgd2lkdGg6IDM1MHB4O1xuICBoZWlnaHQ6IDQ1MHB4O1xufVxuXG4uY3JvcXVpcy1jb250ZW50IHtcbiAgaGVpZ2h0OiA5MHZoO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIHotaW5kZXg6IC0xMDtcbn0iXX0= */"]
+      directives: [_virtual_view_virtual_view_component__WEBPACK_IMPORTED_MODULE_1__["VirtualViewComponent"], _canvas_canvas_component__WEBPACK_IMPORTED_MODULE_2__["CanvasComponent"]],
+      styles: [".container[_ngcontent-%COMP%] {\n  display: flex;\n  padding: 16px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlydHVhbC1tdXNldW0vQzpcXFVzZXJzXFxhbHZhcm9cXERvY3VtZW50c1xcYW5ndWxhclxcbXVzZXVtL3NyY1xcYXBwXFx2aXJ0dWFsLW11c2V1bVxcdmlydHVhbC1tdXNldW0uY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3ZpcnR1YWwtbXVzZXVtL3ZpcnR1YWwtbXVzZXVtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBQTtFQUNBLGFBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL3ZpcnR1YWwtbXVzZXVtL3ZpcnR1YWwtbXVzZXVtLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRhaW5lciB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBwYWRkaW5nOiAxNnB4O1xyXG59XHJcbiIsIi5jb250YWluZXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBwYWRkaW5nOiAxNnB4O1xufSJdfQ== */"]
     });
     /*@__PURE__*/
 
@@ -872,7 +883,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       },
       decls: 3,
       vars: 2,
-      consts: [["width", "780", "height", "580", "allowfullscreen", "", 3, "src"]],
+      consts: [["width", "1020", "height", "680", "allowfullscreen", "", 3, "src"]],
       template: function VirtualViewComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
