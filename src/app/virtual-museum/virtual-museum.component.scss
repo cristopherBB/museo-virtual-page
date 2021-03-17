@@ -1,17 +1,4 @@
-app-canvas {
-  width: 100%;
-}
-
-.croquis {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 350px;
-  height: 450px;
-}
-
-.croquis-content {
-  height: 90vh;
-  position: relative;
-  z-index: -10;
+.container {
+  display: flex;
+  padding: 16px;
 }

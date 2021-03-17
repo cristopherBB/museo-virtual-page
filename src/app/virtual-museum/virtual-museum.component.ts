@@ -8,7 +8,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 export class VirtualMuseumComponent implements OnInit {
   tour = { pins: [], views: [] };
   selectedView: string;
-  @Input() selectedPin: number;
+  selectedPin = 0;
   @ViewChild('virtualView') virtualView: ElementRef;
 
   constructor() { }
@@ -43,8 +43,6 @@ export class VirtualMuseumComponent implements OnInit {
     views.push('sala-fotografia');
     this.tour.views = views;
     this.selectedView = this.tour.views[0];
-    
-   
   }
 
   onPinClick = (viewPosition: number): void => {

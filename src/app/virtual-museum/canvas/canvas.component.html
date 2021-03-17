@@ -5,7 +5,10 @@
       [style.top]="pin.y + '%'"
       (click)="onClick.emit(i)"
     >
-      <mat-icon [ngStyle]="i === selectedPin ? '{'color': 'red'}':'{'color': 'black'}'">location_on</mat-icon>
+      <mat-icon
+        [color]="i === selectedPin ? 'warn' : 'primary'"
+        [style.fontSize]="i === selectedPin ? '28px' : '24px'"
+      >location_on</mat-icon>
     </div>
   </div>
 </div>
