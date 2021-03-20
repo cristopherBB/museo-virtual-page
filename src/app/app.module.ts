@@ -10,8 +10,11 @@ import { VirtualMuseumComponent } from './virtual-museum/virtual-museum.componen
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
+import { LandingComponent } from './views/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view
     ToolbarComponent,
     VirtualMuseumComponent,
     CanvasComponent,
-    VirtualViewComponent
+    VirtualViewComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +32,8 @@ import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view
     MatToolbarModule,
     MatIconModule,
     MatGridListModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
