@@ -2,9 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { VirtualMuseumComponent } from './virtual-museum/virtual-museum.component';
 import { LandingComponent } from './views/landing/landing.component';
+import { TourDetailsComponent } from './views/tour-details/tour-details.component';
 
 
 const routes: Routes = [
+  {
+    path: 'admin/:id',
+    component: TourDetailsComponent
+  },
   {
     path: 'admin',
     component: VirtualMuseumComponent,

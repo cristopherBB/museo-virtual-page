@@ -1,0 +1,38 @@
+<p *ngIf="!museum">Loading...</p>
+<mat-grid-list cols="2" rowHeight="400" *ngIf="museum" class="margin">
+  <mat-grid-tile>
+    <img [src]="museum.featuredImage" alt="Featured Image">
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <form class="expand padding">
+      <mat-form-field appearance="fill" class="expand">
+        <mat-label>Title</mat-label>
+        <input matInput disabled [value]="museum.title">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="expand">
+        <mat-label>Location</mat-label>
+        <input matInput disabled [value]="museum.location">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="expand">
+        <mat-label>Description</mat-label>
+        <textarea matInput disabled [value]="museum.description"></textarea>
+      </mat-form-field>
+    </form>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-grid-list cols="8" rowHeight="150" gutterSize="8" class="margin">
+  <mat-grid-tile *ngFor="let viewUrl of museumViews">
+    <mat-card>
+      <img mat-card-image [src]="viewUrl">
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-content>
+        <button mat-mini-fab color="primary" class="margin-auto" (click)="openUploadImageDialog(null)">
+          <mat-icon>library_add</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

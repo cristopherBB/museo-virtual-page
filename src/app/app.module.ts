@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,9 +13,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
 import { LandingComponent } from './views/landing/landing.component';
+import { TourDetailsComponent } from './views/tour-details/tour-details.component';
+import { UploadImageComponent } from './components/dialogs/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,9 @@ import { LandingComponent } from './views/landing/landing.component';
     VirtualMuseumComponent,
     CanvasComponent,
     VirtualViewComponent,
-    LandingComponent
+    LandingComponent,
+    TourDetailsComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,13 @@ import { LandingComponent } from './views/landing/landing.component';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
+  ],
+  entryComponents: [
+    UploadImageComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
