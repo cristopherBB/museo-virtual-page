@@ -1,5 +1,5 @@
 <div class="container">
-  <app-virtual-view [viewId]='selectedView' #virtualView></app-virtual-view>
+  <app-virtual-view [viewId]='selectedView' #virtualView id="virtualView"></app-virtual-view>
   <div class="croquis-content">
     <app-canvas [pins]="tour.pins" [selectedPin]="selectedPin" (onClick)="onPinClick($event)" class="croquis"></app-canvas>
   </div>
