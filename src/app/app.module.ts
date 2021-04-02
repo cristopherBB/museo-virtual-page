@@ -21,6 +21,7 @@ import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view
 import { LandingComponent } from './views/landing/landing.component';
 import { TourDetailsComponent } from './views/tour-details/tour-details.component';
 import { UploadImageComponent } from './components/dialogs/upload-image/upload-image.component';
+import { DeleteMuseumComponent } from './components/delete-museum/delete-museum.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UploadImageComponent } from './components/dialogs/upload-image/upload-i
     VirtualViewComponent,
     LandingComponent,
     TourDetailsComponent,
-    UploadImageComponent
+    UploadImageComponent,
+    DeleteMuseumComponent
   ],
   imports: [
     BrowserModule,
