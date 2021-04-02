@@ -3,7 +3,10 @@
   <mat-grid-tile>
     <img [src]="museum.featuredImage" alt="Featured Image">
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="display-container">
+    <div class="button-container">
+      <button class="button" (click)="deleteMuseum(null)">Delete</button>
+    </div>
     <form class="expand padding">
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Title</mat-label>
