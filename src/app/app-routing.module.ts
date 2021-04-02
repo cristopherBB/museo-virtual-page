@@ -19,6 +19,10 @@ const routes: Routes = [
     component: LandingComponent,
     pathMatch: 'full'
   },
+  {
+    path: 'add-museum',
+    component: VirtualMuseumComponent,
+  }
 ];
 
 @NgModule({
