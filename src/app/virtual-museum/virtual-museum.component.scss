@@ -1,4 +1,10 @@
 .container {
   display: flex;
   padding: 16px;
+  justify-content: space-evenly;
+}
+
+.croquis-content {
+  display: flex;
+  align-items: flex-end;
 }

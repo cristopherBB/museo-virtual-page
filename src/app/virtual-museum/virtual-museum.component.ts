@@ -24,11 +24,11 @@ export class VirtualMuseumComponent implements OnInit {
     pins.push({ x: 66, y: 51.5 });
     pins.push({ x: 75.8, y: 52.3 });
     // Puesto 2
-    pins.push({ x: 36.7, y: 40 });
+    pins.push({ x: 37.3, y: 32 });
     // Puesto 4
-    pins.push({ x: 62, y: 40});
+    pins.push({ x: 62, y: 32});
     // puesto 7
-    pins.push({ x: 84, y: 56 });
+    pins.push({ x: 84, y: 60 });
     this.tour.pins = pins;
     const views = [];
     views.push('pasillo-1');
