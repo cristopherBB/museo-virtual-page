@@ -39,8 +39,14 @@
   cursor: pointer;
 }
 
-.text {
+.title-text {
   padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.text {
+  padding: 10px 0px;
   display: flex;
   justify-content: center;
 }
