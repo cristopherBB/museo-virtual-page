@@ -16,6 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
 import { LandingComponent } from './views/landing/landing.component';
@@ -23,6 +24,7 @@ import { TourDetailsComponent } from './views/tour-details/tour-details.componen
 import { UploadImageComponent } from './components/dialogs/upload-image/upload-image.component';
 // import { DeleteMuseumComponent } from './components/delete-museum/delete-museum.component';
 import { AddMuseumComponent } from './views/add-museum/add-museum.component';
+import { DeleteComponent } from './components/dialogs/delete/delete.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { AddMuseumComponent } from './views/add-museum/add-museum.component';
     TourDetailsComponent,
     UploadImageComponent,
     // DeleteMuseumComponent,
-    AddMuseumComponent
+    AddMuseumComponent,
+    DeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -50,9 +53,11 @@ import { AddMuseumComponent } from './views/add-museum/add-museum.component';
     MatInputModule,
     MatDialogModule,
     FormsModule,
+    MatTooltipModule,
   ],
   entryComponents: [
     UploadImageComponent,
+    DeleteComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

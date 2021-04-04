@@ -2,6 +2,15 @@
   width: 100%;
 }
 
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  button {
+    margin-left: 8px;
+  }
+}
+
 .padding {
   padding: 16px;
 }
@@ -17,7 +26,7 @@
 
 .display-container {
   >::ng-deep .mat-figure {
-    display: block !important; 
+    display: block !important;
   }
 }
 

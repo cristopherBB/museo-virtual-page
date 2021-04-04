@@ -4,21 +4,32 @@
     <img [src]="museum.featuredImage" alt="Featured Image">
   </mat-grid-tile>
   <mat-grid-tile class="display-container">
-    <div class="button-container">
-      <button class="button" (click)="openUploadImageDialog(null)">Delete</button>
+    <div class="action-buttons">
+      <button mat-raised-button *ngIf="!editMode" color="accent" (click)="toggleEditMode()">
+        Edit
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-raised-button *ngIf="editMode" color="primary" (click)="saveChanges()">
+        Save
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+        Delete
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
     <form class="expand padding">
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Title</mat-label>
-        <input matInput disabled [value]="museum.title">
+        <input matInput [disabled]="!editMode" [value]="museum.title">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Location</mat-label>
-        <input matInput disabled [value]="museum.location">
+        <input matInput [disabled]="!editMode" [value]="museum.location">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Description</mat-label>
-        <textarea matInput disabled [value]="museum.description"></textarea>
+        <textarea matInput [disabled]="!editMode" [value]="museum.description"></textarea>
       </mat-form-field>
     </form>
   </mat-grid-tile>
@@ -32,7 +43,13 @@
   <mat-grid-tile>
     <mat-card>
       <mat-card-content>
-        <button mat-mini-fab color="primary" class="margin-auto" (click)="openUploadImageDialog(null)">
+        <button
+          mat-mini-fab
+          color="primary"
+          class="margin-auto"
+          matTooltip="New image"
+          (click)="openUploadImageDialog()"
+        >
           <mat-icon>library_add</mat-icon>
         </button>
       </mat-card-content>
