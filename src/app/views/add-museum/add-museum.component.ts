@@ -35,6 +35,10 @@ export class AddMuseumComponent implements OnInit {
     });
   };
 
+  // onSubmitTemplateBased() {
+  //   console.log(this.vm)
+  // }
+
 }
 
 
