@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteComponent } from 'src/app/components/dialogs/delete/delete.component';
 import { UploadImageComponent } from 'src/app/components/dialogs/upload-image/upload-image.component';
-// import { DeleteMuseumComponent} from 'src/app/components/delete-museum/delete-museum.component'
 import { MuseumOverview } from 'src/app/models/museum.model';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -96,18 +95,5 @@ export class TourDetailsComponent implements OnInit, OnDestroy {
     this.toggleEditMode();
   }
 
-  // deleteMuseum = (fileUrl: string): void => {
-  //   // Prevent duplicated dialogs
-  //   if (this.dialogSub) this.dialogSub.unsubscribe();
-  //   if (this.dialogRef) this.dialogRef.close();
-  //   // Open dialog
-  //   this.dialogRef = this.dialog.open(DeleteMuseumComponent, {
-  //     width: '350px',
-  //     height: '200px',
-  //     data: { fileUrl },
-  //   });
-  //   this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed', result);
-  //   });
-  // };
+
 }

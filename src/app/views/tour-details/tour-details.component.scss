@@ -12,7 +12,7 @@
 }
 
 .padding {
-  padding: 16px;
+  padding: 30px 16px;
 }
 
 .margin {
@@ -30,19 +30,11 @@
   }
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 25px;
-  margin-bottom: 5px;
+.material-icons {
+  font-size: 20px;
 }
 
-.button {
-  padding: 12px 15px;
-  font-size: 15px;
-  background: #880000;
-  color: white;
-  border: none;
-  border-radius: 12px;
+.mat-raised-button {
+  padding: 0px 10px;
   letter-spacing: 2px;
 }
