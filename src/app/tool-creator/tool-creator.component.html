@@ -1,0 +1,20 @@
+<div id="panorama" ></div>
+
+<div *ngIf="escenas.length != 0" class="scene-container" >
+
+
+    <!-- <img *ngFor="let i of escenas" src="{{sanitizer.bypassSecurityTrustResourceUrl(i)}}" alt=""> -->
+    <img src="{{get_url(urlA)}}" alt="">
+
+</div>
+<img src="" alt="" id="img-file">
+<div *ngIf="escenas.length === 0" class="empty-scene-container">
+    <button class="empty-scene" mat-stroked-button (click)="addScene()">
+        <h2>Para comenzar sube una imagen</h2>
+        <mat-icon>lightbulb</mat-icon>
+    </button>
+
+</div>
+
+
+<input type="file" id="file" (change)="handleFileInput($event.target.files)">

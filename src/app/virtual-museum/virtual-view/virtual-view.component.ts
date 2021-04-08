@@ -1,9 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { ModalComponent } from '../modal/modal.component';
 
 declare var pannellum: any;
+
+
+function openModal(data) {
+  // Search modal
+  console.log(`Abriendo Modal de ${data.title}`);
+  
+  const dialogRef = this.dialog.open(ModalComponent, {
+    width: '250px',
+    data: {
+      title: data.title, 
+      description: data.description,
+      extra: data.extra,
+      imagen: data.imagen
+    }
+  });
+}
+
 
 @Component({
   selector: 'app-virtual-view',
@@ -16,19 +35,20 @@ export class VirtualViewComponent implements OnInit {
   // Element ID for pano
   panoramaHTML = 'panorama'
   // Scene to load
-  scene = 'pasillo-1'
+  scene = 'pasillo-2'
 
   // Pannellum Viewer
   pannellumViewer;
 
   constructor(
+    public dialog: MatDialog
     // private sanitizer: DomSanitizer
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
   ) {
-    // Ver la escena que se va a cargar
-    this.route.queryParams.subscribe(params => {
-      this.scene = params['scene'] || this.scene;
-    });
+    // // Ver la escena que se va a cargar
+    // this.route.queryParams.subscribe(params => {
+    //   this.scene = params['scene'] || this.scene;
+    // });
   }
 
   ngOnInit(): void {
@@ -64,14 +84,14 @@ export class VirtualViewComponent implements OnInit {
               "type": "scene",
               "text": "Pasillo 2",
               "sceneId": "pasillo-2",
-              "targetYaw": -23,
-              "targetPitch": 2
+              "targetYaw": 120,
+              "targetPitch": 3
             },
             {
               "pitch": -3, //arriba - abajo
               "yaw": 150, // izq - der
               "cssClass": "custom-hotspot-img custom-img",
-              "createTooltipFunc": this.hotspot,
+              "createTooltipFunc": this.hotspot.bind(this),
               "createTooltipArgs": {
                 "title": "Mapa",
                 "id": "hotspot-mapa",
@@ -99,7 +119,8 @@ export class VirtualViewComponent implements OnInit {
         "pasillo-2": {
           "title": "Pasillo 2",
           "hfov": 110,
-          "yaw": 150,
+          "yaw": 130,
+          "pitch": 3,
           "type": "equirectangular",
           "panorama": "assets/titles/hacienda/pasillo-2.jpg",
 
@@ -127,7 +148,8 @@ export class VirtualViewComponent implements OnInit {
         "pasillo-3": {
           "title": "Pasillo 3",
           "hfov": 110,
-          "yaw": 150,
+          "yaw": 0,
+          "pitch": 3,
           "type": "equirectangular",
           "panorama": "assets/titles/hacienda/pasillo-3.jpg",
 
@@ -231,7 +253,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/pasillo-4.png",
+          "panorama": "/assets/titles/hacienda/pasillo-4.jpg",
 
           "hotSpots": [
             {
@@ -445,12 +467,34 @@ export class VirtualViewComponent implements OnInit {
     });
   }
 
-/*
- * hotspot
- * 
- * Funcion de creacion de hotspot custom
- */
-  hotspot(hotSpotDiv, args) {
+  /*
+   * openModal
+   * 
+   * Prepara la info que se va a mostrar en el Modal
+   */
+  public openModal(data) {
+    // Search modal
+    console.log(`Abriendo Modal de ${data.title}`);
+    
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '250px',
+      data: {
+        title: data.title, 
+        description: data.description,
+        extra: data.extra,
+        imagen: data.imagen
+      }
+    });
+    
+    
+  }
+
+  /*
+  * hotspot
+  * 
+  * Funcion de creacion de hotspot custom
+  */
+  public hotspot(hotSpotDiv, args) {
 
     console.log(`Cargando Hotspot ${args.title}`);
 
@@ -458,22 +502,33 @@ export class VirtualViewComponent implements OnInit {
     hotSpotDiv.classList.add('custom-tooltip');
     // Custom ID
     hotSpotDiv.id = args.id;
-
+    
+    
     // Se crea el evento para abrir el modal 
     if (args.modal) {
-      $(`#${args.id}`).click(function () {
-        this.openModal(args.modal)
-      })
+      let modal = document.getElementById(args.id)
+      modal.onclick = () => this.openModal(args.modal)
     }
-
+    
     // Create span element to tooltip
     var span = document.createElement('span');
     span.innerHTML = args.title;
     hotSpotDiv.appendChild(span);
     span.style.width = span.scrollWidth - 20 + 'px';
-    span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+    span.style.marginLeft = (-(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 24) + 'px';
     span.style.marginTop = -span.scrollHeight - 12 + 'px';
-
+    
+    span.classList.add('custom-tooltip-span');
+    // $(hotSpotDiv).on('mouseover', function(){
+    //   $(span).addClass('custom-tooltip-span-hover');
+    //   console.log("Entrando");
+      
+    // });
+    // $(hotSpotDiv).on('mouseout', function(){
+    //   $(span).removeClass('custom-tooltip-span-hover')
+    //   console.log("Saliendo");
+    // });
+    
     // Custom icon
     if (args.customIcon && args.customIcon.path) {
       let width = args.customIcon.width || "50";
@@ -486,42 +541,7 @@ export class VirtualViewComponent implements OnInit {
 
   }
 
-  /*
-   * openModal
-   * 
-   * Prepara la info que se va a mostrar en el Modal
-   */
-  openModal(data) {
-    // Search modal
-    let modal = $('#modal-info');
-
-    // Search info modal
-    let title = modal.find('#modal-title');
-    let description = modal.find('#modal-description');
-    let extra = modal.find('#modal-extra');
-    let imagen = modal.find('#modal-img');
-
-
-    // Set info
-    title.text(data.title)
-    description.text(data.description)
-
-    // Set Img
-    if (data.imagen) {
-      imagen.attr({
-        src: `images/${data.imagen.src}`,
-        alt: data.imagen.alt
-      });
-      imagen.addClass(data.imagen.class)
-    }
-
-    // Set html tag
-    extra.html(data.extra)
-
-
-    // Open modal
-    modal.modal('show');
-  }
+  
 
   // getMuseumUrl(): SafeHtml {
   //   const url = `https://alvdeveloper.com/pannellum?scene=${this.viewId}`;

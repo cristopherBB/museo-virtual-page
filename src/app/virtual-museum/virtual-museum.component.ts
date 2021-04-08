@@ -42,7 +42,7 @@ export class VirtualMuseumComponent implements OnInit {
     views.push('tienda-chocolate');
     views.push('sala-fotografia');
     this.tour.views = views;
-    this.selectedView = this.tour.views[0];
+    this.selectedView = this.tour.views[2];
   }
 
   onPinClick = (viewPosition: number): void => {

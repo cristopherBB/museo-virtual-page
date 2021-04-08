@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { VirtualMuseumComponent } from './virtual-museum/virtual-museum.component';
 import { LandingComponent } from './views/landing/landing.component';
 import { TourDetailsComponent } from './views/tour-details/tour-details.component';
+import { ToolCreatorComponent } from './tool-creator/tool-creator.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: VirtualMuseumComponent,
+  },
+  {
+    path: 'tool-creator',
+    component: ToolCreatorComponent
   },
   {
     path: '',
