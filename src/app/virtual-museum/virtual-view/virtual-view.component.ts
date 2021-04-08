@@ -34,8 +34,6 @@ export class VirtualViewComponent implements OnInit {
 
   // Element ID for pano
   panoramaHTML = 'panorama'
-  // Scene to load
-  scene = 'pasillo-2'
 
   // Pannellum Viewer
   pannellumViewer;
@@ -52,7 +50,7 @@ export class VirtualViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.scene);
+    console.log(this.viewId);
     
     // Create pannellum viewer
     this.pannellumViewer = pannellum.viewer(this.panoramaHTML, {
@@ -71,10 +69,6 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          // "panorama": "assets/titles/hacienda/pasillo-1/pasillo-1.jpg",
-          // "panorama": "./titles/hacienda/pasillo-1/pasillo-1_4x.jpg",
-          // "panorama": "./titles/hacienda/pasillo-1/pasillo-1_photos_v2_x4.jpg",
-          // "panorama": "./titles/hacienda/pasillo-1/pasillo-1-8x.jpg",
           "panorama": "assets/titles/hacienda/pasillo-1/pasillo-1-4x-qudratic.jpg",
 
           "hotSpots": [
@@ -99,7 +93,7 @@ export class VirtualViewComponent implements OnInit {
                   "title": "Mapa cuchi",
                   "description": "Un Amplio espacio donde frecuentemente hay eventos de Música de Cámara",
                   "imagen": {
-                    "src": "mapa-pasillo-1.jpg"
+                    "src": "images/mapa-pasillo-1.jpg"
                   }
                 }
               },
@@ -181,7 +175,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Secado 2",
                 "id": "hotspot-galeria-icon",
                 "customIcon": {
-                  "path": "galeria-arte.svg",
+                  "src": "images/galeria-arte.svg",
                   "alt": "Galeria"
                 }
               },
@@ -196,7 +190,6 @@ export class VirtualViewComponent implements OnInit {
           "yaw": 150,
           "type": "equirectangular",
           "panorama": "assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
-          // "panorama": "assets/titles/hacienda/sala-2/sala-2.jpg",
 
           "hotSpots": [
             {
@@ -212,7 +205,7 @@ export class VirtualViewComponent implements OnInit {
               "pitch": -4, //arriba - abajo
               "yaw": 360, // izq - der
               "cssClass": "custom-hotspot-icon",
-              "createTooltipFunc": this.hotspot,
+              "createTooltipFunc": this.hotspot.bind(this),
               "createTooltipArgs": {
                 "title": " Caraotas- Jorge Pedro Nuñez",
                 "id": "hotspot-obra-1-sala-2-img",
@@ -220,9 +213,13 @@ export class VirtualViewComponent implements OnInit {
                   "title": "Caraotas- Jorge Pedro Nuñez",
                   "description": "La prática artística de Jorge Pedro Nuñez está ligada a su experiencia como historiador del arte, debido a lo que sus obras aluden a múltiples referencias, tanto artísticas como contextuales",
                   "imagen": {
-                    "src": "assets/titles/hacienda/sala-2/obras/obra-1.jpg",
+                    "src": "titles/hacienda/sala-2/obras/obra-1.jpg",
                     "alt": "Obra 1"
                   }
+                },
+                "customIcon":{
+                  "src": "titles/hacienda/sala-2/obras/obra-1.jpg",
+                  "alt": "Obra 1"
                 }
               },
             },
@@ -233,7 +230,11 @@ export class VirtualViewComponent implements OnInit {
               "createTooltipFunc": this.hotspot,
               "createTooltipArgs": {
                 "title": "NOMBRE OBRA 2",
-                "id": "hotspot-obra-2-sala-2-img"
+                "id": "hotspot-obra-2-sala-2-img",
+                "customIcon":{
+                  "src": "titles/hacienda/sala-2/obras/obra-2.jpg",
+                  "alt": "Obra 2"
+                }
               },
             },
             {
@@ -243,7 +244,11 @@ export class VirtualViewComponent implements OnInit {
               "createTooltipFunc": this.hotspot,
               "createTooltipArgs": {
                 "title": "NOMBRE OBRA 3",
-                "id": "hotspot-obra-3-sala-2-img"
+                "id": "hotspot-obra-3-sala-2-img",
+                "customIcon":{
+                  "src": "titles/hacienda/sala-2/obras/obra-3.jpg",
+                  "alt": "Obra 3"
+                }
               },
             },
           ]
@@ -283,7 +288,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Secado 3",
                 "id": "hotspot-galeria-icon",
                 "customIcon": {
-                  "path": "galeria-arte.svg",
+                  "src": "images/galeria-arte.svg",
                   "alt": "Galeria"
                 }
               },
@@ -327,7 +332,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Tienda de Chocolate",
                 "id": "hotspot-chocolate-icon",
                 "customIcon": {
-                  "path": "chocolate.svg",
+                  "src": "images/chocolate.svg",
                   "alt": "Chocolate"
                 }
               },
@@ -400,7 +405,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Curso de Fotografia",
                 "id": "hotspot-camara-icon",
                 "customIcon": {
-                  "path": "camara.svg",
+                  "src": "images/camara.svg",
                   "alt": "Camara"
                 }
               },
@@ -454,7 +459,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Curso de Fotografia",
                 "id": "hotspot-camara-icon",
                 "customIcon": {
-                  "path": "camara.svg",
+                  "src": "images/camara.svg",
                   "alt": "Camara"
                 }
               },
@@ -519,23 +524,14 @@ export class VirtualViewComponent implements OnInit {
     span.style.marginTop = -span.scrollHeight - 12 + 'px';
     
     span.classList.add('custom-tooltip-span');
-    // $(hotSpotDiv).on('mouseover', function(){
-    //   $(span).addClass('custom-tooltip-span-hover');
-    //   console.log("Entrando");
-      
-    // });
-    // $(hotSpotDiv).on('mouseout', function(){
-    //   $(span).removeClass('custom-tooltip-span-hover')
-    //   console.log("Saliendo");
-    // });
     
     // Custom icon
-    if (args.customIcon && args.customIcon.path) {
+    if (args.customIcon && args.customIcon.src) {
       let width = args.customIcon.width || "50";
       let height = args.customIcon.height || "50";
 
       $(`#${args.id}`).append(
-        `<img src="assets/images/${args.customIcon.path}" alt="${args.customIcon.alt}" width="${width}" height="${height}">`
+        `<img src="/assets/${args.customIcon.src}" alt="${args.customIcon.alt}" width="${width}" height="${height}">`
       );
     }
 
