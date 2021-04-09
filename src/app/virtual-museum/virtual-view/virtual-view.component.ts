@@ -8,23 +8,6 @@ import { ModalComponent } from '../modal/modal.component';
 
 declare var pannellum: any;
 
-
-function openModal(data) {
-  // Search modal
-  console.log(`Abriendo Modal de ${data.title}`);
-  
-  const dialogRef = this.dialog.open(ModalComponent, {
-    width: '250px',
-    data: {
-      title: data.title, 
-      description: data.description,
-      extra: data.extra,
-      imagen: data.imagen
-    }
-  });
-}
-
-
 @Component({
   selector: 'app-virtual-view',
   templateUrl: './virtual-view.component.html',
@@ -41,62 +24,58 @@ export class VirtualViewComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog
-    // private sanitizer: DomSanitizer
-    // private route: ActivatedRoute,
-  ) {
-    // // Ver la escena que se va a cargar
-    // this.route.queryParams.subscribe(params => {
-    //   this.scene = params['scene'] || this.scene;
-    // });
-  }
+  ) { }
 
   ngOnInit(): void {
     console.log(this.viewId);
+
+    // leer el archivo de configuracion 
     let sceneJson = {};
     config.escenas.forEach(
-      escena=>{
-          let hotspotsArray = [];
-          escena.hotspots.forEach(
-              hotspot => {
-              let aux = {
-                  'pitch' : hotspot['valor_angulo_y'],
-                  'yaw' : hotspot['valor_angulo_x'],
-                  'text' : hotspot['titulo'],
-                  // 'type': hotspot['tipo'],
-                  'sceneId' : hotspot['id_escena'],
-                  'targetYaw': hotspot['targetYaw'] || -23,
-                  'targetPitch': hotspot['targetPitch'] || 2,
-                  'cssClass': hotspot['clase_css'],
-                  'createTooltipFunc': this.hotspot.bind(this),
-                  'createTooltipArgs':{
-                      'title':hotspot['titulo'],
-                      'id':hotspot['id_hotspot'],
-                      'customIcon':{
-                          'src': hotspot['icono'] || null,
-                          'alt': hotspot['attr_alt'] || null
-                      }
-                  }
+      escena => {
+        let hotspotsArray = [];
+        escena.hotspots.forEach(
+          hotspot => {
+            let aux = {
+              'pitch': hotspot['valor_angulo_y'],
+              'yaw': hotspot['valor_angulo_x'],
+              'text': hotspot['titulo'],
+              // 'type': hotspot['tipo'],
+              'sceneId': hotspot['id_escena'],
+              'targetYaw': hotspot['targetYaw'] || -23,
+              'targetPitch': hotspot['targetPitch'] || 2,
+              'cssClass': hotspot['clase_css'],
+              'createTooltipFunc': this.hotspot.bind(this),
+              'createTooltipArgs': {
+                'title': hotspot['titulo'],
+                'id': hotspot['id_hotspot'],
+                'customIcon': {
+                  'src': hotspot['icono'] || null,
+                  'alt': hotspot['attr_alt'] || null
+                }
               }
-              hotspotsArray.push(aux)
+            }
+            hotspotsArray.push(aux)
           })
-  
-          let aux =
-              {
-                  "title":escena['titulo'],
-                  "hfov": escena['hfov'] || 110,
-                  "yaw": escena['yaw'] || 150,
-                  "panorama": escena['img-360'],
-                  "type": "equirectangular",
-                  "hotSpots":hotspotsArray,
-  
-              }
-          sceneJson[escena['id']] = aux
-          
+
+        let aux =
+        {
+          "title": escena['titulo'],
+          "hfov": escena['hfov'] || 110,
+          "yaw": escena['yaw'] || 150,
+          "panorama": escena['img-360'],
+          "type": "equirectangular",
+          "hotSpots": hotspotsArray,
+
+        }
+        sceneJson[escena['id']] = aux
+
       }
-  )
-  
-  console.log("ARRAY ESCENA")
-  console.log(sceneJson)
+    )
+
+    console.log("ARRAY ESCENA")
+    console.log(sceneJson)
+
     // Create pannellum viewer
     this.pannellumViewer = pannellum.viewer(this.panoramaHTML, {
       "showFullscreenCtrl": true,
@@ -107,413 +86,425 @@ export class VirtualViewComponent implements OnInit {
         "firstScene": this.viewId,
         "sceneFadeDuration": 1000
       },
-      "scenes":sceneJson,
-      // "scenes": {
-      //   "pasillo-1": {
-      //     "title": "Pasillo 1",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "assets/titles/hacienda/pasillo-1/pasillo-1-4x-qudratic.jpg",
+      // "scenes":sceneJson,
+      "scenes": {
+        "pasillo-1": {
+          "title": "Pasillo 1",
+          "hfov": 110,
+          "yaw": 150,
+          "type": "equirectangular",
+          "panorama": "assets/titles/hacienda/pasillo-1/pasillo-1-4x-qudratic.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 200,
-      //         "type": "scene",
-      //         "text": "Pasillo 2",
-      //         "sceneId": "pasillo-2",
-      //         "targetYaw": 120,
-      //         "targetPitch": 3
-      //       },
-      //       {
-      //         "pitch": -3, //arriba - abajo
-      //         "yaw": 150, // izq - der
-      //         "cssClass": "custom-hotspot-img custom-img",
-      //         "createTooltipFunc": this.hotspot.bind(this),
-      //         "createTooltipArgs": {
-      //           "title": "Mapa",
-      //           "id": "hotspot-mapa",
-      //           "modal": {
-      //             "title": "Mapa cuchi",
-      //             "description": "Un Amplio espacio donde frecuentemente hay eventos de Música de Cámara",
-      //             "imagen": {
-      //               "src": "/assets/images/mapa-pasillo-1.jpg"
-      //             }
-      //           }
-      //         },
-      //       },
-      //       {
-      //         "pitch": -8, //arriba - abajo
-      //         "yaw": 304, // izq - der
-      //         "cssClass": "custom-hotspot-icon",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Salon de Concierto",
-      //           "id": "hotspot-concierto-icon"
-      //         },
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-2": {
-      //     "title": "Pasillo 2",
-      //     "hfov": 110,
-      //     "yaw": 130,
-      //     "pitch": 3,
-      //     "type": "equirectangular",
-      //     "panorama": "assets/titles/hacienda/pasillo-2.jpg",
+          "hotSpots": [
+            {
+              "pitch": 1,
+              "yaw": 200,
+              "type": "scene",
+              "text": "Pasillo 2",
+              "sceneId": "pasillo-2",
+              "targetYaw": 120,
+              "targetPitch": 3
+            },
+            {
+              "pitch": -3, //arriba - abajo
+              "yaw": 150, // izq - der
+              "cssClass": "custom-hotspot-img custom-img",
+              "createTooltipFunc": this.hotspot.bind(this),
+              "createTooltipArgs": {
+                "title": "Mapa",
+                "id": "hotspot-mapa",
+                "customIcon":{
+                  "src": "/assets/images/mapa-pasillo-1.jpg",
+                  "width": 200,
+                  "height": 200
+                },
+                "modal": {
+                  "title": "Mapa cuchi",
+                  "description": "Un Amplio espacio donde frecuentemente hay eventos de Música de Cámara",
+                  "imagen": {
+                    "src": "/assets/images/mapa-pasillo-1.jpg",
+                    "width": 600,
+                    "height": 600
+                  }
+                }
+              },
+            },
+            {
+              "pitch": -8, //arriba - abajo
+              "yaw": 304, // izq - der
+              "cssClass": "custom-hotspot-icon",
+              "createTooltipFunc": this.hotspot,
+              "createTooltipArgs": {
+                "title": "Salon de Concierto",
+                "id": "hotspot-concierto-icon"
+              },
+            },
+          ]
+        }
+        // "pasillo-2": {
+        //   "title": "Pasillo 2",
+        //   "hfov": 110,
+        //   "yaw": 130,
+        //   "pitch": 3,
+        //   "type": "equirectangular",
+        //   "panorama": "assets/titles/hacienda/pasillo-2.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 205,
-      //         "type": "scene",
-      //         "text": "Pasillo 3",
-      //         "sceneId": "pasillo-3",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 40,
-      //         "type": "scene",
-      //         "text": "Pasillo 1",
-      //         "sceneId": "pasillo-1",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-3": {
-      //     "title": "Pasillo 3",
-      //     "hfov": 110,
-      //     "yaw": 0,
-      //     "pitch": 3,
-      //     "type": "equirectangular",
-      //     "panorama": "assets/titles/hacienda/pasillo-3.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 205,
+        //       "type": "scene",
+        //       "text": "Pasillo 3",
+        //       "sceneId": "pasillo-3",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 40,
+        //       "type": "scene",
+        //       "text": "Pasillo 1",
+        //       "sceneId": "pasillo-1",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //   ]
+        // },
+        // "pasillo-3": {
+        //   "title": "Pasillo 3",
+        //   "hfov": 110,
+        //   "yaw": 0,
+        //   "pitch": 3,
+        //   "type": "equirectangular",
+        //   "panorama": "assets/titles/hacienda/pasillo-3.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 90,
-      //         "type": "scene",
-      //         "text": "Pasillo 4",
-      //         "sceneId": "pasillo-4",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 1,
-      //         "yaw": -90,
-      //         "type": "scene",
-      //         "text": "Pasillo 2",
-      //         "sceneId": "pasillo-2",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 0, //arriba - abajo
-      //         "yaw": 0, // izq - der
-      //         "cssClass": "custom-hotspot-icon latido",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Sala de Secado 2",
-      //           "id": "hotspot-galeria-icon",
-      //           "customIcon": {
-      //             "src": "/assets/images/galeria-arte.svg",
-      //             "alt": "Galeria"
-      //           }
-      //         },
-      //         "type": "scene",
-      //         "sceneId": "sala-2",
-      //       },
-      //     ]
-      //   },
-      //   "sala-2": {
-      //     "title": "Pasillo 2",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 90,
+        //       "type": "scene",
+        //       "text": "Pasillo 4",
+        //       "sceneId": "pasillo-4",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 1,
+        //       "yaw": -90,
+        //       "type": "scene",
+        //       "text": "Pasillo 2",
+        //       "sceneId": "pasillo-2",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 0, //arriba - abajo
+        //       "yaw": 0, // izq - der
+        //       "cssClass": "custom-hotspot-icon latido",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Sala de Secado 2",
+        //         "id": "hotspot-galeria-icon",
+        //         "customIcon": {
+        //           "src": "/assets/images/galeria-arte.svg",
+        //           "alt": "Galeria"
+        //         }
+        //       },
+        //       "type": "scene",
+        //       "sceneId": "sala-2",
+        //     },
+        //   ]
+        // },
+        // "sala-2": {
+        //   "title": "Pasillo 2",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": -8,
-      //         "yaw": 200,
-      //         "type": "scene",
-      //         "text": "Pasillo 3",
-      //         "sceneId": "pasillo-3",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": -4, //arriba - abajo
-      //         "yaw": 360, // izq - der
-      //         "cssClass": "custom-hotspot-icon",
-      //         "createTooltipFunc": this.hotspot.bind(this),
-      //         "createTooltipArgs": {
-      //           "title": " Caraotas- Jorge Pedro Nuñez",
-      //           "id": "hotspot-obra-1-sala-2-img",
-      //           "modal": {
-      //             "title": "Caraotas- Jorge Pedro Nuñez",
-      //             "description": "La prática artística de Jorge Pedro Nuñez está ligada a su experiencia como historiador del arte, debido a lo que sus obras aluden a múltiples referencias, tanto artísticas como contextuales",
-      //             "imagen": {
-      //               "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
-      //               "alt": "Obra 1"
-      //             }
-      //           },
-      //           "customIcon":{
-      //             "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
-      //             "alt": "Obra 1"
-      //           }
-      //         },
-      //       },
-      //       {
-      //         "pitch": -4, //arriba - abajo
-      //         "yaw": 110, // izq - der
-      //         "cssClass": "custom-hotspot-icon",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "NOMBRE OBRA 2",
-      //           "id": "hotspot-obra-2-sala-2-img",
-      //           "customIcon":{
-      //             "src": "/assets/titles/hacienda/sala-2/obras/obra-2.jpg",
-      //             "alt": "Obra 2"
-      //           }
-      //         },
-      //       },
-      //       {
-      //         "pitch": -4, //arriba - abajo
-      //         "yaw": 230, // izq - der
-      //         "cssClass": "custom-hotspot-icon",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "NOMBRE OBRA 3",
-      //           "id": "hotspot-obra-3-sala-2-img",
-      //           "customIcon":{
-      //             "src": "/assets/titles/hacienda/sala-2/obras/obra-3.jpg",
-      //             "alt": "Obra 3"
-      //           }
-      //         },
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-4": {
-      //     "title": "Pasillo 4",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/pasillo-4.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": -8,
+        //       "yaw": 200,
+        //       "type": "scene",
+        //       "text": "Pasillo 3",
+        //       "sceneId": "pasillo-3",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": -4, //arriba - abajo
+        //       "yaw": 360, // izq - der
+        //       "cssClass": "custom-hotspot-icon",
+        //       "createTooltipFunc": this.hotspot.bind(this),
+        //       "createTooltipArgs": {
+        //         "title": " Caraotas- Jorge Pedro Nuñez",
+        //         "id": "hotspot-obra-1-sala-2-img",
+        //         "modal": {
+        //           "title": "Caraotas- Jorge Pedro Nuñez",
+        //           "description": "La prática artística de Jorge Pedro Nuñez está ligada a su experiencia como historiador del arte, debido a lo que sus obras aluden a múltiples referencias, tanto artísticas como contextuales",
+        //           "imagen": {
+        //             "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
+        //             "alt": "Obra 1"
+        //           }
+        //         },
+        //         "customIcon":{
+        //           "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
+        //           "alt": "Obra 1"
+        //         }
+        //       },
+        //     },
+        //     {
+        //       "pitch": -4, //arriba - abajo
+        //       "yaw": 110, // izq - der
+        //       "cssClass": "custom-hotspot-icon",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "NOMBRE OBRA 2",
+        //         "id": "hotspot-obra-2-sala-2-img",
+        //         "customIcon":{
+        //           "src": "/assets/titles/hacienda/sala-2/obras/obra-2.jpg",
+        //           "alt": "Obra 2"
+        //         }
+        //       },
+        //     },
+        //     {
+        //       "pitch": -4, //arriba - abajo
+        //       "yaw": 230, // izq - der
+        //       "cssClass": "custom-hotspot-icon",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "NOMBRE OBRA 3",
+        //         "id": "hotspot-obra-3-sala-2-img",
+        //         "customIcon":{
+        //           "src": "/assets/titles/hacienda/sala-2/obras/obra-3.jpg",
+        //           "alt": "Obra 3"
+        //         }
+        //       },
+        //     },
+        //   ]
+        // },
+        // "pasillo-4": {
+        //   "title": "Pasillo 4",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/pasillo-4.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 90,
-      //         "type": "scene",
-      //         "text": "Pasillo 5",
-      //         "sceneId": "pasillo-5",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 1,
-      //         "yaw": -90,
-      //         "type": "scene",
-      //         "text": "Pasillo 3",
-      //         "sceneId": "pasillo-3",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 0, //arriba - abajo
-      //         "yaw": -4, // izq - der
-      //         "cssClass": "custom-hotspot-icon latido",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Sala de Secado 3",
-      //           "id": "hotspot-galeria-icon",
-      //           "customIcon": {
-      //             "src": "/assets/images/galeria-arte.svg",
-      //             "alt": "Galeria"
-      //           }
-      //         },
-      //         "type": "scene",
-      //         "sceneId": "sala-3",
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-5": {
-      //     "title": "Pasillo 5",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/pasillo-5.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 90,
+        //       "type": "scene",
+        //       "text": "Pasillo 5",
+        //       "sceneId": "pasillo-5",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 1,
+        //       "yaw": -90,
+        //       "type": "scene",
+        //       "text": "Pasillo 3",
+        //       "sceneId": "pasillo-3",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 0, //arriba - abajo
+        //       "yaw": -4, // izq - der
+        //       "cssClass": "custom-hotspot-icon latido",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Sala de Secado 3",
+        //         "id": "hotspot-galeria-icon",
+        //         "customIcon": {
+        //           "src": "/assets/images/galeria-arte.svg",
+        //           "alt": "Galeria"
+        //         }
+        //       },
+        //       "type": "scene",
+        //       "sceneId": "sala-3",
+        //     },
+        //   ]
+        // },
+        // "pasillo-5": {
+        //   "title": "Pasillo 5",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/pasillo-5.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 90,
-      //         "type": "scene",
-      //         "text": "Pasillo 6",
-      //         "sceneId": "pasillo-6",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 1,
-      //         "yaw": -90,
-      //         "type": "scene",
-      //         "text": "Pasillo 4",
-      //         "sceneId": "pasillo-4",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 5, //arriba - abajo
-      //         "yaw": 0, // izq - der
-      //         "cssClass": "custom-hotspot-icon latido",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Tienda de Chocolate",
-      //           "id": "hotspot-chocolate-icon",
-      //           "customIcon": {
-      //             "src": "/assets/images/chocolate.svg",
-      //             "alt": "Chocolate"
-      //           }
-      //         },
-      //         "type": "scene",
-      //         "sceneId": "tienda-chocolate",
-      //       },
-      //       {
-      //         "pitch": -7, //arriba - abajo
-      //         "yaw": 195, // izq - der
-      //         "cssClass": "custom-hotspot-img custom-img",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Mapa",
-      //           "id": "hotspot-mapa"
-      //         },
-      //       },
-      //     ]
-      //   },
-      //   "tienda-chocolate": {
-      //     "title": "Tienda de Chocolate",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "assets/titles/hacienda/cacao/cacao_photos_v2_faces_x4_toned.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 90,
+        //       "type": "scene",
+        //       "text": "Pasillo 6",
+        //       "sceneId": "pasillo-6",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 1,
+        //       "yaw": -90,
+        //       "type": "scene",
+        //       "text": "Pasillo 4",
+        //       "sceneId": "pasillo-4",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 5, //arriba - abajo
+        //       "yaw": 0, // izq - der
+        //       "cssClass": "custom-hotspot-icon latido",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Tienda de Chocolate",
+        //         "id": "hotspot-chocolate-icon",
+        //         "customIcon": {
+        //           "src": "/assets/images/chocolate.svg",
+        //           "alt": "Chocolate"
+        //         }
+        //       },
+        //       "type": "scene",
+        //       "sceneId": "tienda-chocolate",
+        //     },
+        //     {
+        //       "pitch": -7, //arriba - abajo
+        //       "yaw": 195, // izq - der
+        //       "cssClass": "custom-hotspot-img custom-img",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Mapa",
+        //         "id": "hotspot-mapa"
+        //       },
+        //     },
+        //   ]
+        // },
+        // "tienda-chocolate": {
+        //   "title": "Tienda de Chocolate",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "assets/titles/hacienda/cacao/cacao_photos_v2_faces_x4_toned.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": -3,
-      //         "yaw": -15,
-      //         "type": "scene",
-      //         "text": "Pasillo 5",
-      //         "sceneId": "pasillo-5",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-6": {
-      //     "title": "Pasillo 6",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/pasillo-6.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": -3,
+        //       "yaw": -15,
+        //       "type": "scene",
+        //       "text": "Pasillo 5",
+        //       "sceneId": "pasillo-5",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //   ]
+        // },
+        // "pasillo-6": {
+        //   "title": "Pasillo 6",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/pasillo-6.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": 90,
-      //         "type": "scene",
-      //         "text": "Pasillo 7",
-      //         "sceneId": "pasillo-7",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 1,
-      //         "yaw": -90,
-      //         "type": "scene",
-      //         "text": "Pasillo 5",
-      //         "sceneId": "pasillo-5",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 0, //arriba - abajo
-      //         "yaw": 110, // izq - der
-      //         "cssClass": "custom-hotspot-icon latido",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Sala de Curso de Fotografia",
-      //           "id": "hotspot-camara-icon",
-      //           "customIcon": {
-      //             "src": "/assets/images/camara.svg",
-      //             "alt": "Camara"
-      //           }
-      //         },
-      //         "type": "scene",
-      //         "sceneId": "sala-fotografia",
-      //       },
-      //     ]
-      //   },
-      //   "sala-fotografia": {
-      //     "title": "Sala de Curso Fotografia",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/fotoclase.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": 90,
+        //       "type": "scene",
+        //       "text": "Pasillo 7",
+        //       "sceneId": "pasillo-7",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 1,
+        //       "yaw": -90,
+        //       "type": "scene",
+        //       "text": "Pasillo 5",
+        //       "sceneId": "pasillo-5",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 0, //arriba - abajo
+        //       "yaw": 110, // izq - der
+        //       "cssClass": "custom-hotspot-icon latido",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Sala de Curso de Fotografia",
+        //         "id": "hotspot-camara-icon",
+        //         "customIcon": {
+        //           "src": "/assets/images/camara.svg",
+        //           "alt": "Camara"
+        //         }
+        //       },
+        //       "type": "scene",
+        //       "sceneId": "sala-fotografia",
+        //     },
+        //   ]
+        // },
+        // "sala-fotografia": {
+        //   "title": "Sala de Curso Fotografia",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/fotoclase.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": -3,
-      //         "yaw": 290,
-      //         "type": "scene",
-      //         "text": "Pasillo 6",
-      //         "sceneId": "pasillo-6",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //     ]
-      //   },
-      //   "pasillo-7": {
-      //     "title": "Pasillo 7",
-      //     "hfov": 110,
-      //     "yaw": 150,
-      //     "type": "equirectangular",
-      //     "panorama": "/assets/titles/hacienda/pasillo-final.jpg",
+        //   "hotSpots": [
+        //     {
+        //       "pitch": -3,
+        //       "yaw": 290,
+        //       "type": "scene",
+        //       "text": "Pasillo 6",
+        //       "sceneId": "pasillo-6",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //   ]
+        // },
+        // "pasillo-7": {
+        //   "title": "Pasillo 7",
+        //   "hfov": 110,
+        //   "yaw": 150,
+        //   "type": "equirectangular",
+        //   "panorama": "/assets/titles/hacienda/pasillo-final.jpg",
 
-      //     "hotSpots": [
-      //       {
-      //         "pitch": 1,
-      //         "yaw": -90,
-      //         "type": "scene",
-      //         "text": "Pasillo 6",
-      //         "sceneId": "pasillo-6",
-      //         "targetYaw": -23,
-      //         "targetPitch": 2
-      //       },
-      //       {
-      //         "pitch": 0, //arriba - abajo
-      //         "yaw": 210, // izq - der
-      //         "cssClass": "custom-hotspot-icon latido",
-      //         "createTooltipFunc": this.hotspot,
-      //         "createTooltipArgs": {
-      //           "title": "Sala de Curso de Fotografia",
-      //           "id": "hotspot-camara-icon",
-      //           "customIcon": {
-      //             "src": "/assets/images/camara.svg",
-      //             "alt": "Camara"
-      //           }
-      //         },
-      //         "type": "scene",
-      //         "sceneId": "sala-fotografia",
-      //       },
-      //     ]
-      //   },
-      // }
+        //   "hotSpots": [
+        //     {
+        //       "pitch": 1,
+        //       "yaw": -90,
+        //       "type": "scene",
+        //       "text": "Pasillo 6",
+        //       "sceneId": "pasillo-6",
+        //       "targetYaw": -23,
+        //       "targetPitch": 2
+        //     },
+        //     {
+        //       "pitch": 0, //arriba - abajo
+        //       "yaw": 210, // izq - der
+        //       "cssClass": "custom-hotspot-icon latido",
+        //       "createTooltipFunc": this.hotspot,
+        //       "createTooltipArgs": {
+        //         "title": "Sala de Curso de Fotografia",
+        //         "id": "hotspot-camara-icon",
+        //         "customIcon": {
+        //           "src": "/assets/images/camara.svg",
+        //           "alt": "Camara"
+        //         }
+        //       },
+        //       "type": "scene",
+        //       "sceneId": "sala-fotografia",
+        //     },
+        //   ]
+        // },
+      }
+
+
+
+      // FIN CONFIG
+
     });
   }
 
@@ -525,18 +516,26 @@ export class VirtualViewComponent implements OnInit {
   public openModal(data) {
     // Search modal
     console.log(`Abriendo Modal de ${data.title}`);
-    
+
+    // Width del modal
+    // Se calcula en base al width de la imagen.
+    let w = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
+    let h = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
+
+    // Llamar el modal
     const dialogRef = this.dialog.open(ModalComponent, {
-      width: '250px',
+      width: w + 'px',
       data: {
-        title: data.title, 
+        title: data.title,
         description: data.description,
         extra: data.extra,
-        imagen: data.imagen
+        image: data.imagen,
+        imageWidth: w,
+        imageHeight: h
       }
     });
-    
-    
+
+
   }
 
   /*
@@ -552,14 +551,14 @@ export class VirtualViewComponent implements OnInit {
     hotSpotDiv.classList.add('custom-tooltip');
     // Custom ID
     hotSpotDiv.id = args.id;
-    
-    
+
+
     // Se crea el evento para abrir el modal 
     if (args.modal) {
       let modal = document.getElementById(args.id)
       modal.onclick = () => this.openModal(args.modal)
     }
-    
+
     // Create span element to tooltip
     var span = document.createElement('span');
     span.innerHTML = args.title;
@@ -567,9 +566,9 @@ export class VirtualViewComponent implements OnInit {
     span.style.width = span.scrollWidth - 20 + 'px';
     span.style.marginLeft = (-(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 24) + 'px';
     span.style.marginTop = -span.scrollHeight - 12 + 'px';
-    
+
     span.classList.add('custom-tooltip-span');
-    
+
     // Custom icon
     if (args.customIcon && args.customIcon.src) {
       let width = args.customIcon.width || "50";
@@ -580,13 +579,13 @@ export class VirtualViewComponent implements OnInit {
       );
     }
 
-    
+
   }
-  
-  
-  public actualizarView(){
+
+
+  public actualizarView() {
     console.log(this.viewId);
-    
+
   }
 
   // getMuseumUrl(): SafeHtml {
