@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { VirtualViewComponent } from './virtual-view/virtual-view.component';
 
 @Component({
   selector: 'app-virtual-museum',
@@ -9,7 +10,8 @@ export class VirtualMuseumComponent implements OnInit {
   tour = { pins: [], views: [] };
   selectedView: string;
   selectedPin = 0;
-  @ViewChild('virtualView') virtualView: ElementRef;
+  @ViewChild('virtualView') virtualView: VirtualViewComponent;
+
 
   constructor() { }
 
@@ -42,7 +44,7 @@ export class VirtualMuseumComponent implements OnInit {
     views.push('tienda-chocolate');
     views.push('sala-fotografia');
     this.tour.views = views;
-    this.selectedView = this.tour.views[2];
+    this.selectedView = this.tour.views[0];
   }
 
   onPinClick = (viewPosition: number): void => {
@@ -51,7 +53,9 @@ export class VirtualMuseumComponent implements OnInit {
     this.selectedPin = viewPosition;
     this.selectedView = this.tour.views[viewPosition];
 
-    return location.reload()
+    console.log(this.selectedView);
+    
+    this.virtualView.actualizarView()
   };
 
 }

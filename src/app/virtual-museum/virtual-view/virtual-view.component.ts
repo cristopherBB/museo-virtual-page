@@ -93,7 +93,7 @@ export class VirtualViewComponent implements OnInit {
                   "title": "Mapa cuchi",
                   "description": "Un Amplio espacio donde frecuentemente hay eventos de Música de Cámara",
                   "imagen": {
-                    "src": "images/mapa-pasillo-1.jpg"
+                    "src": "/assets/images/mapa-pasillo-1.jpg"
                   }
                 }
               },
@@ -175,7 +175,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Secado 2",
                 "id": "hotspot-galeria-icon",
                 "customIcon": {
-                  "src": "images/galeria-arte.svg",
+                  "src": "/assets/images/galeria-arte.svg",
                   "alt": "Galeria"
                 }
               },
@@ -189,7 +189,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
+          "panorama": "/assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
 
           "hotSpots": [
             {
@@ -213,12 +213,12 @@ export class VirtualViewComponent implements OnInit {
                   "title": "Caraotas- Jorge Pedro Nuñez",
                   "description": "La prática artística de Jorge Pedro Nuñez está ligada a su experiencia como historiador del arte, debido a lo que sus obras aluden a múltiples referencias, tanto artísticas como contextuales",
                   "imagen": {
-                    "src": "titles/hacienda/sala-2/obras/obra-1.jpg",
+                    "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
                     "alt": "Obra 1"
                   }
                 },
                 "customIcon":{
-                  "src": "titles/hacienda/sala-2/obras/obra-1.jpg",
+                  "src": "/assets/titles/hacienda/sala-2/obras/obra-1.jpg",
                   "alt": "Obra 1"
                 }
               },
@@ -232,7 +232,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "NOMBRE OBRA 2",
                 "id": "hotspot-obra-2-sala-2-img",
                 "customIcon":{
-                  "src": "titles/hacienda/sala-2/obras/obra-2.jpg",
+                  "src": "/assets/titles/hacienda/sala-2/obras/obra-2.jpg",
                   "alt": "Obra 2"
                 }
               },
@@ -246,7 +246,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "NOMBRE OBRA 3",
                 "id": "hotspot-obra-3-sala-2-img",
                 "customIcon":{
-                  "src": "titles/hacienda/sala-2/obras/obra-3.jpg",
+                  "src": "/assets/titles/hacienda/sala-2/obras/obra-3.jpg",
                   "alt": "Obra 3"
                 }
               },
@@ -288,7 +288,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Secado 3",
                 "id": "hotspot-galeria-icon",
                 "customIcon": {
-                  "src": "images/galeria-arte.svg",
+                  "src": "/assets/images/galeria-arte.svg",
                   "alt": "Galeria"
                 }
               },
@@ -302,7 +302,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/pasillo-5.jpg",
+          "panorama": "/assets/titles/hacienda/pasillo-5.jpg",
 
           "hotSpots": [
             {
@@ -332,7 +332,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Tienda de Chocolate",
                 "id": "hotspot-chocolate-icon",
                 "customIcon": {
-                  "src": "images/chocolate.svg",
+                  "src": "/assets/images/chocolate.svg",
                   "alt": "Chocolate"
                 }
               },
@@ -375,7 +375,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/pasillo-6.jpg",
+          "panorama": "/assets/titles/hacienda/pasillo-6.jpg",
 
           "hotSpots": [
             {
@@ -405,7 +405,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Curso de Fotografia",
                 "id": "hotspot-camara-icon",
                 "customIcon": {
-                  "src": "images/camara.svg",
+                  "src": "/assets/images/camara.svg",
                   "alt": "Camara"
                 }
               },
@@ -419,7 +419,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/fotoclase.jpg",
+          "panorama": "/assets/titles/hacienda/fotoclase.jpg",
 
           "hotSpots": [
             {
@@ -438,7 +438,7 @@ export class VirtualViewComponent implements OnInit {
           "hfov": 110,
           "yaw": 150,
           "type": "equirectangular",
-          "panorama": "assets/titles/hacienda/pasillo-final.jpg",
+          "panorama": "/assets/titles/hacienda/pasillo-final.jpg",
 
           "hotSpots": [
             {
@@ -459,7 +459,7 @@ export class VirtualViewComponent implements OnInit {
                 "title": "Sala de Curso de Fotografia",
                 "id": "hotspot-camara-icon",
                 "customIcon": {
-                  "src": "images/camara.svg",
+                  "src": "/assets/images/camara.svg",
                   "alt": "Camara"
                 }
               },
@@ -531,13 +531,18 @@ export class VirtualViewComponent implements OnInit {
       let height = args.customIcon.height || "50";
 
       $(`#${args.id}`).append(
-        `<img src="/assets/${args.customIcon.src}" alt="${args.customIcon.alt}" width="${width}" height="${height}">`
+        `<img src="${args.customIcon.src}" alt="${args.customIcon.alt}" width="${width}" height="${height}">`
       );
     }
 
+    
   }
-
   
+  
+  public actualizarView(){
+    console.log(this.viewId);
+    
+  }
 
   // getMuseumUrl(): SafeHtml {
   //   const url = `https://alvdeveloper.com/pannellum?scene=${this.viewId}`;
