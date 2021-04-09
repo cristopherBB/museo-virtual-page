@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
 import { LandingComponent } from './views/landing/landing.component';
@@ -54,6 +57,9 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
     MatDialogModule,
     FormsModule,
     MatTooltipModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatTableModule,
   ],
   entryComponents: [
     UploadImageComponent,
