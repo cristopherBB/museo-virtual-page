@@ -8,11 +8,9 @@ import { EXAMPLE_MUSEUM_OVERVIEWS } from 'src/app/models/museum.model';
 })
 export class LandingComponent implements OnInit {
   museums = EXAMPLE_MUSEUM_OVERVIEWS;
-
   constructor() { }
 
   ngOnInit(): void {
     console.log(this.museums);
   }
-
 }
