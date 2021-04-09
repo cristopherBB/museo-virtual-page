@@ -39,6 +39,8 @@ export var config = {
                     "titulo":"Mapa",
                     "id_hotspot": "hotspot-mapa",
                     "icono":"/assets/images/mapa-pasillo-1.jpg",
+                    "ancho_icono": 120,
+                    "altura_icono": 160,
                     "attr_alt":"Galeria",
                     "clase_css":"custom-hotspot-icon custom-img",
                     "titulo_modal":"Mapa Cuchi",

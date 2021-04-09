@@ -73,7 +73,9 @@ export class VirtualViewComponent implements OnInit {
                       'id':hotspot['id_hotspot'],
                       'customIcon':{
                           'src': hotspot['icono'] || null,
-                          'alt': hotspot['attr_alt'] || null
+                          'alt': hotspot['attr_alt'] || null,
+                          'width': hotspot['ancho_icono']||null,
+                          'height':hotspot['altura_icono']||null,
                       },
                       'modal':{
                         'title': hotspot['titulo_modal'] || null,
@@ -102,8 +104,6 @@ export class VirtualViewComponent implements OnInit {
       }
   )
   
-  console.log("ARRAY ESCENA")
-  console.log(sceneJson)
     // Create pannellum viewer
     this.pannellumViewer = pannellum.viewer(this.panoramaHTML, {
       "showFullscreenCtrl": true,
