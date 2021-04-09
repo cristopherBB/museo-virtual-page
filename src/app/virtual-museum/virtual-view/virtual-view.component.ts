@@ -34,11 +34,12 @@ export class VirtualViewComponent implements OnInit {
     let sceneJson = {};
     config.escenas.forEach(
       escena => {
+        
         // Construir cada Hotspot con la config
         let hotspotsArray = [];
         escena.hotspots.forEach(
           hotspot => {
-
+            
             // Crear los hotspot segun el tipo
             let type = hotspot['tipo']
             let aux;
@@ -94,8 +95,8 @@ export class VirtualViewComponent implements OnInit {
                     'imagen': {
                       'src': hotspot['imagen_modal'] || null,
                       'alt': hotspot['attr_alt'] || null,
-                      'width': hotspot['ancho_icono'] || null,
-                      'height': hotspot['altura_icono'] || null,
+                      'width': hotspot['ancho_imagen'] || null,
+                      'height': hotspot['altura_imagen'] || null,
                     }
                   }
                 }
@@ -643,24 +644,6 @@ export class VirtualViewComponent implements OnInit {
 }
 
 
-// let mouseToogle = false
 
-// // WHEN LOAD PANNELLUM
-// pannellumViewer.on('mousedown',
-//     function (e) {
-//         console.log(e);
-//         if( mouseToogle ){
-//             let a = pannellumViewer.mouseEventToCoords(e);
-//             console.log(a);
-//         }
-//     }
-// );
-
-// document.addEventListener('keydown', function(e){
-//     if (e.key === 'e'){
-//         mouseToogle = !mouseToogle
-//         console.log("MouseToogle: ", mouseToogle);
-//     }
-// })
 
 

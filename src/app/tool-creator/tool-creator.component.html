@@ -1,20 +1,37 @@
-<div id="panorama" ></div>
 
-<div *ngIf="escenas.length != 0" class="scene-container" >
-
-
-    <!-- <img *ngFor="let i of escenas" src="{{sanitizer.bypassSecurityTrustResourceUrl(i)}}" alt=""> -->
-    <img src="{{get_url(urlA)}}" alt="">
-
-</div>
-<img src="" alt="" id="img-file">
-<div *ngIf="escenas.length === 0" class="empty-scene-container">
+<!-- Boton para subir archivo -->
+<div *ngIf="!showPano" class="empty-scene-container">
     <button class="empty-scene" mat-stroked-button (click)="addScene()">
-        <h2>Para comenzar sube una imagen</h2>
+        <h2>Para comenzar sube un archivo de Configuracion en <b>Formato JSON</b></h2>
         <mat-icon>lightbulb</mat-icon>
     </button>
 
 </div>
 
+<!-- Panorama -->
+<div id="panorama" *ngIf="showPano"></div>
 
-<input type="file" id="file" (change)="handleFileInput($event.target.files)">
+<!-- Toolbar -->
+<div id="tools-view" *ngIf="showPano">
+    <h2>Tools</h2>
+    <form>
+
+        <button mat-raised-button (click)="pannellumService.toogleAddHotspot()">Agregar Hotspot</button>
+        <mat-form-field appearance="fill">
+            <mat-label>Tipo de HotSpot</mat-label>
+            <mat-select [formControl]="hotspotTypeInput">
+              <mat-option *ngFor="let h of hotspots" [value]="h.value">
+                {{h.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </form>
+
+</div>
+
+
+
+
+<!-- <input hidden type="file" id="file" (change)="handleFileInput($event.target.files)"> -->
+<input hidden type="file" id="file" (change)="onJsonFileChanged($event)">

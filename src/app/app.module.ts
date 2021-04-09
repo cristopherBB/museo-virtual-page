@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 import {MatDialogModule} from '@angular/material/dialog';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
@@ -23,7 +25,6 @@ import { TourDetailsComponent } from './views/tour-details/tour-details.componen
 import { UploadImageComponent } from './components/dialogs/upload-image/upload-image.component';
 import { ToolCreatorComponent } from './tool-creator/tool-creator.component';
 import { ModalComponent } from './virtual-museum/modal/modal.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,8 @@ import { ModalComponent } from './virtual-museum/modal/modal.component';
     MatInputModule,
     MatDialogModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   entryComponents: [
     UploadImageComponent,

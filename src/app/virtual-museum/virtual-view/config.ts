@@ -1,4 +1,4 @@
-export var config = {
+export let config = {
     "escenas":[
         {
             "id":"pasillo-1",
@@ -45,9 +45,11 @@ export var config = {
                     "clase_css":"custom-hotspot-icon custom-img",
                     "titulo_modal":"Mapa Cuchi",
                     "descripcion_modal":"Mapa completo de la Hacienda.",
-                    "imagen_modal":"/assets/images/mapa-pasillo-1.jpg"
+                    "imagen_modal":"/assets/images/mapa-pasillo-1.jpg",
+                    "ancho_imagen": 600,
+                    "altura_imagen": 600
                 }
-            ],
-        },
+            ]
+        }
     ]
 };

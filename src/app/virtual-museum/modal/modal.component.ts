@@ -5,7 +5,9 @@ interface DialogData {
   title: string,
   description: string,
   extra: string,
-  imagen: any
+  image: any,
+  imageWidth: number,
+  imageHeight: number,
 }
 
 @Component({
