@@ -62,7 +62,7 @@ export class VirtualViewComponent implements OnInit {
                   'pitch' : hotspot['valor_angulo_y'],
                   'yaw' : hotspot['valor_angulo_x'],
                   'text' : hotspot['titulo'],
-                  // 'type': hotspot['tipo'],
+                  'type': hotspot['tipo'],
                   'sceneId' : hotspot['id_escena'],
                   'targetYaw': hotspot['targetYaw'] || -23,
                   'targetPitch': hotspot['targetPitch'] || 2,
@@ -74,6 +74,13 @@ export class VirtualViewComponent implements OnInit {
                       'customIcon':{
                           'src': hotspot['icono'] || null,
                           'alt': hotspot['attr_alt'] || null
+                      },
+                      'modal':{
+                        'title': hotspot['titulo_modal'] || null,
+                        'description':hotspot['descripcion_modal']||null,
+                        'imagen':{
+                          'src':hotspot['imagen_modal'] || null
+                        }
                       }
                   }
               }
