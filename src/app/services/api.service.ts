@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import {  MuseumOverview } from '../models/museum.model';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Artifact } from '../models/artifact.model';
 
 export interface MuseumsResponse {
@@ -31,7 +32,7 @@ export class ApiService {
    */
   getMuseumDetails = (label: string): Observable<MuseumArtifactsResponse> => {
     const url = environment.apiUrl + `/artifacts/?museum="${label}"`;
-    return this.http.get<MuseumArtifactsResponse>(url);
+    return this.http.get<MuseumArtifactsResponse>(url).pipe(tap(console.log));
   };
 
   /**
@@ -40,7 +41,17 @@ export class ApiService {
    */
   getMuseums = (): Observable<MuseumsResponse> => {
     const url = environment.apiUrl + '/museums';
-    return this.http.get<MuseumsResponse>(url);
+    return this.http.get<MuseumsResponse>(url).pipe(tap(console.log));
+  };
+
+  /**
+   * Fetches an Artefact and it's details.
+   * @param id - Artefact identifier.
+   * @returns {Observable<any>} The artefact requested details.
+   */
+  getArtefact = (id: string): Observable<any> => {
+    const url = environment.apiUrl + `/artifact/?id=${id}`;
+    return this.http.get<any>(url).pipe(tap(console.log));
   };
 
   /**

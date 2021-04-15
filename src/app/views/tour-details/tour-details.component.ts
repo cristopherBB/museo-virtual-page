@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { DeleteComponent } from 'src/app/components/dialogs/delete/delete.component';
 import { UploadImageComponent } from 'src/app/components/dialogs/upload-image/upload-image.component';
 import { Artifact } from 'src/app/models/artifact.model';
-import { MuseumOverview } from 'src/app/models/museum.model';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
