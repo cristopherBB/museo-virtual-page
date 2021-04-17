@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
 import { config } from './config'
 import { ModalComponent } from '../modal/modal.component';
+import { PannellumService } from 'src/app/services/pannellum.service';
+import { Subscription } from 'rxjs';
 
 declare var pannellum: any;
 
@@ -13,7 +13,7 @@ declare var pannellum: any;
   templateUrl: './virtual-view.component.html',
   styleUrls: ['./virtual-view.component.scss']
 })
-export class VirtualViewComponent implements OnInit {
+export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() viewId: string;
 
   // Element ID for pano
@@ -22,24 +22,27 @@ export class VirtualViewComponent implements OnInit {
   // Pannellum Viewer
   pannellumViewer;
 
+  sceneSub: Subscription;
+
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private pannellumService: PannellumService,
   ) { }
 
   ngOnInit(): void {
     console.log(this.viewId);
 
     // leer el archivo de configuracion
-    // Construir cada Escena 
+    // Construir cada Escena
     let sceneJson = {};
     config.escenas.forEach(
       escena => {
-        
+
         // Construir cada Hotspot con la config
         let hotspotsArray = [];
         escena.hotspots.forEach(
           hotspot => {
-            
+
             // Crear los hotspot segun el tipo
             let type = hotspot['tipo']
             let aux;
@@ -107,7 +110,7 @@ export class VirtualViewComponent implements OnInit {
             hotspotsArray.push(aux)
           }
         )
-        
+
         // Construccion de la Scena
         let escenaAux = {
           "title": escena['titulo'],
@@ -555,9 +558,19 @@ export class VirtualViewComponent implements OnInit {
       });
   }
 
+  ngAfterViewInit(): void {
+    this.sceneSub = this.pannellumService.selectedScene.subscribe((sceneId: string) => {
+      if (sceneId) this.pannellumViewer.loadScene(sceneId);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sceneSub) this.sceneSub.unsubscribe();
+  }
+
   /*
    * openModal
-   * 
+   *
    * Prepara la info que se va a mostrar en el Modal
    */
   public openModal(data) {
@@ -587,7 +600,7 @@ export class VirtualViewComponent implements OnInit {
 
   /*
   * hotspot
-  * 
+  *
   * Funcion de creacion de hotspot custom
   */
   public hotspot(hotSpotDiv, args) {
@@ -600,7 +613,7 @@ export class VirtualViewComponent implements OnInit {
     hotSpotDiv.id = args.id;
 
 
-    // Se crea el evento para abrir el modal 
+    // Se crea el evento para abrir el modal
     if (args.modal) {
       let modal = document.getElementById(args.id)
       modal.onclick = () => this.openModal(args.modal)
@@ -628,19 +641,6 @@ export class VirtualViewComponent implements OnInit {
 
 
   }
-
-
-  public actualizarView() {
-    console.log(this.viewId);
-
-  }
-
-  // getMuseumUrl(): SafeHtml {
-  //   const url = `https://alvdeveloper.com/pannellum?scene=${this.viewId}`;
-  //   console.log(url);
-  //   return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  // }
-
 }
 
 

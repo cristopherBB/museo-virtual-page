@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import $ from 'jquery';
+import { BehaviorSubject } from 'rxjs';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
 
 declare var pannellum
@@ -18,6 +19,12 @@ export class PannellumService {
   hotspotType: string;
   hotspotText: string;
 
+  private _activeScene = new BehaviorSubject<string>(null);
+
+  get selectedScene() {
+    return this._activeScene.asObservable();
+  }
+
   constructor(
     public dialog: MatDialog
   ) { }
@@ -25,13 +32,13 @@ export class PannellumService {
 
   /**
    * constructScenes
-   * 
-   * Construir las escenas a partir de un archivo de configuracion 
+   *
+   * Construir las escenas a partir de un archivo de configuracion
    */
   public constructScenes(config) {
 
     // leer el archivo de configuracion
-    // Construir cada Escena 
+    // Construir cada Escena
     this.sceneJson = {};
     config.escenas.forEach(
       escena => {
@@ -132,7 +139,7 @@ export class PannellumService {
 
   /**
    * initPannellum
-   * 
+   *
    * iniciar pannellum
    */
   public initPannellum(panoramaHTML, viewId, sceneJson, edit = null) {
@@ -224,7 +231,7 @@ export class PannellumService {
     // Agregar hotspot a la lista de hotspots
     // this.sceneJson[this.activeScene]['hotSpots'].push(hotspot)
 
-    
+
     this.pannellumViewer.addHotSpot(hotspot)
   }
 
@@ -242,7 +249,7 @@ export class PannellumService {
 
   /*
    * openModal
-   * 
+   *
    * Prepara la info que se va a mostrar en el Modal
    */
   public openModal(data) {
@@ -272,7 +279,7 @@ export class PannellumService {
 
   /*
   * hotspot
-  * 
+  *
   * Funcion de creacion de hotspot custom
   */
   public hotspot(hotSpotDiv, args) {
@@ -285,7 +292,7 @@ export class PannellumService {
     hotSpotDiv.id = args.id;
 
 
-    // Se crea el evento para abrir el modal 
+    // Se crea el evento para abrir el modal
     if (args.modal) {
       let modal = document.getElementById(args.id)
       modal.onclick = () => this.openModal(args.modal)
@@ -312,5 +319,9 @@ export class PannellumService {
     }
 
 
+  }
+
+  setScene = (sceneId: string): void => {
+    this._activeScene.next(sceneId);
   }
 }

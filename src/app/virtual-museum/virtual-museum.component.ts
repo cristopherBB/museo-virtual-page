@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { PannellumService } from '../services/pannellum.service';
 import { VirtualViewComponent } from './virtual-view/virtual-view.component';
 
 @Component({
@@ -13,7 +14,9 @@ export class VirtualMuseumComponent implements OnInit {
   @ViewChild('virtualView') virtualView: VirtualViewComponent;
 
 
-  constructor() { }
+  constructor(
+    private pannellumService: PannellumService,
+  ) { }
 
   ngOnInit(): void {
     const pins = [];
@@ -49,13 +52,13 @@ export class VirtualMuseumComponent implements OnInit {
 
   onPinClick = (viewPosition: number): void => {
     console.log("ACTIVADO ", viewPosition);
-    
+
     this.selectedPin = viewPosition;
     this.selectedView = this.tour.views[viewPosition];
 
     console.log(this.selectedView);
-    
-    this.virtualView.actualizarView()
+
+    this.pannellumService.setScene(this.selectedView);
   };
 
 }
