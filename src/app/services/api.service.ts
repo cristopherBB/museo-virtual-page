@@ -57,11 +57,11 @@ export class ApiService {
   /**
    * Fetches an Artefact and it's details.
    * @param id - Artefact identifier.
-   * @returns {Observable<any>} The artefact requested details.
+   * @returns {Observable<MuseumArtifactsResponse>} The artefact requested details.
    */
-  getArtefact = (id: string): Observable<any> => {
-    const url = environment.apiUrl + `/artifact/?id=${id}`;
-    return this.http.get<any>(url).pipe(tap(console.log));
+  getArtefact = (id: string): Observable<MuseumArtifactsResponse> => {
+    const url = environment.apiUrl + `/artifact/${id}`;
+    return this.http.get<MuseumArtifactsResponse>(url).pipe(tap(console.log));
   };
 
   /**
