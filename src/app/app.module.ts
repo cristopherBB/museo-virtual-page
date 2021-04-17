@@ -34,6 +34,7 @@ import { ModalComponent } from './virtual-museum/modal/modal.component';
 import { AddMuseumComponent } from './views/add-museum/add-museum.component';
 import { DeleteComponent } from './components/dialogs/delete/delete.component';
 import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
+import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hotspot.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/
     // DeleteMuseumComponent,
     AddMuseumComponent,
     DeleteComponent,
-    ArtifactDetailsComponent
+    ArtifactDetailsComponent,
+    RemoveHotspotComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,8 @@ import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/
     UploadImageComponent,
     DeleteComponent,
     ArtifactDetailsComponent,
+    ModalComponent,
+    RemoveHotspotComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
