@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {DomSanitizer} from '@angular/platform-browser';
 import { PannellumService } from '../services/pannellum.service';
+import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
 
 declare var pannellum: any;
 
@@ -40,6 +41,7 @@ export class ToolCreatorComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -141,6 +143,24 @@ export class ToolCreatorComponent implements OnInit {
 
     // Habilitar el evento
     this.pannellumService.enableAddHotspot(hotspotType, hotspotText)
+  }
+
+  /**
+   * removeHotspot
+   */
+  public removeHotspot(hotspot) {
+
+    const dialogRef = this.dialog.open(RemoveHotspotComponent, {
+      width: '250px',
+      data: {name: hotspot.text}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result.result)
+        this.pannellumService.removeHotspot(hotspot.id)
+    });
+
   }
 
   get_url(url){

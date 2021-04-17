@@ -40,8 +40,9 @@
 
 <div class="row">
     <div id="hotspots-view" *ngIf="showPano">
-        <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()">
+        <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()" (click)="removeHotspot(hotspot)">
             <h4>{{hotspot.text}}</h4>
+            <p>{{hotspot.type}}</p>
         </div>
     </div>
 

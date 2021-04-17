@@ -22,6 +22,22 @@ export class PannellumService {
     public dialog: MatDialog
   ) { }
 
+  /**
+   * generateId
+   * 
+   * Generar un id totalmente random para manjear los hotspot a traves de la API de Pannellum
+   */
+  private generateId(id: string) {
+    //  existe el id, usar ese
+    if (id)
+      return id;
+
+    // Crear un nuevo id con la estructura 'tc-xxxx'
+    let newId = 'tc-' + String(Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000);
+
+    return newId
+
+  }
 
   /**
    * constructScenes
@@ -47,9 +63,13 @@ export class PannellumService {
             let type = hotspot['tipo']
             let aux;
 
+            // Usar el id o generarlo en caso de no especificarlo
+            let id = this.generateId(hotspot['id_hotspot'])
+
             // SCENE HOTSPOT
             if (type == "scene") {
               aux = {
+                'id': id,
                 'pitch': hotspot['valor_angulo_y'],
                 'yaw': hotspot['valor_angulo_x'],
                 'text': hotspot['titulo'],
@@ -63,6 +83,7 @@ export class PannellumService {
             // INFO HOTSPOT
             else if (type == "info") {
               aux = {
+                'id': id,
                 'pitch': hotspot['valor_angulo_y'],
                 'yaw': hotspot['valor_angulo_x'],
                 'text': hotspot['titulo'],
@@ -75,6 +96,7 @@ export class PannellumService {
             // CUSTOM HOTSPOT
             else {
               aux = {
+                'id': id,
                 'pitch': hotspot['valor_angulo_y'],
                 'yaw': hotspot['valor_angulo_x'],
                 'text': hotspot['titulo'],
@@ -219,13 +241,24 @@ export class PannellumService {
       'yaw': coords[1],
       'text': this.hotspotText,
       'type': this.hotspotType,
+      'sceneId': this.activeScene
     }
 
     // Agregar hotspot a la lista de hotspots
     // this.sceneJson[this.activeScene]['hotSpots'].push(hotspot)
 
     
-    this.pannellumViewer.addHotSpot(hotspot)
+    this.pannellumViewer.addHotSpot(hotspot, this.activeScene)
+
+    console.log(this.sceneJson);
+    
+  }
+
+  /**
+   * removeHotspot
+   */
+  public removeHotspot(id: string) {
+    this.pannellumViewer.removeHotSpot(id, this.activeScene)
   }
 
   /**
