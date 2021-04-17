@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
 import { config } from './config'
 import { ModalComponent } from '../modal/modal.component';
-import { PannellumService } from 'src/app/services/pannellum.service';
-import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
 
 declare var pannellum: any;
 
@@ -13,7 +14,7 @@ declare var pannellum: any;
   templateUrl: './virtual-view.component.html',
   styleUrls: ['./virtual-view.component.scss']
 })
-export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VirtualViewComponent implements OnInit {
   @Input() viewId: string;
 
   // Element ID for pano
@@ -22,27 +23,32 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
   // Pannellum Viewer
   pannellumViewer;
 
-  sceneSub: Subscription;
-
   constructor(
     public dialog: MatDialog,
-    private pannellumService: PannellumService,
+    public apiServive: ApiService
   ) { }
 
   ngOnInit(): void {
     console.log(this.viewId);
 
+
+    this.apiServive.getArtefact('m01_s03-04_088').subscribe(
+      data =>{
+        console.log(data);
+      }
+    );
+
     // leer el archivo de configuracion
-    // Construir cada Escena
+    // Construir cada Escena 
     let sceneJson = {};
     config.escenas.forEach(
       escena => {
-
+        
         // Construir cada Hotspot con la config
         let hotspotsArray = [];
         escena.hotspots.forEach(
           hotspot => {
-
+            
             // Crear los hotspot segun el tipo
             let type = hotspot['tipo']
             let aux;
@@ -57,6 +63,17 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
                 'sceneId': hotspot['id_escena'],
                 'targetYaw': hotspot['targetYaw'] || -23,
                 'targetPitch': hotspot['targetPitch'] || 2,
+                // 'createTooltipFunc': this.hotspot.bind(this),
+                // 'createTooltipArgs': {
+                //   'title': hotspot['titulo'],
+                //   'id': hotspot['id_hotspot'],
+                //   'customIcon': {
+                //     'src': hotspot['icono'] || null,
+                //     'alt': hotspot['attr_alt'] || null,
+                //     'width': hotspot['ancho_icono'] || null,
+                //     'height': hotspot['altura_icono'] || null,
+                //   }
+                // }
               }
             }
 
@@ -91,7 +108,7 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
                     'alt': hotspot['attr_alt'] || null,
                     'width': hotspot['ancho_icono'] || null,
                     'height': hotspot['altura_icono'] || null,
-                  },
+                  }
                   'modal': {
                     'title': hotspot['titulo_modal'] || null,
                     'description': hotspot['descripcion_modal'] || null,
@@ -104,13 +121,27 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
                   }
                 }
               }
+              console.log("Mostrar modal");
+              console.log(hotspot['mostrar_modal']);
+              
+              // if(hotspot['mostrar_modal']){
+              //   aux.createTooltipArgs.modal = {
+              //       'title': hotspot['titulo_modal'] || null,
+              //       'description': hotspot['descripcion_modal'] || null,
+              //       'imagen': {
+              //         'src': hotspot['imagen_modal'] || null,
+              //         'alt': hotspot['attr_alt'] || null,
+              //         'width': hotspot['ancho_imagen'] || null,
+              //         'height': hotspot['altura_imagen'] || null,
+              //       }
+              //   }
+              // }
             }
-
             // Agregar el hotspot al array
             hotspotsArray.push(aux)
           }
         )
-
+        
         // Construccion de la Scena
         let escenaAux = {
           "title": escena['titulo'],
@@ -558,19 +589,9 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    this.sceneSub = this.pannellumService.selectedScene.subscribe((sceneId: string) => {
-      if (sceneId) this.pannellumViewer.loadScene(sceneId);
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.sceneSub) this.sceneSub.unsubscribe();
-  }
-
   /*
    * openModal
-   *
+   * 
    * Prepara la info que se va a mostrar en el Modal
    */
   public openModal(data) {
@@ -600,7 +621,7 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /*
   * hotspot
-  *
+  * 
   * Funcion de creacion de hotspot custom
   */
   public hotspot(hotSpotDiv, args) {
@@ -613,7 +634,7 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
     hotSpotDiv.id = args.id;
 
 
-    // Se crea el evento para abrir el modal
+    // Se crea el evento para abrir el modal 
     if (args.modal) {
       let modal = document.getElementById(args.id)
       modal.onclick = () => this.openModal(args.modal)
@@ -641,6 +662,19 @@ export class VirtualViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   }
+
+
+  public actualizarView() {
+    console.log(this.viewId);
+
+  }
+
+  // getMuseumUrl(): SafeHtml {
+  //   const url = `https://alvdeveloper.com/pannellum?scene=${this.viewId}`;
+  //   console.log(url);
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  // }
+
 }
 
 

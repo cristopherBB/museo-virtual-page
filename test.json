@@ -10,9 +10,17 @@
                     "tipo":"scene",
                     "valor_angulo_y": 1,
                     "valor_angulo_x": 200,
-                    "titulo": "Pasillo 2",
-                    "id_escena": "pasillo-2",
-                    "id_hotspot": "hotspot-escena-pasillo-1-pasillo-2"
+                    "titulo": "Pasillo 5",
+                    "id_escena": "pasillo-5",
+                    "id_hotspot": "hotspot-escena-pasillo-1-pasillo-5"
+                },
+                {
+                    "tipo":"scene",
+                    "valor_angulo_y": 1.6,
+                    "valor_angulo_x": -130,
+                    "titulo": "EJEPLO",
+                    "id_escena": "ejemplo",
+                    "id_hotspot": "hotspot-escena-pasillo-1-ejemplo"
                 },
                 {
                     "tipo":"scene",
