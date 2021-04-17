@@ -34,6 +34,7 @@
     </form>
   </mat-grid-tile>
 </mat-grid-list>
+<h2>Scenes</h2>
 <mat-grid-list cols="8" rowHeight="150" gutterSize="8" class="margin">
   <mat-grid-tile *ngFor="let viewUrl of museumViews">
     <mat-card>
@@ -57,27 +58,46 @@
   </mat-grid-tile>
 </mat-grid-list>
 
+<h2>Rooms</h2>
+<mat-list role="list">
+  <mat-list-item *ngFor="let room of museumRooms" role="listitem">
+    {{ room }}
+  </mat-list-item>
+</mat-list>
 <div class="mat-elevation-z8 table">
   <table mat-table [dataSource]="matTableDataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+      <td mat-cell *matCellDef="let element"
+        (click)="openArtifactDialog(element)" class="link"
+      >
+        {{ element.id }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="labelArtifact">
       <th mat-header-cell *matHeaderCellDef> Artifact </th>
-      <td mat-cell *matCellDef="let element"> {{ element.labelArtifact }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.labelArtifact }}</td>
     </ng-container>
     <ng-container matColumnDef="labelMaterial">
       <th mat-header-cell *matHeaderCellDef> Material </th>
-      <td mat-cell *matCellDef="let element"> {{ element.labelMaterial }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.labelMaterial }}</td>
     </ng-container>
     <ng-container matColumnDef="labelCreator">
       <th mat-header-cell *matHeaderCellDef> Creator </th>
-      <td mat-cell *matCellDef="let element"> {{ element.labelCreator }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.labelCreator }}</td>
+    </ng-container>
+    <ng-container matColumnDef="labelLocation">
+      <th mat-header-cell *matHeaderCellDef> Room </th>
+      <td mat-cell *matCellDef="let element">{{ element.labelLocation }}</td>
     </ng-container>
     <ng-container matColumnDef="note">
       <th mat-header-cell *matHeaderCellDef> Comments </th>
-      <td mat-cell *matCellDef="let element"> {{ element.note }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.note.length > 100
+          ? element.note.substring(0, 100) + '...'
+          : element.note
+        }}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

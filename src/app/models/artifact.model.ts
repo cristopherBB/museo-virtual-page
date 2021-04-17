@@ -5,6 +5,7 @@ export class Artifact {
    * @param labelArtifact - Title or label of the Artifact.
    * @param labelMaterial - Material used to build the artifact.
    * @param labelCreator - Author of the artifact.
+   * @param labelLocation - The room in the Museum where it is stored.
    * @param note - A description or history about the artifact.
    */
   constructor(
@@ -12,6 +13,7 @@ export class Artifact {
     public labelArtifact: string,
     public labelMaterial: string,
     public labelCreator: string,
+    public labelLocation: string,
     public note: string,
   ) { }
 }

@@ -11,6 +11,10 @@
   }
 }
 
+h2 {
+  padding: 30px 0px 0px 16px;
+}
+
 .padding {
   padding: 30px 16px;
 }
@@ -41,4 +45,9 @@
 
 .table {
   margin: 16px;
+}
+
+.link {
+  cursor: pointer;
+  color: blue;
 }

@@ -20,6 +20,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import {MatListModule} from '@angular/material/list';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
 import { LandingComponent } from './views/landing/landing.component';
@@ -28,6 +29,7 @@ import { UploadImageComponent } from './components/dialogs/upload-image/upload-i
 // import { DeleteMuseumComponent } from './components/delete-museum/delete-museum.component';
 import { AddMuseumComponent } from './views/add-museum/add-museum.component';
 import { DeleteComponent } from './components/dialogs/delete/delete.component';
+import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
     UploadImageComponent,
     // DeleteMuseumComponent,
     AddMuseumComponent,
-    DeleteComponent
+    DeleteComponent,
+    ArtifactDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +63,12 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule,
+    MatListModule,
   ],
   entryComponents: [
     UploadImageComponent,
     DeleteComponent,
+    ArtifactDetailsComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

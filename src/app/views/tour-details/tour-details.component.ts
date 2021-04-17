@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ArtifactDetailsComponent } from 'src/app/components/dialogs/artifact-details/artifact-details.component';
 import { DeleteComponent } from 'src/app/components/dialogs/delete/delete.component';
 import { UploadImageComponent } from 'src/app/components/dialogs/upload-image/upload-image.component';
 import { Artifact } from 'src/app/models/artifact.model';
@@ -29,15 +30,25 @@ export class TourDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.museum.featuredImage,
     this.museum.featuredImage,
   ];
+  museumRooms: string[];
   editMode = false;
   museumArtifacts: Artifact[];
   matTableDataSource = new MatTableDataSource<Artifact>([]);
   artifactPageEvent: PageEvent;
-  displayedColumns = ['labelArtifact', 'labelMaterial', 'labelCreator', 'note',];
+  displayedColumns = [
+    'id',
+    'labelArtifact',
+    'labelMaterial',
+    'labelLocation',
+    'labelCreator',
+    'note',
+  ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   private museumId: string;
-  private paramsSub: Subscription;
   dialogRef: any;
+  private museumSub: Subscription;
+  private artifactsSub: Subscription;
+  private paramsSub: Subscription;
   private dialogSub: Subscription;
 
   constructor(
@@ -52,19 +63,23 @@ export class TourDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.museumId = params.id;
       if (!this.museumId) this.router.navigateByUrl('/');
       this.museum.title = this.museumId;
-      this.api.getMuseumDetails(this.museumId).subscribe((response) => {
+
+      this.artifactsSub = this.api.getMuseumArtifacts(this.museumId).subscribe((response) => {
         this.museumArtifacts = [...response.result];
-        this.museumArtifacts.forEach(artifact => {
-          if (artifact.note.length > 100) artifact.note = artifact.note.substring(0, 100) + '...';
-        });
         this.matTableDataSource.data = this.museumArtifacts;
       }, console.error);
-    });
+
+      this.museumSub = this.api.getMuseumDetails(this.museumId).subscribe((response) => {
+        this.museumRooms = [...response.rooms];
+      }, console.error);
+    }, console.error);
   }
 
   ngOnDestroy(): void {
     if (this.paramsSub) this.paramsSub.unsubscribe();
     if (this.dialogSub) this.dialogSub.unsubscribe();
+    if (this.artifactsSub) this.artifactsSub.unsubscribe();
+    if (this.museumSub) this.museumSub.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -95,6 +110,21 @@ export class TourDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
       width: '450px',
       height: '250px',
       data: { title: this.museum.title }
+    });
+    this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  };
+
+  openArtifactDialog = (artifact: Artifact): void => {
+    // Prevent duplicated dialogs
+    if (this.dialogSub) this.dialogSub.unsubscribe();
+    if (this.dialogRef) this.dialogRef.close();
+    // Open dialog
+    this.dialogRef = this.dialog.open(ArtifactDetailsComponent, {
+      width: '450px',
+      height: '550px',
+      data: { artifact },
     });
     this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
