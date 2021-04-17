@@ -32,6 +32,7 @@ export class ToolCreatorComponent implements OnInit {
 
   // Inputs
   hotspotTypeInput: FormControl = new FormControl('scene', [])
+  hotspotTextInput: FormControl = new FormControl('', [])
 
 
   urlA: any;
@@ -129,6 +130,17 @@ export class ToolCreatorComponent implements OnInit {
     //   // reader.onload = (event) => {
     //   //   this.escenas.push(reader.result)
     //   // }
+  }
+
+  /**
+   * addHotspot
+   */
+  public addHotspot() {
+    let hotspotType = this.hotspotTypeInput.value
+    let hotspotText = this.hotspotTextInput.value
+
+    // Habilitar el evento
+    this.pannellumService.enableAddHotspot(hotspotType, hotspotText)
   }
 
   get_url(url){

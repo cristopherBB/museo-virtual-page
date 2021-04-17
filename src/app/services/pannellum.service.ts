@@ -11,8 +11,12 @@ declare var pannellum
 export class PannellumService {
 
   pannellumViewer: any;
+  sceneJson: Object = {};
   scenes: Array<string> = [];
   mouseToogle: boolean = false;
+  activeScene: string;
+  hotspotType: string;
+  hotspotText: string;
 
   constructor(
     public dialog: MatDialog
@@ -28,7 +32,7 @@ export class PannellumService {
 
     // leer el archivo de configuracion
     // Construir cada Escena 
-    let sceneJson = {};
+    this.sceneJson = {};
     config.escenas.forEach(
       escena => {
         // Guardar el orden de las escenas
@@ -117,12 +121,12 @@ export class PannellumService {
           "hotSpots": hotspotsArray,
         }
 
-        sceneJson[escena['id']] = escenaAux
+        this.sceneJson[escena['id']] = escenaAux
 
       }
     )
 
-    return sceneJson
+    return this.sceneJson
   }
 
 
@@ -134,6 +138,11 @@ export class PannellumService {
   public initPannellum(panoramaHTML, viewId, sceneJson, edit = null) {
 
     console.info("Iniciando pannellum");
+
+    // Guardar la escena activa
+    this.activeScene = viewId
+
+    // Iniciar pannellum
     this.pannellumViewer = pannellum.viewer(panoramaHTML, {
       "showFullscreenCtrl": true,
       "autoLoad": true,
@@ -145,6 +154,8 @@ export class PannellumService {
       "scenes": sceneJson
     })
 
+
+    // Activar los eventos para agregar hotspots
     if (edit) {
 
       // Evento para click del mouse agregar un nuevo hotspot
@@ -152,8 +163,9 @@ export class PannellumService {
         (e) => {
           if (this.mouseToogle) {
             let a = this.pannellumViewer.mouseEventToCoords(e);
-            console.log(a);
-            this.toogleAddHotspot()
+            // console.log(a);
+            this.toogleAddHotspot(false)
+            this.addHotspot(a)
           }
         }
       );
@@ -164,8 +176,25 @@ export class PannellumService {
   /**
    * toogleAddHotspot
    */
-  public toogleAddHotspot() {
-    this.mouseToogle = !this.mouseToogle
+  public toogleAddHotspot(b: boolean) {
+    // Activar el evento de click
+    this.mouseToogle = b;
+  }
+
+  /**
+   * enableAddHotspot
+   */
+  public enableAddHotspot(hotspotType, hotspotText) {
+
+    // Activar el evento
+    this.toogleAddHotspot(true)
+
+    // Guardar el tipo de hotspot
+    this.hotspotType = hotspotType;
+
+    // texto
+    this.hotspotText = hotspotText
+
   }
 
   /**
@@ -180,6 +209,36 @@ export class PannellumService {
   }
 
 
+  /**
+   * addHotspot
+   */
+  public addHotspot(coords: Array<number>) {
+
+    let hotspot = {
+      'pitch': coords[0],
+      'yaw': coords[1],
+      'text': this.hotspotText,
+      'type': this.hotspotType,
+    }
+
+    // Agregar hotspot a la lista de hotspots
+    // this.sceneJson[this.activeScene]['hotSpots'].push(hotspot)
+
+    
+    this.pannellumViewer.addHotSpot(hotspot)
+  }
+
+  /**
+   * getHotspots
+   */
+  public getHotspots() {
+    if ( this.sceneJson ){
+      if( this.sceneJson[this.activeScene] ){
+        return this.sceneJson[this.activeScene]['hotSpots']
+      }
+    }
+    return []
+  }
 
   /*
    * openModal

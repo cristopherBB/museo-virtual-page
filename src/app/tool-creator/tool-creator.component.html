@@ -8,27 +8,45 @@
 
 </div>
 
-<!-- Panorama -->
-<div id="panorama" *ngIf="showPano"></div>
-
-<!-- Toolbar -->
-<div id="tools-view" *ngIf="showPano">
-    <h2>Tools</h2>
-    <form>
-
-        <button mat-raised-button (click)="pannellumService.toogleAddHotspot()">Agregar Hotspot</button>
-        <mat-form-field appearance="fill">
-            <mat-label>Tipo de HotSpot</mat-label>
-            <mat-select [formControl]="hotspotTypeInput">
-              <mat-option *ngFor="let h of hotspots" [value]="h.value">
-                {{h.name}}
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-    </form>
+<div class="row">
+    <!-- Panorama -->
+    <div id="panorama" *ngIf="showPano"></div>
+    
+    <!-- Toolbar -->
+    <div id="tools-view" *ngIf="showPano">
+        <h2>Tools</h2>
+        <form>
+    
+            <button mat-raised-button (click)="addHotspot()">Agregar Hotspot</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de HotSpot</mat-label>
+                <mat-select [formControl]="hotspotTypeInput">
+                  <mat-option *ngFor="let h of hotspots" [value]="h.value">
+                    {{h.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Texto</mat-label>
+                <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
+            </mat-form-field>
+    
+        </form>
+    
+    </div>
 
 </div>
+
+<div class="row">
+    <div id="hotspots-view" *ngIf="showPano">
+        <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()">
+            <h4>{{hotspot.text}}</h4>
+        </div>
+    </div>
+
+</div>
+
 
 
 
