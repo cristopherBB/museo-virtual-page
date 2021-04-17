@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EXAMPLE_MUSEUM_OVERVIEWS } from 'src/app/models/museum.model';
+import { MuseumOverview } from 'src/app/models/museum.model';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-landing',
@@ -7,10 +8,15 @@ import { EXAMPLE_MUSEUM_OVERVIEWS } from 'src/app/models/museum.model';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
-  museums = EXAMPLE_MUSEUM_OVERVIEWS;
-  constructor() { }
+  museums: MuseumOverview[];
+
+  constructor(
+    private api: ApiService,
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.museums);
+    this.api.getMuseums().subscribe((response) => {
+      this.museums = [...response.result];
+    }, console.error);
   }
 }

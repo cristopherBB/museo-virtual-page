@@ -1,25 +1,40 @@
-<p *ngIf="!museum">Loading...</p>
+<p *ngIf="!museumArtifacts">Loading...</p>
 <mat-grid-list cols="2" rowHeight="400" *ngIf="museum" class="margin">
   <mat-grid-tile>
     <img [src]="museum.featuredImage" alt="Featured Image">
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="display-container">
+    <div class="action-buttons">
+      <button mat-raised-button *ngIf="!editMode" color="accent" (click)="toggleEditMode()">
+        Edit
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-raised-button *ngIf="editMode" color="primary" (click)="saveChanges()">
+        Save
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+        Delete
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
     <form class="expand padding">
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Title</mat-label>
-        <input matInput disabled [value]="museum.title">
+        <input matInput [disabled]="!editMode" [value]="museum.title">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Location</mat-label>
-        <input matInput disabled [value]="museum.location">
+        <input matInput [disabled]="!editMode" [value]="museum.location">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expand">
         <mat-label>Description</mat-label>
-        <textarea matInput disabled [value]="museum.description"></textarea>
+        <textarea matInput [disabled]="!editMode" [value]="museum.description"></textarea>
       </mat-form-field>
     </form>
   </mat-grid-tile>
 </mat-grid-list>
+<h2>Scenes</h2>
 <mat-grid-list cols="8" rowHeight="150" gutterSize="8" class="margin">
   <mat-grid-tile *ngFor="let viewUrl of museumViews">
     <mat-card>
@@ -29,10 +44,68 @@
   <mat-grid-tile>
     <mat-card>
       <mat-card-content>
-        <button mat-mini-fab color="primary" class="margin-auto" (click)="openUploadImageDialog(null)">
+        <button
+          mat-mini-fab
+          color="primary"
+          class="margin-auto"
+          matTooltip="New image"
+          (click)="openUploadImageDialog()"
+        >
           <mat-icon>library_add</mat-icon>
         </button>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+
+<h2>Rooms</h2>
+<mat-list role="list">
+  <mat-list-item *ngFor="let room of museumRooms" role="listitem">
+    {{ room }}
+  </mat-list-item>
+</mat-list>
+<div class="mat-elevation-z8 table">
+  <table mat-table [dataSource]="matTableDataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"
+        (click)="openArtifactDialog(element)" class="link"
+      >
+        {{ element.id }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="labelArtifact">
+      <th mat-header-cell *matHeaderCellDef> Artifact </th>
+      <td mat-cell *matCellDef="let element">{{ element.labelArtifact }}</td>
+    </ng-container>
+    <ng-container matColumnDef="labelMaterial">
+      <th mat-header-cell *matHeaderCellDef> Material </th>
+      <td mat-cell *matCellDef="let element">{{ element.labelMaterial }}</td>
+    </ng-container>
+    <ng-container matColumnDef="labelCreator">
+      <th mat-header-cell *matHeaderCellDef> Creator </th>
+      <td mat-cell *matCellDef="let element">{{ element.labelCreator }}</td>
+    </ng-container>
+    <ng-container matColumnDef="labelLocation">
+      <th mat-header-cell *matHeaderCellDef> Room </th>
+      <td mat-cell *matCellDef="let element">{{ element.labelLocation }}</td>
+    </ng-container>
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef> Comments </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.note.length > 100
+          ? element.note.substring(0, 100) + '...'
+          : element.note
+        }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Artifact Details</h1>
+<div mat-dialog-content class="d-flex">
+  <form class="expand padding">
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Id</mat-label>
+      <input matInput disabled [value]="data.artifact.id">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Name</mat-label>
+      <input matInput disabled [value]="data.artifact.labelArtifact">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Material</mat-label>
+      <input matInput disabled [value]="data.artifact.labelMaterial">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Creator</mat-label>
+      <input matInput disabled [value]="data.artifact.labelCreator">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Museum Room</mat-label>
+      <input matInput disabled [value]="data.artifact.labelLocation">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="expand">
+      <mat-label>Comments</mat-label>
+      <textarea rows="3" matInput disabled [value]="data.artifact.note"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button [mat-dialog-close]="data.artifact">Save</button>
+</div>

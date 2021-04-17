@@ -2,8 +2,21 @@
   width: 100%;
 }
 
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  button {
+    margin-left: 8px;
+  }
+}
+
+h2 {
+  padding: 30px 0px 0px 16px;
+}
+
 .padding {
-  padding: 16px;
+  padding: 30px 16px;
 }
 
 .margin {
@@ -13,4 +26,28 @@
 .margin-auto {
   display: block;
   margin: auto;
+}
+
+.display-container {
+  >::ng-deep .mat-figure {
+    display: block !important;
+  }
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+.mat-raised-button {
+  padding: 0px 10px;
+  letter-spacing: 1px;
+}
+
+.table {
+  margin: 16px;
+}
+
+.link {
+  cursor: pointer;
+  color: blue;
 }

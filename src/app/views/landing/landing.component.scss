@@ -17,3 +17,36 @@
     padding: 8px 16px 0px 16px;
   }
 }
+
+.add-museum-card {
+  width: 80%;
+  // height: 80%;
+
+  mat-card-content {
+    margin-top: 16px;
+    padding: 8px 16px 0px 16px;
+  }
+
+}
+
+.museum-pin {
+  width: 30%;
+}
+
+.button-museum {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.title-text {
+  padding: 28px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.text {
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+}

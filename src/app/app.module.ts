@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatListModule} from '@angular/material/list';
 import { CanvasComponent } from './virtual-museum/canvas/canvas.component';
 import { VirtualViewComponent } from './virtual-museum/virtual-view/virtual-view.component';
 import { LandingComponent } from './views/landing/landing.component';
@@ -25,6 +30,11 @@ import { TourDetailsComponent } from './views/tour-details/tour-details.componen
 import { UploadImageComponent } from './components/dialogs/upload-image/upload-image.component';
 import { ToolCreatorComponent } from './tool-creator/tool-creator.component';
 import { ModalComponent } from './virtual-museum/modal/modal.component';
+// import { DeleteMuseumComponent } from './components/delete-museum/delete-museum.component';
+import { AddMuseumComponent } from './views/add-museum/add-museum.component';
+import { DeleteComponent } from './components/dialogs/delete/delete.component';
+import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +46,11 @@ import { ModalComponent } from './virtual-museum/modal/modal.component';
     TourDetailsComponent,
     UploadImageComponent,
     ToolCreatorComponent,
-    ModalComponent
+    ModalComponent,
+    // DeleteMuseumComponent,
+    AddMuseumComponent,
+    DeleteComponent,
+    ArtifactDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +67,16 @@ import { ModalComponent } from './virtual-museum/modal/modal.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatTooltipModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatListModule,
   ],
   entryComponents: [
     UploadImageComponent,
+    DeleteComponent,
+    ArtifactDetailsComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,18 +2,31 @@
   <mat-grid-tile *ngFor="let museum of museums" class="museum-tile">
     <mat-card class="museum-card">
       <mat-card-header>
-        <mat-card-title>{{ museum.title }}</mat-card-title>
-        <mat-card-subtitle>{{ museum.location }}</mat-card-subtitle>
+        <mat-card-title>{{ museum.label }}</mat-card-title>
+        <!-- <mat-card-subtitle>{{ museum.location }}</mat-card-subtitle> -->
       </mat-card-header>
-      <img mat-card-image class="featured-image" [src]="museum.featuredImage" alt="">
+      <img mat-card-image class="featured-image" [src]="'../../../assets/svg/museum-pin.jpeg'" alt="">
       <mat-card-content>
-        <span>{{ museum.description }}</span>
+        <!-- <span>{{ museum.description }}</span> -->
       </mat-card-content>
       <mat-card-actions>
         <button mat-button>VIEW</button>
-        <button mat-button [routerLink]="['/admin', museum.id]" color="primary">ADMIN</button>
+        <button mat-button [routerLink]="['/admin', museum.label]" color="primary">ADMIN</button>
         <button mat-button [routerLink]="['/admin']" color="primary">EDIT TOUR</button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>
+  <mat-grid-tile  class="museum-tile">
+    <mat-card class="add-museum-card">
+      <mat-card-content>
+        <button  class="button-museum" [routerLink]="['/add-museum']">
+          <img class="museum-pin" src="../../../assets/svg/museum-pin.jpeg">
+        </button>
+      </mat-card-content>
+      <mat-card-title class="title-text">Add a museum</mat-card-title>
+      <mat-card-subtitle class="text">If you want to add a museum, click on the pin</mat-card-subtitle>
+    </mat-card>
+  </mat-grid-tile>
 </mat-grid-list>
+
+

@@ -1,0 +1,46 @@
+
+<div class='padding'>
+  <div class='title'>
+    Add a Museum
+  </div>
+  <div class="subtitle">Please complete the data if you want to add the museum</div>
+  <div>
+    <form #myForm="ngForm" >
+      <p>
+        <mat-form-field appearance="legacy" >
+          <mat-label>Title</mat-label>
+          <input matInput placeholder="Museum name">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Location</mat-label>
+          <input matInput >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Description</mat-label>
+          <input matInput >
+        </mat-form-field>
+      </p>
+      <div >
+        <div class='photo-txt'>
+          Photo
+        </div>
+        <div class="photo-button">
+          <mat-card >
+            <mat-card-content >
+              <button mat-mini-fab color="primary" (click)="openUploadImageDialog(null)">
+                <mat-icon>library_add</mat-icon>
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <p class="button-container">
+        <button type="submit" class="button" [disabled]="!myForm.valid">Save</button>
+      </p>
+    </form>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { VirtualMuseumComponent } from './virtual-museum/virtual-museum.componen
 import { LandingComponent } from './views/landing/landing.component';
 import { TourDetailsComponent } from './views/tour-details/tour-details.component';
 import { ToolCreatorComponent } from './tool-creator/tool-creator.component';
+import { AddMuseumComponent} from './views/add-museum/add-museum.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,10 @@ const routes: Routes = [
     component: LandingComponent,
     pathMatch: 'full'
   },
+  {
+    path: 'add-museum',
+    component: AddMuseumComponent,
+  }
 ];
 
 @NgModule({
