@@ -178,12 +178,31 @@ export class ToolCreatorComponent implements OnInit {
 
     // Variable de error, por si algun campo reqeurido no fue llenado
     let error: boolean= false;
+    // Para saber si es un hotspot nativo de pannellum o custom
+    let useCustomFunction: boolean = false;
 
     // Valores genericos
     let hotspotType = this.hotspotTypeInput.value;
     let hotspotText = this.hotspotTextInput.value;
     let hotspotId = this.hotspotIdInput.value;
     let hotspotCssClass = this.hotspotCssClassInput.value;
+
+    
+    // Contruir el custom icon
+    let icon: CustomImage = null;
+    let iconSrc = this.hotspotCustomIconSrcInput.value
+    let iconAlt = this.hotspotCustomIconAltInput.value
+    let iconWidth = this.hotspotCustomIconWidthInput.value
+    let iconHeight = this.hotspotCustomIconHeightInput.value
+
+    if( iconSrc ){
+      icon = {
+        src: iconSrc,
+        alt: iconAlt,
+        width: iconWidth,
+        height: iconHeight,
+      }
+    }
 
     // Declaracion de hotspot
     let hotspot: InfoHotspot | SceneHotspot | CustomHotspot;
@@ -194,12 +213,23 @@ export class ToolCreatorComponent implements OnInit {
 
       // Construccion
       let sceneId = this.hotspotSceneIdInput.value;
+      
       hotspot = {
         text: hotspotText, 
         type: hotspotType,
         sceneId: sceneId,
         id: hotspotId,
         cssClass: hotspotCssClass,
+      }
+
+      if ( iconSrc ){
+        hotspot.createTooltipArgs = {
+          title: hotspotText,
+          id: hotspotId,
+          customIcon: icon
+        }
+
+        useCustomFunction = true;
       }
     }
     else if( this.hotspotTypeInput.value == 'info'){
@@ -217,6 +247,8 @@ export class ToolCreatorComponent implements OnInit {
       }
     }
     else if( this.hotspotTypeInput.value == 'custom' ){
+      // Activar para que sea custom
+      useCustomFunction = true;
 
       // ///////////////////
       // Contruir el modal
@@ -238,23 +270,6 @@ export class ToolCreatorComponent implements OnInit {
           title: modalTitle,
           description: modalDescription,
           imagen: imagen,
-        }
-      }
-
-      // ////////////////////////
-      // Contruir el custom icon
-      let icon: CustomImage = null;
-      let iconSrc = this.hotspotCustomIconSrcInput.value
-      let iconAlt = this.hotspotCustomIconAltInput.value
-      let iconWidth = this.hotspotCustomIconWidthInput.value
-      let iconHeight = this.hotspotCustomIconHeightInput.value
-
-      if( iconSrc ){
-        icon = {
-          src: iconSrc,
-          alt: iconAlt,
-          width: iconWidth,
-          height: iconHeight,
         }
       }
 
@@ -284,7 +299,7 @@ export class ToolCreatorComponent implements OnInit {
       console.log("GUARDADO");
       
       // Habilitar el evento
-      this.pannellumService.enableAddHotspot(hotspotType, hotspot)
+      this.pannellumService.enableAddHotspot(hotspotType, hotspot, useCustomFunction)
     }
     else{
       console.log("ERROR");

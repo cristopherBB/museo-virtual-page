@@ -11,7 +11,7 @@ export interface SceneHotspot{
 
     // PQC para typescript
     createTooltipFunc?: any,
-    createTooltipArgs?: any,
+    createTooltipArgs?: TooltipArgs
 }
 
 export interface InfoHotspot {

@@ -56,6 +56,46 @@
                     </mat-select>
                 </mat-form-field>
 
+                <!-- CUSTOM ICON -->
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="customIconField = true" (closed)="customIconField = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Icono Personalizado
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <!-- SRC -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>SRC</mat-label>
+                            <input matInput [formControl]="hotspotCustomIconSrcInput" type="text"
+                                placeholder="Ruta del icono">
+                        </mat-form-field>
+
+                        <!-- ALT -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>ALT</mat-label>
+                            <input matInput [formControl]="hotspotCustomIconAltInput" type="text"
+                                placeholder="Alt del icono">
+                        </mat-form-field>
+
+                        <!-- WIDTH -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Ancho</mat-label>
+                            <input matInput [formControl]="hotspotCustomIconWidthInput" type="text"
+                                placeholder="Ancho del icono">
+                        </mat-form-field>
+
+                        <!-- HEIGHT -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Alto</mat-label>
+                            <input matInput [formControl]="hotspotCustomIconHeightInput" type="text"
+                                placeholder="Alto del icono">
+                        </mat-form-field>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
                 <!-- CSS Class -->
                 <mat-form-field appearance="fill">
                     <mat-label>CSS Class</mat-label>

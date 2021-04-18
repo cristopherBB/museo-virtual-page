@@ -19,6 +19,7 @@ export class PannellumService {
   scenes: Array<string> = [];
   mouseToogle: boolean = false;
   activeScene: string;
+  customFunction: boolean;
 
   // Para Agregar un nuevo hotspot
   hotspotType: string;
@@ -79,7 +80,7 @@ export class PannellumService {
 
             // Usar el id o generarlo en caso de no especificarlo
             let id = this.generateId(hotspot['id_hotspot'])
-
+            
             // SCENE HOTSPOT
             if (type == "scene") {
               aux = {
@@ -92,6 +93,21 @@ export class PannellumService {
                 'targetYaw': hotspot['targetYaw'] || -23,
                 'targetPitch': hotspot['targetPitch'] || 2,
                 'cssClass': hotspot['clase_css'],
+              }
+
+              if ( hotspot['icono'] ){
+                aux.createTooltipFunc = this.hotspot.bind(this),
+                aux.createTooltipArgs= {
+                    'title': hotspot['titulo'],
+                    'id': hotspot['id_hotspot'],
+                    'customIcon': {
+                      'src': hotspot['icono'] || null,
+                      'alt': hotspot['attr_alt'] || null,
+                      'width': hotspot['ancho_icono'] || null,
+                      'height': hotspot['altura_icono'] || null,
+                    }
+                  }
+                
               }
             }
 
@@ -161,7 +177,7 @@ export class PannellumService {
                 }
               );
             }
-
+            
             // Agregar el hotspot al array
             hotspotsArray.push(aux)
           }
@@ -240,7 +256,7 @@ export class PannellumService {
   /**
    * enableAddHotspot
    */
-  public enableAddHotspot(hotspotType, hotspot) {
+  public enableAddHotspot(hotspotType, hotspot, customFun = false) {
 
     // Activar el evento
     this.toogleAddHotspot(true)
@@ -250,6 +266,9 @@ export class PannellumService {
 
     // hotspot
     this.nextAddHotspot = hotspot;
+
+    // Si se va a usar la funcion custom
+    this.customFunction = customFun
 
   }
 
@@ -283,7 +302,7 @@ export class PannellumService {
     this.nextAddHotspot.id = this.generateId(this.nextAddHotspot.id)
 
 
-    if (this.hotspotType == 'custom'){
+    if (this.customFunction ){
       // Agregar la funcion custom
       this.nextAddHotspot.createTooltipFunc = this.hotspot.bind(this)
 
