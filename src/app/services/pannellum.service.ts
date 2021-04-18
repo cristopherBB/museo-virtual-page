@@ -347,9 +347,11 @@ export class PannellumService {
   public hotspot(hotSpotDiv, args) {
 
     console.log(`Cargando Hotspot ${args.title}`);
-
+    
     // Custom class
     hotSpotDiv.classList.add('custom-tooltip');
+
+    hotSpotDiv.classList.remove('pnlm-hotspot')
     // Custom ID
     hotSpotDiv.id = args.id;
 
@@ -365,7 +367,7 @@ export class PannellumService {
     span.innerHTML = args.title;
     hotSpotDiv.appendChild(span);
     span.style.width = span.scrollWidth - 20 + 'px';
-    span.style.marginLeft = (-(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 24) + 'px';
+    span.style.marginLeft = (- (span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 24) + 'px';
     span.style.marginTop = -span.scrollHeight - 12 + 'px';
 
     span.classList.add('custom-tooltip-span');
