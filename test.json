@@ -51,8 +51,8 @@
                     "altura_icono": 160,
                     "attr_alt":"Galeria",
                     "clase_css":"custom-hotspot-icon custom-img",
-                    "titulo_modal":"Mapa Cuchi",
-                    "descripcion_modal":"Mapa completo de la Hacienda.",
+                    "mostrar_modal":"db",
+                    "id_obra":"m01_s03-04_088",
                     "imagen_modal":"/assets/images/mapa-pasillo-1.jpg",
                     "ancho_imagen": 600,
                     "altura_imagen": 600
