@@ -3,27 +3,32 @@
   <form class="expand padding">
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Id</mat-label>
-      <input matInput disabled [value]="data.artifact.id">
+      <input matInput disabled [value]="data.artifact.id" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Name</mat-label>
-      <input matInput disabled [value]="data.artifact.labelArtifact">
+      <input matInput disabled [value]="data.artifact.artifactLabel" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Material</mat-label>
-      <input matInput disabled [value]="data.artifact.labelMaterial">
+      <input matInput disabled [value]="data.artifact.labelMaterial" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Creator</mat-label>
-      <input matInput disabled [value]="data.artifact.labelCreator">
+      <input matInput disabled [value]="data.artifact.labelCreator" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Museum Room</mat-label>
-      <input matInput disabled [value]="data.artifact.labelLocation">
+      <input matInput disabled [value]="data.artifact.labelLocation" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="expand">
       <mat-label>Comments</mat-label>
-      <textarea rows="3" matInput disabled [value]="data.artifact.note"></textarea>
+      <textarea
+        rows="3"
+        matInput
+        disabled
+        [value]="data.artifact.note"
+      ></textarea>
     </mat-form-field>
   </form>
 </div>

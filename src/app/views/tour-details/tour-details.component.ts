@@ -37,7 +37,7 @@ export class TourDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   artifactPageEvent: PageEvent;
   displayedColumns = [
     'id',
-    'labelArtifact',
+    'artifactLabel',
     'labelMaterial',
     'labelLocation',
     'labelCreator',
