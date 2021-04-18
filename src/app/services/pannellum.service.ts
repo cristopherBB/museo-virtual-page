@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import $ from 'jquery';
+import { CustomHotspot, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
 
 declare var pannellum
@@ -15,8 +16,10 @@ export class PannellumService {
   scenes: Array<string> = [];
   mouseToogle: boolean = false;
   activeScene: string;
+
+  // Para Agregar un nuevo hotspot
   hotspotType: string;
-  hotspotText: string;
+  nextAddHotspot: CustomHotspot | SceneHotspot | InfoHotspot;
 
   constructor(
     public dialog: MatDialog
@@ -77,6 +80,7 @@ export class PannellumService {
                 'sceneId': hotspot['id_escena'],
                 'targetYaw': hotspot['targetYaw'] || -23,
                 'targetPitch': hotspot['targetPitch'] || 2,
+                'cssClass': hotspot['clase_css'],
               }
             }
 
@@ -206,7 +210,7 @@ export class PannellumService {
   /**
    * enableAddHotspot
    */
-  public enableAddHotspot(hotspotType, hotspotText) {
+  public enableAddHotspot(hotspotType, hotspot) {
 
     // Activar el evento
     this.toogleAddHotspot(true)
@@ -214,8 +218,8 @@ export class PannellumService {
     // Guardar el tipo de hotspot
     this.hotspotType = hotspotType;
 
-    // texto
-    this.hotspotText = hotspotText
+    // hotspot
+    this.nextAddHotspot = hotspot;
 
   }
 
@@ -236,19 +240,29 @@ export class PannellumService {
    */
   public addHotspot(coords: Array<number>) {
 
-    let hotspot = {
-      'pitch': coords[0],
-      'yaw': coords[1],
-      'text': this.hotspotText,
-      'type': this.hotspotType,
-      'sceneId': this.activeScene
+    console.log(this.nextAddHotspot);
+    
+
+    // Coordenadas
+    let pitch = coords[0];
+    let yaw = coords[1];
+    this.nextAddHotspot.pitch = pitch;
+    this.nextAddHotspot.yaw = yaw;
+
+    // Agregar ID si no tiene
+    this.nextAddHotspot.id = this.generateId(this.nextAddHotspot.id)
+
+
+    if (this.hotspotType == 'custom'){
+      // Agregar la funcion custom
+      this.nextAddHotspot.createTooltipFunc = this.hotspot.bind(this)
+
+      // guardar el mismo id
+      this.nextAddHotspot.createTooltipArgs.id = this.nextAddHotspot.id
     }
 
-    // Agregar hotspot a la lista de hotspots
-    // this.sceneJson[this.activeScene]['hotSpots'].push(hotspot)
-
-    
-    this.pannellumViewer.addHotSpot(hotspot, this.activeScene)
+    // Agregar el hotspot
+    this.pannellumViewer.addHotSpot(this.nextAddHotspot, this.activeScene)
 
     console.log(this.sceneJson);
     
@@ -258,7 +272,17 @@ export class PannellumService {
    * removeHotspot
    */
   public removeHotspot(id: string) {
+
     this.pannellumViewer.removeHotSpot(id, this.activeScene)
+    console.log(this.sceneJson);
+    
+  }
+
+  /**
+   * getScenes
+   */
+  public getScenes() {
+    return this.scenes;
   }
 
   /**
@@ -283,9 +307,14 @@ export class PannellumService {
     console.log(`Abriendo Modal de ${data.title}`);
 
     // Width del modal
-    // Se calcula en base al width de la imagen.
-    let w = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
-    let h = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
+    let w = 300;
+    let h = 300;
+    if(data.imagen){
+      // Se calcula en base al width de la imagen.
+      w = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
+      h = (data.imagen.width > 800 ? 350 : data.imagen.width + 50) || 300;
+    }
+
 
     // Llamar el modal
     const dialogRef = this.dialog.open(ModalComponent, {
@@ -318,12 +347,6 @@ export class PannellumService {
     hotSpotDiv.id = args.id;
 
 
-    // Se crea el evento para abrir el modal 
-    if (args.modal) {
-      let modal = document.getElementById(args.id)
-      modal.onclick = () => this.openModal(args.modal)
-    }
-
     // Create span element to tooltip
     var span = document.createElement('span');
     span.innerHTML = args.title;
@@ -333,6 +356,12 @@ export class PannellumService {
     span.style.marginTop = -span.scrollHeight - 12 + 'px';
 
     span.classList.add('custom-tooltip-span');
+
+    // Se crea el evento para abrir el modal 
+    if (args.modal && args.modal.title) {
+      let modal = document.getElementById(args.id)
+      modal.onclick = () => this.openModal(args.modal)
+    }
 
     // Custom icon
     if (args.customIcon && args.customIcon.src) {

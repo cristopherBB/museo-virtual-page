@@ -1,7 +1,8 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {DomSanitizer} from '@angular/platform-browser';
+import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
 
@@ -16,7 +17,11 @@ declare var pannellum: any;
 export class ToolCreatorComponent implements OnInit {
 
   showPano = false;
+  customIconField = false;
+  modalField = false;
+
   hotspots = [
+    {value: '', name: "Elegir un tipo"},
     {value: 'scene', name: 'Escena'},
     {value: 'info', name: 'Info'},
     {value: 'custom', name: 'Personalizado'}
@@ -31,13 +36,45 @@ export class ToolCreatorComponent implements OnInit {
   jsonConfig = null;
   scenes: Array<string> = [];
 
-  // Inputs
-  hotspotTypeInput: FormControl = new FormControl('scene', [])
+  // Inputs genericos
+  hotspotTypeInput: FormControl = new FormControl('', [])
   hotspotTextInput: FormControl = new FormControl('', [])
+  hotspotIdInput: FormControl = new FormControl('', [])
+  hotspotCssClassInput: FormControl = new FormControl('', [])
+
+  // Inputs especificos
+  // De tipo Scene
+  hotspotSceneIdInput: FormControl = new FormControl('', [Validators.required])
+
+  // TODO: PARA IMPLEMENTARLOS LUEGO
+  hotspotTargetPitchInput: FormControl = new FormControl('', [])
+  hotspotTargetYawInput: FormControl = new FormControl('', [])
+
+
+  // De tipo Info
+  hotspotURLInput: FormControl = new FormControl('', [Validators.required])
+
+  // De tipo custom
+  hotspotCustomIconSrcInput: FormControl = new FormControl('', [])
+  hotspotCustomIconAltInput: FormControl = new FormControl('', [])
+  hotspotCustomIconWidthInput: FormControl = new FormControl('', [])
+  hotspotCustomIconHeightInput: FormControl = new FormControl('', [])
+
+  hotspotModalTitleInput: FormControl = new FormControl('', [])
+  hotspotModalDescriptionInput: FormControl = new FormControl('', [])
+  hotspotModalImageURLInput: FormControl = new FormControl('', [])
+
+  // TODO: FALTA IMPLEMENTAR
+  hotspotModalImageAltInput: FormControl = new FormControl('', [])
+  hotspotModalImageWidthInput: FormControl = new FormControl('', [])
+  hotspotModalImageHeightInput: FormControl = new FormControl('', [])
 
 
   urlA: any;
+
+  // Vista principal de pannellum
   pannellumViewer: any;
+
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
@@ -138,11 +175,123 @@ export class ToolCreatorComponent implements OnInit {
    * addHotspot
    */
   public addHotspot() {
-    let hotspotType = this.hotspotTypeInput.value
-    let hotspotText = this.hotspotTextInput.value
 
-    // Habilitar el evento
-    this.pannellumService.enableAddHotspot(hotspotType, hotspotText)
+    // Variable de error, por si algun campo reqeurido no fue llenado
+    let error: boolean= false;
+
+    // Valores genericos
+    let hotspotType = this.hotspotTypeInput.value;
+    let hotspotText = this.hotspotTextInput.value;
+    let hotspotId = this.hotspotIdInput.value;
+    let hotspotCssClass = this.hotspotCssClassInput.value;
+
+    // Declaracion de hotspot
+    let hotspot: InfoHotspot | SceneHotspot | CustomHotspot;
+
+    if( this.hotspotTypeInput.value == 'scene'){
+      // Si existe error
+      error = !this.hotspotSceneIdInput.valid 
+
+      // Construccion
+      let sceneId = this.hotspotSceneIdInput.value;
+      hotspot = {
+        text: hotspotText, 
+        type: hotspotType,
+        sceneId: sceneId,
+        id: hotspotId,
+        cssClass: hotspotCssClass,
+      }
+    }
+    else if( this.hotspotTypeInput.value == 'info'){
+      // Si existe error
+      error = !this.hotspotURLInput.valid
+
+      // Construccion
+      let url = this.hotspotURLInput.value;
+      hotspot = {
+        text: hotspotText, 
+        type: hotspotType,
+        URL: url,
+        id: hotspotId,
+        cssClass: hotspotCssClass,
+      }
+    }
+    else if( this.hotspotTypeInput.value == 'custom' ){
+
+      // ///////////////////
+      // Contruir el modal
+      let modalTitle = this.hotspotModalTitleInput.value
+      let modalDescription = this.hotspotModalDescriptionInput.value
+      let modalImageSrc = this.hotspotModalImageURLInput.value
+      let modal: HotspotModal = null;
+      let imagen: CustomImage = null;
+      // Contruir el modal
+      if ( modalTitle ){
+        if( modalImageSrc ){
+          // Contruir la imagen del modal
+          imagen = {
+            src: modalImageSrc
+          }
+        }
+        // Resto del modal
+        modal = {
+          title: modalTitle,
+          description: modalDescription,
+          imagen: imagen,
+        }
+      }
+
+      // ////////////////////////
+      // Contruir el custom icon
+      let icon: CustomImage = null;
+      let iconSrc = this.hotspotCustomIconSrcInput.value
+      let iconAlt = this.hotspotCustomIconAltInput.value
+      let iconWidth = this.hotspotCustomIconWidthInput.value
+      let iconHeight = this.hotspotCustomIconHeightInput.value
+
+      if( iconSrc ){
+        icon = {
+          src: iconSrc,
+          alt: iconAlt,
+          width: iconWidth,
+          height: iconHeight,
+        }
+      }
+
+
+      // ////////////////////////
+      // Construir el Hotspot
+      hotspot = {
+        text: hotspotText, 
+        id: hotspotId,
+        cssClass: hotspotCssClass,
+        createTooltipArgs: {
+          title: hotspotText,
+          id: hotspotId,
+          modal: modal,
+          customIcon: icon
+        }
+      }
+
+
+    }
+    else{
+      error = true
+    }
+
+    // Si no hay errores
+    if( !error){
+      console.log("GUARDADO");
+      
+      // Habilitar el evento
+      this.pannellumService.enableAddHotspot(hotspotType, hotspot)
+    }
+    else{
+      console.log("ERROR");
+      
+    }
+
+    
   }
 
   /**
@@ -157,7 +306,7 @@ export class ToolCreatorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       
-      if (result.result)
+      if (result && result.result)
         this.pannellumService.removeHotspot(hotspot.id)
     });
 
