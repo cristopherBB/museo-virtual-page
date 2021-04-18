@@ -4,6 +4,8 @@ import $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
 import { CustomHotspot, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
+import { ApiService } from './api.service';
+
 
 declare var pannellum
 
@@ -29,7 +31,9 @@ export class PannellumService {
   }
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public apiServive: ApiService
+
   ) { }
 
   /**
@@ -124,19 +128,38 @@ export class PannellumService {
                     'alt': hotspot['attr_alt'] || null,
                     'width': hotspot['ancho_icono'] || null,
                     'height': hotspot['altura_icono'] || null,
-                  },
-                  'modal': {
-                    'title': hotspot['titulo_modal'] || null,
-                    'description': hotspot['descripcion_modal'] || null,
+                  }
+                }
+              }
+            }
+
+            if(hotspot['mostrar_modal']=='local'){
+              aux.createTooltipArgs.modal = {
+                  'title': hotspot['titulo_modal'] || null,
+                  'description': hotspot['descripcion_modal'] || null,
+                  'imagen': {
+                    'src': hotspot['imagen_modal'] || null,
+                    'alt': hotspot['attr_alt'] || null,
+                    'width': hotspot['ancho_imagen'] || null,
+                    'height': hotspot['altura_imagen'] || null,
+                  }
+              }
+            }else if (hotspot['mostrar_modal']=='db') {
+              this.apiServive.getArtefact(hotspot['id_obra']).subscribe(
+                data =>{
+                  aux.createTooltipArgs.modal = {
+                    'title': data.result[0].artifactLabel.value || null,
+                    'description': data.result[0].note.value || null,
                     'imagen': {
                       'src': hotspot['imagen_modal'] || null,
                       'alt': hotspot['attr_alt'] || null,
                       'width': hotspot['ancho_imagen'] || null,
                       'height': hotspot['altura_imagen'] || null,
                     }
-                  }
                 }
-              }
+                  
+                }
+              );
             }
 
             // Agregar el hotspot al array
