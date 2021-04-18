@@ -51,12 +51,10 @@ export class VirtualMuseumComponent implements OnInit {
   }
 
   onPinClick = (viewPosition: number): void => {
-    console.log("ACTIVADO ", viewPosition);
 
     this.selectedPin = viewPosition;
     this.selectedView = this.tour.views[viewPosition];
 
-    console.log(this.selectedView);
 
     this.pannellumService.setScene(this.selectedView);
   };

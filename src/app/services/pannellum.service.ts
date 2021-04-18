@@ -24,12 +24,6 @@ export class PannellumService {
   hotspotType: string;
   nextAddHotspot: CustomHotspot | SceneHotspot | InfoHotspot;
 
-  private _activeScene = new BehaviorSubject<string>(null);
-
-  get selectedScene() {
-    return this._activeScene.asObservable();
-  }
-
   constructor(
     public dialog: MatDialog,
     public apiServive: ApiService
@@ -38,7 +32,7 @@ export class PannellumService {
 
   /**
    * generateId
-   * 
+   *
    * Generar un id totalmente random para manjear los hotspot a traves de la API de Pannellum
    */
   private generateId(id: string) {
@@ -157,7 +151,7 @@ export class PannellumService {
                       'height': hotspot['altura_imagen'] || null,
                     }
                 }
-                  
+
                 }
               );
             }
@@ -271,7 +265,7 @@ export class PannellumService {
   public addHotspot(coords: Array<number>) {
 
     console.log(this.nextAddHotspot);
-    
+
 
     // Coordenadas
     let pitch = coords[0];
@@ -295,7 +289,7 @@ export class PannellumService {
     this.pannellumViewer.addHotSpot(this.nextAddHotspot, this.activeScene)
 
     console.log(this.sceneJson);
-    
+
   }
 
   /**
@@ -305,7 +299,7 @@ export class PannellumService {
 
     this.pannellumViewer.removeHotSpot(id, this.activeScene)
     console.log(this.sceneJson);
-    
+
   }
 
   /**
@@ -370,7 +364,7 @@ export class PannellumService {
   public hotspot(hotSpotDiv, args) {
 
     console.log(`Cargando Hotspot ${args.title}`);
-    
+
     // Custom class
     hotSpotDiv.classList.add('custom-tooltip');
 
@@ -395,7 +389,7 @@ export class PannellumService {
 
     span.classList.add('custom-tooltip-span');
 
-    // Se crea el evento para abrir el modal 
+    // Se crea el evento para abrir el modal
     if (args.modal && args.modal.title) {
       let modal = document.getElementById(args.id)
       modal.onclick = () => this.openModal(args.modal)
@@ -414,7 +408,11 @@ export class PannellumService {
 
   }
 
+  /**
+   * Changes the scene of the pannellumViewer object.
+   * @param sceneId The id of the scene.
+   */
   setScene = (sceneId: string): void => {
-    this._activeScene.next(sceneId);
+    if (this.pannellumViewer) this.pannellumViewer.loadScene(sceneId);
   }
 }
