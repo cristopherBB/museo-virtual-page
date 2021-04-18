@@ -35,6 +35,7 @@ import { AddMuseumComponent } from './views/add-museum/add-museum.component';
 import { DeleteComponent } from './components/dialogs/delete/delete.component';
 import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
 import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hotspot.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hot
     MatPaginatorModule,
     MatTableModule,
     MatListModule,
+    MatExpansionModule
   ],
   entryComponents: [
     UploadImageComponent,
