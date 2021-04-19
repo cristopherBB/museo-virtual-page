@@ -18,13 +18,31 @@ export let config = {
                     "valor_angulo_y": 0,
                     "valor_angulo_x": 155,
                     "titulo":"	Miguel Grau",
-                    "id_hotspot": "hotspot-miguel-grau",
+                    "id_hotspot": "hotspot-pasillo-1-obra-1",
                     "icono":"/assets/images/mapa-pasillo-1.jpg",
                     "ancho_icono": 120,
                     "altura_icono": 160,
                     "attr_alt":"Galeria",
                     "clase_css":"custom-hotspot-icon custom-img",
                     "id_obra": "m01_s03-04_078",
+                    "mostrar_modal":"db",
+                    // "titulo_modal":"Mapa Cuchi EJEMPLO",
+                    // "descripcion_modal":"Mapa completo de la Hacienda.",
+                    "imagen_modal":"/assets/images/mapa-pasillo-1.jpg",
+                    "ancho_imagen": 600,
+                    "altura_imagen": 600
+                },
+                {
+                    "valor_angulo_y": 0,
+                    "valor_angulo_x": 345,
+                    "titulo":"Oleo sobre lienzo",
+                    "id_hotspot": "hotspot-pasillo-1-obra-2",
+                    "icono":"/assets/images/mapa-pasillo-1.jpg",
+                    "ancho_icono": 120,
+                    "altura_icono": 160,
+                    "attr_alt":"Galeria",
+                    "clase_css":"custom-hotspot-icon custom-img",
+                    "id_obra": "m01_s03-04_085",
                     "mostrar_modal":"db",
                     // "titulo_modal":"Mapa Cuchi EJEMPLO",
                     // "descripcion_modal":"Mapa completo de la Hacienda.",
@@ -84,7 +102,11 @@ export let config = {
                     "valor_angulo_x": 0,
                     "titulo": "Sala de Secado 2",
                     "id_escena": "sala-2",
-                    "id_hotspot": "hotspot-escena-pasillo-3-sala-2" 
+                    "id_hotspot": "hotspot-escena-pasillo-3-sala-2" ,
+                    "icono":"/assets/images/galeria-arte.svg",
+                    "attr_alt":"Galeria - Sala de Secado 2",
+                    "ancho_icono" : 50,
+                    "alto_icono": 50
                 }
             ]
         },
@@ -200,7 +222,11 @@ export let config = {
                     "valor_angulo_x": 0,
                     "titulo": "Tienda de Chocolate",
                     "id_escena": "tienda-chocolate",
-                    "id_hotspot": "hotspot-escena-pasillo-5-tienda-chocolate" 
+                    "id_hotspot": "hotspot-escena-pasillo-5-tienda-chocolate",
+                    "icono":"/assets/images/chocolate.svg",
+                    "attr_alt":"Tienda de Chocolate",
+                    "ancho_icono" : 50,
+                    "alto_icono": 50
                 }
             ]
         },
