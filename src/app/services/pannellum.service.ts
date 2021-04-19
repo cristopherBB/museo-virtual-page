@@ -145,6 +145,7 @@ export class PannellumService {
 
             if(hotspot['mostrar_modal']=='local'){
               aux.createTooltipArgs.modal = {
+                  'type': "local",
                   'title': hotspot['titulo_modal'] || null,
                   'description': hotspot['descripcion_modal'] || null,
                   'imagen': {
@@ -155,21 +156,17 @@ export class PannellumService {
                   }
               }
             }else if (hotspot['mostrar_modal']=='db') {
-              this.apiServive.getArtefact(hotspot['id_obra']).subscribe(
-                data =>{
-                  aux.createTooltipArgs.modal = {
-                    'title': data.result[0].artifactLabel.value || null,
-                    'description': data.result[0].note.value || null,
-                    'imagen': {
-                      'src': hotspot['imagen_modal'] || null,
-                      'alt': hotspot['attr_alt'] || null,
-                      'width': hotspot['ancho_imagen'] || null,
-                      'height': hotspot['altura_imagen'] || null,
-                    }
-                }
 
+              aux.createTooltipArgs.modal = {
+                "type": "db",
+                "id":  hotspot['id_obra'],
+                'imagen': {
+                  'src': hotspot['imagen_modal'] || null,
+                  'alt': hotspot['attr_alt'] || null,
+                  'width': hotspot['ancho_imagen'] || null,
+                  'height': hotspot['altura_imagen'] || null,
                 }
-              );
+              }
             }
             
             // Agregar el hotspot al array
@@ -387,15 +384,39 @@ export class PannellumService {
     // Custom class
     hotSpotDiv.classList.add('custom-tooltip');
 
-    hotSpotDiv.classList.remove('pnlm-hotspot')
     // Custom ID
     hotSpotDiv.id = args.id;
 
 
     // Se crea el evento para abrir el modal
     if (args.modal) {
-      let modal = document.getElementById(args.id)
-      modal.onclick = () => this.openModal(args.modal)
+
+      if ( args.modal.type === "db"){
+        this.apiServive.getArtefact(args.modal.id).subscribe(
+          data =>{
+            
+            let modalData = {
+              'title': data.result[0].artifactLabel.value || null,
+              'description': data.result[0].note.value || null,
+              'imagen': {
+                'src': args.modal.imagen.src, 
+                'alt': args.modal.imagen.alt, 
+                'width': args.modal.imagen.width, 
+                'height': args.modal.imagen.height, 
+              }
+            }
+
+            let modal = document.getElementById(args.id)
+            modal.onclick = () => this.openModal(modalData)
+
+          }
+        );
+      }
+      else{
+        let modal = document.getElementById(args.id)
+        modal.onclick = () => this.openModal(args.modal)
+      }
+
     }
 
     // Create span element to tooltip
@@ -416,6 +437,9 @@ export class PannellumService {
 
     // Custom icon
     if (args.customIcon && args.customIcon.src) {
+      // Quitamos la clase de pannellum para quitar el icono por defecto
+      hotSpotDiv.classList.remove('pnlm-hotspot')
+
       let width = args.customIcon.width || "50";
       let height = args.customIcon.height || "50";
 
