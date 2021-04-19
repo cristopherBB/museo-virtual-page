@@ -430,6 +430,16 @@ export class PannellumService {
       );
     }
 
+  }
+
+  /**
+   * OutputJson
+   * 
+   * Genera un json a patir de las scenas almacenadas
+   */
+  public OutputJson() {
+    
+    
 
   }
 
