@@ -23,6 +23,7 @@
                     "ancho_icono": 120,
                     "altura_icono": 160,
                     "attr_alt":"Galeria",
+                    "mostrar_modal":"local",
                     "clase_css":"custom-hotspot-icon custom-img",
                     "titulo_modal":"Mapa Cuchi",
                     "descripcion_modal":"Mapa completo de la Hacienda.",
@@ -82,7 +83,11 @@
                     "valor_angulo_x": 0,
                     "titulo": "Sala de Secado 2",
                     "id_escena": "sala-2",
-                    "id_hotspot": "hotspot-escena-pasillo-3-sala-2" 
+                    "id_hotspot": "hotspot-escena-pasillo-3-sala-2",
+                    "icono":"/assets/images/galeria-arte.svg",
+                    "attr_alt":"Galeria - Sala de Secado 2",
+                    "ancho_icono" : 50,
+                    "alto_icono": 50
                 }
             ]
         },
@@ -133,8 +138,8 @@
                     "titulo":"NOMBRE OBRA 3",
                     "id_hotspot": "hotspot-obra-3-sala-2-img",
                     "icono":"/assets/titles/hacienda/sala-2/obras/obra-3.jpg",
-                    "ancho_icono": 400,
-                    "altura_icono": 200,
+                    "ancho_icono": 100,
+                    "altura_icono": 100,
                     "attr_alt":"NOMBRE OBRA 3",
                     "clase_css":"custom-hotspot-icon custom-img"
                 }
@@ -213,7 +218,11 @@
                     "valor_angulo_x": -15,
                     "titulo": "Pasillo 5",
                     "id_escena": "pasillo-5",
-                    "id_hotspot": "hotspot-escena-tienda-chocolate-pasillo-5"
+                    "id_hotspot": "hotspot-escena-tienda-chocolate-pasillo-5",
+                    "icono":"/assets/images/chocolate.svg",
+                    "attr_alt":"Tienda de Chocolate",
+                    "ancho_icono" : 50,
+                    "alto_icono": 50
                 }
             ]
         },
