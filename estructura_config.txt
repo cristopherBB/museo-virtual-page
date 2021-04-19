@@ -40,6 +40,11 @@ En el Json de escenas se van a agregar todas las escenas del tour. Esta seccion 
                     "ancho_icono": Anchura del icono en pixeles.
                     "altura_icono": Altura del icono en pixeles.
                     "clase_css": Clases CSS extras para el hotspot.
+                    "mostar_modal": Si es de tipo 'custom', indica de donde se tomaran los datos para el modal, puede tener valores como:
+                        'local': Si queremos que el titulo y la descripcion del modal, las tome del mismo archivo de configuracion.
+                        'db': Si queremos que el titulo y la descripcion del modal las tome de los datos de la ontologia.
+                    
+                    "id_obra": Si es de tipo 'custom' y "mostrar_modal" tiene valor 'db', el id  de la obra es estricatamente necesario para hacer la conexion con la ontologia.
                     "titulo_modal": Si es de tipo 'custom'. Titulo que tendra el modal del hostpot
                     "descripcion_modal": Si es de tipo 'custom'. Descripcion que tendra el modal del hostpot
                     "imagen_modal": Si es de tipo 'custom'. imagen que tendra el modal del hostpot
