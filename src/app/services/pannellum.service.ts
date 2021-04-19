@@ -41,6 +41,8 @@ export class PannellumService {
    * generateId
    * 
    * Generar un id totalmente random para manjear los hotspot a traves de la API de Pannellum
+   * @param id id del elemento 
+   * @returns newId, el nuevo id generado aleatoreamente
    */
   private generateId(id: string) {
     //  existe el id, usar ese
@@ -58,6 +60,8 @@ export class PannellumService {
    * constructScenes
    *
    * Construir las escenas a partir de un archivo de configuracion
+   * @param config Json que viene del archivo de configuracion con los parametros del tour
+   * @returns sceneJson, el json formateado de manera que sea legible para pannellum para poder construir el tour
    */
   public constructScenes(config) {
 
@@ -206,6 +210,10 @@ export class PannellumService {
    * initPannellum
    *
    * iniciar pannellum
+   * @param panoramaHTML id del elemento panorama en el DOM
+   * @param viewId primera escena a mostrar
+   * @param sceneJson json formateado de manera que sea legible para pannellum para poder construir el tour
+   * @param edit determina si el tour sera editable o no
    */
   public initPannellum(panoramaHTML, viewId, sceneJson, edit = null) {
 
@@ -247,14 +255,21 @@ export class PannellumService {
 
   /**
    * toogleAddHotspot
+   * Activar el evento de click
+   * 
+   * @param b booleano para activar el evento click
    */
   public toogleAddHotspot(b: boolean) {
-    // Activar el evento de click
+
     this.mouseToogle = b;
   }
 
   /**
    * enableAddHotspot
+   * Al agregar un hotspot en el toolCreator, se guardan las configuraciones y habilitar el evento click
+   * @param hotspotType El tipo del hostpot
+   * @param hotspot El hotspot 
+   * @param customFun para usar la funcion custom o no
    */
   public enableAddHotspot(hotspotType, hotspot, customFun = false) {
 
@@ -274,6 +289,10 @@ export class PannellumService {
 
   /**
    * getInitialScene
+   *  Devuelve el la scena solicitada
+   * 
+   * @param index indice de la escena 
+   * @returns escena o null, segun exista el indice
    */
   public getInitialScene(index: number) {
     console.log(this.scenes);
@@ -286,6 +305,8 @@ export class PannellumService {
 
   /**
    * addHotspot
+   * Agregar el hotspot
+   * @param coords Coordenadas donde se dio click para agregar el hotspot
    */
   public addHotspot(coords: Array<number>) {
 
@@ -319,6 +340,8 @@ export class PannellumService {
 
   /**
    * removeHotspot
+   * Eliminar hotspot
+   * @param id Id del hotspot a eliminar
    */
   public removeHotspot(id: string) {
 
@@ -329,6 +352,8 @@ export class PannellumService {
 
   /**
    * getScenes
+   * DEvuelve las escenas 
+   * @returns scenes Escenas del tour
    */
   public getScenes() {
     return this.scenes;
@@ -336,6 +361,8 @@ export class PannellumService {
 
   /**
    * getHotspots
+   * Devuelve los hotspots de la escena activa
+   * @returns lista de hostspot en caso de existir
    */
   public getHotspots() {
     if ( this.sceneJson ){
@@ -346,10 +373,10 @@ export class PannellumService {
     return []
   }
 
-  /*
+  /**
    * openModal
-   *
    * Prepara la info que se va a mostrar en el Modal
+   * @param data Informacion del modal
    */
   public openModal(data) {
     // Search modal
@@ -381,10 +408,12 @@ export class PannellumService {
 
   }
 
-  /*
+  /**
   * hotspot
   *
   * Funcion de creacion de hotspot custom
+  * @param hotSpotDiv div del hotspot
+  * @param args Argumentos custom del hotspot
   */
   public hotspot(hotSpotDiv, args) {
 
@@ -443,6 +472,12 @@ export class PannellumService {
 
   }
 
+
+  /**
+   * setScene 
+   * Establece la escena a mostrar
+   * @param sceneId id de la escena
+   */
   setScene = (sceneId: string): void => {
     this._activeScene.next(sceneId);
   }
