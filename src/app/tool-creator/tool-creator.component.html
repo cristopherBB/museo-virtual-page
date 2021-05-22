@@ -1,4 +1,24 @@
-<!-- Boton para subir archivo -->
+
+<img src="assets\images\fondo2.jpg" class="img-fluid" style="position: absolute; right: 0; top: 0; z-index: -100; width: 100%; height: 100%;">
+    <div *ngIf="!showPano" class="empty-scene-container">
+        <mat-card  class = "example-card"> 
+            <mat-card-header style="justify-content: center;" >  
+              <mat-card-title > <h2>Selecciona la opción de tu preferencia</h2> </mat-card-title>
+            </mat-card-header>  
+            <mat-card-content > 
+              <p >
+                Crea un recorrido desde cero o sube un archivo de configuración en formato JSON y continua tu recorrido.
+              </p >
+            </mat-card-content > 
+            <mat-card-actions style="text-align: center;" > 
+              <button  mat-button (click)="cero()"> Crear recorrido </button> 
+              <button  mat-button (click)="addScene()"> Subir JSON </button > 
+            </mat-card-actions > 
+          </mat-card>
+    </div>
+
+<!-- Boton para subir archivo
+
 <div *ngIf="!showPano" class="empty-scene-container">
     <button class="empty-scene" mat-stroked-button (click)="addScene()">
         <h2>Para comenzar sube un archivo de Configuracion en <b>Formato JSON</b></h2>
@@ -6,11 +26,13 @@
     </button>
 
 </div>
-
+-->
 <div class="row">
     <!-- Panorama -->
-    <div id="panorama" *ngIf="showPano"></div>
-
+    <div id="panorama" *ngIf="showPano && !election"></div>
+    <div id="no_imagen" style="text-align: center;" *ngIf="election"> 
+        <img src="assets\images\no_escenas.png" style="margin-top: 120px; width: 50%;">
+    </div>
     <!-- Toolbar -->
     <div id="tools-view" *ngIf="showPano">
         <h2>Tools</h2>
@@ -243,7 +265,7 @@
 
 </div>
 
-<div class="row">
+ <!-- <div class="row">
     <div id="hotspots-view" *ngIf="showPano">
         <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()"
             (click)="removeHotspot(hotspot)">
@@ -252,7 +274,41 @@
         </div>
     </div>
 
+</div>-->
+
+<div class="row">
+    <div id="hotspots-view" *ngIf="showPano" style="height: 18vh;">
+        <mat-tab-group animationDuration="100ms">
+            <mat-tab label="Hotspots de la escena">
+                <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getOneHotspots()"
+                    (click)="removeHotspot(hotspot)">
+                    <h4>{{hotspot.text}}</h4>
+                    <p>{{hotspot.type}}</p>
+                </div>
+            </mat-tab>
+            <mat-tab label="Todos los Hotspots">
+                <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getAllHotspots()"
+                    (click)="removeHotspot(hotspot)">
+                    <h4>{{hotspot.text}}</h4>
+                    <p>{{hotspot.type}}</p>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 </div>
 
+<div class="row">
+    <div id="hotspots-view" *ngIf="showPano">
+        <mat-tab-group animationDuration="100ms">
+            <mat-tab label="Escenas del recorrido">
+                <div class="hotspot-view-child" style="float: left;" *ngFor="let scene of pannellumService.getScenes()"
+                    (click)="goScene(scene)">
+                    <h4>{{scene}}</h4>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>
 
 <input hidden type="file" id="file" (change)="onJsonFileChanged( $event )" />

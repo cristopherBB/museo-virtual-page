@@ -19,6 +19,7 @@ export class ToolCreatorComponent implements OnInit {
   showPano = false;
   customIconField = false;
   modalField = false;
+  election = false;
 
   hotspots = [
     {value: '', name: "Elegir un tipo"},
@@ -84,6 +85,14 @@ export class ToolCreatorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+public cero() {
+  this.showPano = true;
+  this.election = true;
+}
+
+public goScene(scene) {
+  this.pannellumService.setScene(scene);
+}
 
   /**
    * addScene
@@ -91,8 +100,9 @@ export class ToolCreatorComponent implements OnInit {
   public addScene() {
     let fileInput = document.getElementById('file')
     fileInput.click()
-
-    this.showPano = true
+    this.election = false;
+    this.showPano = true;
+    
   }
 
 
@@ -142,6 +152,12 @@ export class ToolCreatorComponent implements OnInit {
 
     // Mostrar el div de panorama y ocultar lo demas.
     this.showPano = true;
+    console.log("soy yo ok");
+    /*let prueba2 = this.pannellumService.getScenes();
+    let prueba = this.pannellumService.getOneHotspots();
+    let prueba = this.pannellumService.getAllHotspots();
+    console.log(prueba);
+    console.log(prueba2[0])*/
   }
 
 

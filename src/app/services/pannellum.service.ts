@@ -499,4 +499,26 @@ export class PannellumService {
   setScene = (sceneId: string): void => {
     if (this.pannellumViewer) this.pannellumViewer.loadScene(sceneId);
   }
+
+  public getAllHotspots() {
+
+    let ListHotspots = [];
+    if ( this.sceneJson ){
+
+      for (let i in this.scenes) {
+       // console.log(index2); // prints elements: 0, 1, 2, 3
+        for (let j of this.sceneJson[this.scenes[i]]['hotSpots']){
+          ListHotspots.push(j)
+        }
+        //console.log(this.sceneJson[this.scenes[i]]['hotSpots'])
+      }
+      return ListHotspots;
+    }
+    return []
+  }
+
+  public getOneHotspots() {
+    let p = this.pannellumViewer.getScene();
+    return this.sceneJson[p]['hotSpots']
+  }
 }
