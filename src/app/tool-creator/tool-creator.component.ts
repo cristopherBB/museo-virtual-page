@@ -1,6 +1,7 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
@@ -79,7 +80,8 @@ export class ToolCreatorComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -185,6 +187,16 @@ public goScene(scene) {
     //   // reader.onload = (event) => {
     //   //   this.escenas.push(reader.result)
     //   // }
+  }
+
+  /**
+  * openSnackBar
+  *
+  * Muestra una barra de información para explicarle al usuario cómo agregar un nuevo hotspot
+  */
+  openSnackBar(message: string, action: string){
+    let snackbar_duration = 5000;
+    this._snackBar.open(message, action, {duration: snackbar_duration});
   }
 
   /**
@@ -315,7 +327,11 @@ public goScene(scene) {
       console.log("GUARDADO");
       
       // Habilitar el evento
-      this.pannellumService.enableAddHotspot(hotspotType, hotspot, useCustomFunction)
+      this.pannellumService.enableAddHotspot(hotspotType, hotspot, useCustomFunction);
+
+      // Mostrar mensaje guía al usuario para agregar el hotspot al recorrido
+      let snackbar_message = "Haz click sobre el área de la imagen en donde deseas agregar el nuevo hotspot";
+      this.openSnackBar(snackbar_message, "Ok")
     }
     else{
       console.log("ERROR");
