@@ -7,6 +7,13 @@ import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } f
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
 
+import Ajv, {JSONSchemaType} from "ajv"
+const ajv = new Ajv()
+interface MyData {
+  foo: number
+  bar?: string
+}
+
 declare var pannellum: any;
 
 
@@ -85,6 +92,7 @@ export class ToolCreatorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.validateSchema();
   }
 
 public cero() {
@@ -108,6 +116,26 @@ public goScene(scene) {
   }
 
 
+  public validateSchema() {
+    let schema: JSONSchemaType<MyData> = {
+      type: "object",
+      properties: {
+        foo: {type: "integer"},
+        bar: {type: "string", nullable: "true"}
+      },
+      required: ["foo"],
+      additionalProperties: false
+    }
+
+    const data = {
+      foo: 1,
+      bar: "abc"
+    }
+    
+    var validate = ajv.compile(schema);
+    var valid = validate(data);
+    if (!valid) console.log(validate.errors);
+  }
   /**
    * onJsonFileChanged
    * 
