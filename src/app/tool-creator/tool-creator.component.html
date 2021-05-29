@@ -1,3 +1,4 @@
+<!--Inicio y botones de crear recorrido y subir JSON -->
 <img src="assets\images\fondo2.jpg" class="img-fluid" style="position: absolute; right: 0; top: 0; z-index: -100; width: 100%; height: 100%;">
     <div *ngIf="!showPano" class="empty-scene-container">
         <mat-card  class = "example-card"> 
@@ -16,14 +17,6 @@
           </mat-card>
     </div>
 
-<!-- Boton para subir archivo
-<div *ngIf="!showPano" class="empty-scene-container">
-    <button class="empty-scene" mat-stroked-button (click)="addScene()">
-        <h2>Para comenzar sube un archivo de Configuracion en <b>Formato JSON</b></h2>
-        <mat-icon>lightbulb</mat-icon>
-    </button>
-</div>
--->
 <div class="row">
     <!-- Panorama -->
     <div id="panorama" *ngIf="showPano && !election"></div>
@@ -264,16 +257,7 @@
 
 </div>
 
- <!-- <div class="row">
-    <div id="hotspots-view" *ngIf="showPano">
-        <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()"
-            (click)="removeHotspot(hotspot)">
-            <h4>{{hotspot.text}}</h4>
-            <p>{{hotspot.type}}</p>
-        </div>
-    </div>
-</div>-->
-
+<!-- Lista de hotspots -->
 <div class="row">
     <div id="hotspots-view" *ngIf="showPano" style="height: 18vh;">
         <mat-tab-group animationDuration="100ms">
@@ -295,6 +279,7 @@
     </div>
 </div>
 
+<!-- Listas de escenas -->
 <div class="row">
     <div id="hotspots-view" *ngIf="showPano">
         <mat-tab-group animationDuration="100ms">
@@ -306,7 +291,28 @@
             </mat-tab>
         </mat-tab-group>
     </div>
-
 </div>
+
+<!-- Mostrar seccion de minimapa -->
+<div class="row">
+    <div id="hotspots-view" *ngIf="showPano">
+        <mat-tab-group animationDuration="100ms">
+            <mat-tab label="Minimapa">
+                <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)">
+                <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
+                <div class="croquis-content" *ngIf="nuevo_pin">
+                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [imagen]="minimapa" [lugar]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
+                    <ol>
+                        <li  *ngFor="let pins of tour.result.views">
+                            {{pins}}
+                        </li>
+                    </ol>
+                </div>
+                <div><button  mat-button (click)="addPin()"> Agregar Pin </button ></div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
 
 <input hidden type="file" id="file" (change)="onJsonFileChanged( $event )" />

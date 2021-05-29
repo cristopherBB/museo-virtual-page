@@ -518,7 +518,10 @@ export class PannellumService {
   }
 
   public getOneHotspots() {
-    let p = this.pannellumViewer.getScene();
-    return this.sceneJson[p]['hotSpots']
+    if (this.pannellumViewer ){
+      let p = this.pannellumViewer.getScene();
+      return this.sceneJson[p]['hotSpots']
+    }
+    return []
   }
 }

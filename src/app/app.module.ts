@@ -38,6 +38,8 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
 import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
 import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hotspot.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ModalMinimapaComponent } from './tool-creator/modal_minimapa/modal_minimapa.component';
+import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ToolbarComponent,
     VirtualMuseumComponent,
     CanvasComponent,
+    CanvasMinimapaComponent,
     VirtualViewComponent,
     LandingComponent,
     TourDetailsComponent,
@@ -55,7 +58,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AddMuseumComponent,
     DeleteComponent,
     ArtifactDetailsComponent,
-    RemoveHotspotComponent
+    RemoveHotspotComponent,
+    ModalMinimapaComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DeleteComponent,
     ArtifactDetailsComponent,
     ModalComponent,
-    RemoveHotspotComponent
+    RemoveHotspotComponent,
+    ModalMinimapaComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,12 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
+import { ModalMinimapaComponent } from './modal_minimapa/modal_minimapa.component';
 
 declare var pannellum: any;
 
@@ -21,6 +22,11 @@ export class ToolCreatorComponent implements OnInit {
   customIconField = false;
   modalField = false;
   election = false;
+  nuevo_pin = false;
+  minimapa = <HTMLImageElement>document.getElementById('minimapa');
+  tour;
+  selectedPin = 0;
+  selectedView: string;
 
   hotspots = [
     {value: '', name: "Elegir un tipo"},
@@ -114,7 +120,7 @@ public goScene(scene) {
    * Maneja las configuraciones que viene en archivo Json
    */
    onJsonFileChanged(event) {
-    console.log("hola");
+    //console.log("hola");
     
     this.jsonFile = event.target.files[0];
     // Leer archivo como texto
@@ -154,12 +160,6 @@ public goScene(scene) {
 
     // Mostrar el div de panorama y ocultar lo demas.
     this.showPano = true;
-    console.log("soy yo ok");
-    /*let prueba2 = this.pannellumService.getScenes();
-    let prueba = this.pannellumService.getOneHotspots();
-    let prueba = this.pannellumService.getAllHotspots();
-    console.log(prueba);
-    console.log(prueba2[0])*/
   }
 
 
@@ -362,4 +362,56 @@ public goScene(scene) {
   get_url(url){
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
+
+ /**
+  * onFileSelected(event)
+  *
+  * Funcion que permite abrir la imagen que se va a usar como minimapa
+  */
+  onFileSelected(event) {
+    // colocamos el tour en vacio
+    let local: any;
+    this.tour = local;
+
+    // permite verificar si ya se agrego un pin al minimapa
+    this.nuevo_pin = false;
+
+    // cambiamos el src para mostar la imagen
+    var image = <HTMLImageElement>document.getElementById('minimapa');
+    let nueva_url = URL.createObjectURL(event.target.files[0]);
+    image.src = nueva_url
+    this.minimapa = <HTMLImageElement>event.target.files[0];
+  }
+
+  /**
+  * addPin()
+  *
+  * Funcion que permite anadir un pin al minimapa
+  */
+  public addPin() {
+    // abrimos el modal
+      const dialogRef = this.dialog.open(ModalMinimapaComponent, {
+        width: '400px',
+        data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.nuevo_pin = true;
+        this.tour = result;
+      });
+  }
+
+  /**
+  * onPinClick()
+  *
+  * Funcion que permite mostrar la escena cuando se toca un pin del minimapa
+  */
+  onPinClick = (viewPosition: number): void => {
+
+    this.selectedPin = viewPosition;
+    this.selectedView = this.tour.result.views[viewPosition];
+
+
+    this.pannellumService.setScene(this.selectedView);
+  };
 }

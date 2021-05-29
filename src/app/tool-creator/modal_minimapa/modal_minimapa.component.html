@@ -1,0 +1,14 @@
+<h1 mat-dialog-title style="text-align: center;">Toca el minimapa para colocar el pin</h1>
+<div mat-dialog-content style="text-align: center;">
+    <div class="croquis-content">
+      <app-canvas_minimapa [pins]="tour.pins" [selectedPin]="selectedPin" [imagen]="img" [lugar] = "true" class="croquis"></app-canvas_minimapa>
+    </div>
+    <select name="miselect" [(ngModel)]="seleccionado">
+        <option> Escena a navegar </option>
+        <option [value]="item" *ngFor="let item of escenas_disponibles">{{item}}</option> 
+    </select>
+</div>
+<div mat-dialog-actions style="justify-content: center;">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-button cdkFocusInitial (click)="aceptar()">Aceptar</button>
+</div>
