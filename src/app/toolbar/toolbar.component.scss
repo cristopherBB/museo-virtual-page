@@ -1,3 +1,33 @@
+//.spacer {
+//  flex: 1 1 auto;
+//}
+
 .spacer {
-  flex: 1 1 auto;
+	flex: 0.95;
+}
+
+.spacer2{
+	flex: 0.05;
+}
+
+.button-toolbar {
+	font-size: 14px;
+}
+
+.button-toolbar:hover {
+	opacity: 0.6 !important;
+	text-decoration: overline;
+}
+
+.header-title{
+	font-family: "monospace";
+	font-size: 40px;
+}
+
+.title-line{
+	border-top: 1px solid rgba(255, 255, 255, 0.18);
+	margin-top: 10px;
+	margin-bottom: 0px; 
+	border-right: 0px; 
+	border-left: 0px;
 }
