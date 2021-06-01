@@ -524,4 +524,32 @@ export class PannellumService {
     }
     return []
   }
+
+  /**
+  * getImageSource
+  * Obtiene la ruta de la imagen de una escena
+  * @param scene_id id de la escena
+  */
+  public getImageSource(scene_id: string) {
+    if ( this.sceneJson ){
+      if( this.sceneJson[scene_id] ){
+        return this.sceneJson[scene_id]['panorama']
+      }
+    }
+    return []
+  }
+
+  /**
+  * getSceneTitle
+  * Obtiene el título de una escena
+  * @param scene_id id de la escena
+  */
+  public getSceneTitle(scene_id: string) {
+    if ( this.sceneJson ){
+      if( this.sceneJson[scene_id] ){
+        return this.sceneJson[scene_id]['title']
+      }
+    }
+    return []
+  }
 }
