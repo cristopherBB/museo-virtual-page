@@ -1,31 +1,98 @@
 <!--Inicio y botones de crear recorrido y subir JSON -->
-<img src="assets\images\fondo2.jpg" class="img-fluid" style="position: absolute; right: 0; top: 0; z-index: -100; width: 100%; height: 100%;">
-    <div *ngIf="!showPano" class="empty-scene-container">
-        <mat-card  class = "example-card"> 
-            <mat-card-header style="justify-content: center;" >  
-              <mat-card-title > <h2>Selecciona la opción de tu preferencia</h2> </mat-card-title>
-            </mat-card-header>  
-            <mat-card-content > 
-              <p >
-                Crea un recorrido desde cero o sube un archivo de configuración en formato JSON y continua tu recorrido.
-              </p >
-            </mat-card-content > 
-            <mat-card-actions style="text-align: center;" > 
-              <button  mat-button (click)="cero()"> Crear recorrido </button> 
-              <button  mat-button (click)="addScene()"> Subir JSON </button > 
-            </mat-card-actions > 
-          </mat-card>
-    </div>
+<div *ngIf="!showPano" class="empty-scene-container">
+    <mat-card  class = "example-card"> 
+        <mat-card-header style="justify-content: center;" >  
+          <mat-card-title > <h2>Selecciona la opción de tu preferencia</h2> </mat-card-title>
+        </mat-card-header>  
+        <mat-card-content > 
+          <p >
+            Crea un recorrido desde cero o sube un archivo de configuración en formato JSON y continúa tu recorrido.
+          </p >
+        </mat-card-content > 
+        <mat-card-actions style="text-align: center;" > 
+          <button  mat-button (click)="cero()"> Crear recorrido </button> 
+          <button  mat-button (click)="addScene()"> Subir JSON </button > 
+        </mat-card-actions > 
+      </mat-card>
+</div>
 
 <div class="row">
-    <!-- Panorama -->
-    <div id="panorama" *ngIf="showPano && !election"></div>
-    <div id="no_imagen" style="text-align: center;" *ngIf="election"> 
-        <img src="assets\images\no_escenas.png" style="margin-top: 120px; width: 50%;">
+
+    <!-- Panorama, Lista de Escenas, Listas de Hotspots -->
+    <div>
+
+        <!-- Panorama -->
+        <div id="panorama" style="width: 68.1vw; height: 60vh" *ngIf="showPano && !election"></div>
+        <div id="no_imagen" style="text-align: center;" *ngIf="election"> 
+            <img src="assets\images\no_escenas.png" style="margin-top: 120px; width: 50%;">
+        </div>
+
+
+        <!-- Tabs: Lista de Escenas, Lista de Hotspots de la Escena, Lista de Todos los Hotspots -->
+        <div class="row" style="width: 68.1vw; height: 22.5vh">
+            <div id="hotspots-view" class="background-color-primary" *ngIf="showPano">
+                <mat-tab-group animationDuration="100ms" [backgroundColor]="'primary'">
+                    
+                    <!-- Lista de Escenas (Carousel) -->
+                    <mat-tab label="Escenas del recorrido">
+                        <div id="carousel-container" class="carousel-container">
+                            <div class="carousel-inner">
+                                <div id = "track" class="track">
+                                    <div class="card-container" *ngFor="let scene of pannellumService.getScenes()"
+                                         (click)="goScene(scene)">
+                                        <div class="card">
+                                            <div class="img">
+                                                <img class="image" src="{{pannellumService.getImageSource(scene)}}" alt="">
+                                            </div>
+                                            <div class="info">{{pannellumService.getSceneTitle(scene)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-buttons">
+                                <button id="prev" class="prev" (click)="moveCarouselLeft()">
+                                    <i class="material-icons">arrow_back_ios</i>
+                                </button>
+                                <button id="next" class="next" (click)="moveCarouselRight()">
+                                    <i class="material-icons">arrow_forward_ios</i>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+
+                    <!-- Lista de Hotspots de la Escena -->
+                    <mat-tab label="Hotspots de la escena">
+                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getOneHotspots()"
+                            (click)="removeHotspot(hotspot)">
+                            <h4>{{hotspot.text}}</h4>
+                            <p>{{hotspot.type}}</p>
+                        </div>
+                    </mat-tab>
+
+
+                    <!-- Lista de Todos los Hotspots -->
+                    <mat-tab label="Todos los Hotspots">
+                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getAllHotspots()"
+                            (click)="removeHotspot(hotspot)">
+                            <h4>{{hotspot.text}}</h4>
+                            <p>{{hotspot.type}}</p>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
     </div>
-    <!-- Toolbar -->
+
+
+    <!-- Toolbar: Agregar Hotspot -->
     <div id="tools-view" *ngIf="showPano">
-        <h2>Agregar Hotspot</h2>
+        
+        <!--<h2>Agregar Hotspot</h2>-->
+        <mat-card class="fixed-title-card">AGREGAR HOTSPOT</mat-card>
+        
         <form id="hotspot-form">
 
             <mat-form-field appearance="fill" class="form-field">
@@ -250,50 +317,12 @@
             <button mat-raised-button color="{{pannellumService.mouseToogle ? 'primary' : ''}}" class="add-hotspot-button"
                 (click)="addHotspot()">Agregar Hotspot</button>
 
-
         </form>
-
-    </div>
-
-</div>
-
-<!-- Lista de hotspots -->
-<div class="row">
-    <div id="hotspots-view" *ngIf="showPano" style="height: 18vh;">
-        <mat-tab-group animationDuration="100ms">
-            <mat-tab label="Hotspots de la escena">
-                <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getOneHotspots()"
-                    (click)="removeHotspot(hotspot)">
-                    <h4>{{hotspot.text}}</h4>
-                    <p>{{hotspot.type}}</p>
-                </div>
-            </mat-tab>
-            <mat-tab label="Todos los Hotspots">
-                <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getAllHotspots()"
-                    (click)="removeHotspot(hotspot)">
-                    <h4>{{hotspot.text}}</h4>
-                    <p>{{hotspot.type}}</p>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
     </div>
 </div>
 
-<!-- Listas de escenas -->
-<div class="row">
-    <div id="hotspots-view" *ngIf="showPano">
-        <mat-tab-group animationDuration="100ms">
-            <mat-tab label="Escenas del recorrido">
-                <div class="hotspot-view-child" style="float: left;" *ngFor="let scene of pannellumService.getScenes()"
-                    (click)="goScene(scene)">
-                    <h4>{{scene}}</h4>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-</div>
 
-<!-- Mostrar seccion de minimapa -->
+<!-- Mostrar sección de minimapa-->
 <div class="row">
     <div id="hotspots-view" *ngIf="showPano">
         <mat-tab-group animationDuration="100ms">

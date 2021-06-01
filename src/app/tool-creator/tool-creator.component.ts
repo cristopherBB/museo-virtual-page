@@ -414,4 +414,53 @@ public goScene(scene) {
 
     this.pannellumService.setScene(this.selectedView);
   };
+
+
+  /**
+   * ---Carousel de escenas---
+  */
+
+  index = 0;
+
+  /**
+  * moveCarouselRight: Mueve el carousel hacia la derecha
+  */
+  public moveCarouselRight(){
+
+    this.index++;
+
+    const carousel_width = document.getElementById("carousel-container").offsetWidth;
+    const cards_per_carousel = 5;
+    const card_width = carousel_width / cards_per_carousel;
+
+    let translation: number = this.index * card_width;
+    document.getElementById("prev").style.display = "block";                                  // Muestra el botón izquierdo
+    document.getElementById("track").style.transform = "translateX(-"+translation+"px)";      // Mueve el carousel
+
+    // Cuando el carousel llega al final se quita el botón de la derecha
+    if (document.getElementById("track").offsetWidth - (this.index * card_width) <= card_width * cards_per_carousel){
+      document.getElementById("next").style.display = "none";
+    }
+  }
+
+  /**
+  * moveCarouselLeft: Mueve el carousel hacia la izquierda
+  */
+  public moveCarouselLeft(){
+
+    this.index--;
+
+    const carousel_width = document.getElementById("carousel-container").offsetWidth;
+    const cards_per_carousel = 5;
+    const card_width = carousel_width / cards_per_carousel;
+
+    let translation: number = this.index * card_width;
+    document.getElementById("next").style.display = "block";                                  // Muestra el botón derecho
+    document.getElementById("track").style.transform = "translateX(-"+translation+"px)";      // Mueve el carousel
+
+    // Cuando el carousel llega al principio se quita el botón de la izquierda
+    if (this.index == 0){
+      document.getElementById("prev").style.display = "none";
+    }
+  }
 }
