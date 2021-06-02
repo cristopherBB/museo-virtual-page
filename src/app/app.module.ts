@@ -40,6 +40,7 @@ import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hot
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ModalMinimapaComponent } from './tool-creator/modal_minimapa/modal_minimapa.component';
 import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
+import { EliminarPinsComponent } from './tool-creator/eliminar_pins/eliminar_pins.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_m
     DeleteComponent,
     ArtifactDetailsComponent,
     RemoveHotspotComponent,
-    ModalMinimapaComponent
+    ModalMinimapaComponent,
+    EliminarPinsComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +93,8 @@ import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_m
     ArtifactDetailsComponent,
     ModalComponent,
     RemoveHotspotComponent,
-    ModalMinimapaComponent
+    ModalMinimapaComponent,
+    EliminarPinsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } f
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
 import { ModalMinimapaComponent } from './modal_minimapa/modal_minimapa.component';
+import { EliminarPinsComponent } from './eliminar_pins/eliminar_pins.component';
 
 declare var pannellum: any;
 
@@ -414,6 +415,23 @@ public goScene(scene) {
 
     this.pannellumService.setScene(this.selectedView);
   };
+
+   /**
+  * removePin()
+  *
+  * Funcion que permite anadir un pin al minimapa
+  */
+    public removePin() {
+      // abrimos el modal
+        const dialogRef = this.dialog.open(EliminarPinsComponent, {
+          width: '400px',
+          data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
+        });
+  
+        dialogRef.afterClosed().subscribe(result => {
+          this.tour = result;
+        });
+    }
 
 
   /**
