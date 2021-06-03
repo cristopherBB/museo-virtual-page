@@ -6,8 +6,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
+<<<<<<< 1d0b548199e97133a7d8804f30a1af19ce60a9d1
 import { ModalMinimapComponent } from './modal_minimap/modal_minimap.component';
 import { RemovePinsComponent } from './remove_pins/remove_pins.component';
+=======
+
+declare var pannellum: any;
+
+>>>>>>> se eliminó la lgógica de validate schema en el toolcreator y se añadió al servicio de pannellum directamente
 
 @Component({
   selector: 'app-tool-creator',
@@ -89,8 +95,11 @@ export class ToolCreatorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+<<<<<<< 1d0b548199e97133a7d8804f30a1af19ce60a9d1
     let local: any;
     this.tour = local;
+=======
+>>>>>>> se eliminó la lgógica de validate schema en el toolcreator y se añadió al servicio de pannellum directamente
   }
 
 public cero() {
