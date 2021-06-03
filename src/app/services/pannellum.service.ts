@@ -6,6 +6,9 @@ import { CustomHotspot, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
 import { ApiService } from './api.service';
 
+import Ajv, {JSONSchemaType} from "ajv"
+import {DefinedError} from "ajv"
+const ajv = new Ajv()
 
 declare var pannellum
 
@@ -24,6 +27,89 @@ export class PannellumService {
   // Para Agregar un nuevo hotspot
   hotspotType: string;
   nextAddHotspot: CustomHotspot | SceneHotspot | InfoHotspot;
+
+  schema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "imagen": {
+        "type": "object",
+        "properties": {
+          "alt": {"type": "string"},
+          "height": {"type": "number"},
+          "src": {"type": "string"},
+          "width": {"type": "number"}
+        }
+      },
+      "modal": {
+        "type": "object",
+        "properties": {
+          "description": {"type": "string"},
+          "imagen": {"$ref": "#/definitions/imagen"},
+          "title": {"type": "string"},
+          "type": {"type": "string"}
+        }
+      },
+      "customIcon": {
+        "type": "object",
+        "properties": {
+          "alt": {"type": "string"},
+          "height": {"type": "number"},
+          "src": {"type": "string"},
+          "width": {"type": "number"}
+        }
+      },
+      "createTooltipArgs": {
+        "type": "object",
+        "properties": {
+          "customIcon":  {"$ref": "#/definitions/customIcon"},
+          "id": {"type": "string"},
+          "modal": {"$ref": "#/definitions/modal"},
+          "title": {"type": "string"}
+        }
+      },
+      "hotspot": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "id":  { "type": "string" },
+            "sceneId": {"type": "string"},
+            "pitch": { "type": "number" },
+            "cssClass": { "type": "string" },
+            "targetPitch": {"type": "number"},
+            "targetYaw": {"type": "number"},
+            "text": {"type": "string"},
+            "type": {"type": "string"},
+            "yaw": {"type": "number"},
+            "createTooltipArgs":  { "$ref": "#/definitions/createTooltipArgs"},
+            "createTooltipFunc": {"type": "string"},
+            "div": {"type": "string"},
+            "url": {"type": "string"}
+          },
+          "required": ["id"]
+        },
+        "default": []
+      },
+      "scene": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "title": {"type": "string"},
+            "panorama": {"type": "string"},
+            "type": {"type": "string"},
+            "yaw": {"type": "number"},
+            "hotspots": { "$ref": "#/definitions/hotspot"}
+          },
+          "required": ["title"]
+        },
+        "default": []
+      }
+    },
+    "type": "object",
+    "properties": {
+      "scene": { "$ref": "#/definitions/scene" }
+    },
+    "required": ["scene"]
+  }
 
   constructor(
     public dialog: MatDialog,
@@ -193,6 +279,14 @@ export class PannellumService {
       }
     )
 
+    let scenes = [];
+    for (const k in this.sceneJson) { scenes.push(this.sceneJson[k]) };
+
+    let json = {
+      "scene": scenes
+    }
+
+    this.validateSchema(json);
     return this.sceneJson
   }
 
@@ -572,4 +666,33 @@ export class PannellumService {
     }
     return []
   }
+
+  public validateSchema(data) {
+    console.log("json to validate: ");
+    console.log(data);
+    var validate = ajv.compile(this.schema);
+    var valid = validate(data);
+    console.log(valid);
+    if (!valid) console.log(validate.errors);
+  
+    if (validate(data)) {
+      // data is MyData here
+      console.log('is valid');
+      console.log(data)
+    } else {
+      // The type cast is needed, as Ajv uses a wider type to allow extension
+      // You can extend this type to include your error types as needed.
+      for (const err of validate.errors as DefinedError[]) {
+        console.log('is not valid');
+        switch (err.keyword) {
+          case "type":
+            // err type is narrowed here to have "type" error params properties
+            console.log(err.params.type)
+          break
+            // ...
+        }
+      }
+    }
+  }
+
 }
