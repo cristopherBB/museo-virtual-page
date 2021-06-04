@@ -9,17 +9,17 @@ export class CanvasMinimapaComponent implements OnInit {
   @ViewChild('map') canvas: ElementRef;
   @Input() pins: any[];
   @Input() selectedPin: number;
-  @Input() imagen: HTMLImageElement;
-  @Input() lugar: boolean;
+  @Input() img: HTMLImageElement;
+  @Input() place: boolean;
   @Output() onClick = new EventEmitter<number>();
-  enlace: string;
-  conteo = false;
+  link: string;
+  count = false;
 
   constructor() { }
 
   ngOnInit(): void {
     // Mostramos la imagen del minimapa
-    this.enlace = URL.createObjectURL(this.imagen);
+    this.link = URL.createObjectURL(this.img);
   }
 
   /**
@@ -30,13 +30,13 @@ export class CanvasMinimapaComponent implements OnInit {
   */
   onMouseClick(e: MouseEvent) {
     // verificamos si el usuario volvio a dar click en la imagen para eliminar una duplicacion.
-    if(this.conteo && this.lugar){
+    if(this.count && this.place){
       this.pins.pop();
     }
     // creamos el nuevo pin en la poscion del click
-    if(this.lugar){
+    if(this.place){
       this.pins.push({ x: ((e.offsetX * 100)/350), y: ((e.offsetY * 100)/260) });
-      this.conteo = true;
+      this.count = true;
     }
   }
 }

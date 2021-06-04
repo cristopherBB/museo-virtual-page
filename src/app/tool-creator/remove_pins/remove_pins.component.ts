@@ -3,11 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PannellumService } from 'src/app/services/pannellum.service';
 
 @Component({
-  selector: 'app-eliminar_pins',
-  templateUrl: './eliminar_pins.component.html',
-  styleUrls: ['./eliminar_pins.component.scss']
+  selector: 'app-remove_pins',
+  templateUrl: './remove_pins.component.html',
+  styleUrls: ['./remove_pins.component.scss']
 })
-export class EliminarPinsComponent implements OnInit {
+export class RemovePinsComponent implements OnInit {
   seleccionado: string = "Pin a eliminar";
   tour = { pins: [], views: [] };
   selectedView: string;
@@ -18,7 +18,7 @@ export class EliminarPinsComponent implements OnInit {
   tamano_nuevo = 0;
 
   constructor(
-    public dialogRef: MatDialogRef<EliminarPinsComponent>,
+    public dialogRef: MatDialogRef<RemovePinsComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) { }
 

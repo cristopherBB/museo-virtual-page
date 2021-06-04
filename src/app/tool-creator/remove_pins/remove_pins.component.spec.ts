@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EliminarPinsComponent } from './eliminar_pins.component';
+import { RemovePinsComponent } from './remove_pins.component';
 
-describe('EliminarPinsComponent', () => {
-  let component: EliminarPinsComponent;
-  let fixture: ComponentFixture<EliminarPinsComponent>;
+describe('RemovePinsComponent', () => {
+  let component: RemovePinsComponent;
+  let fixture: ComponentFixture<RemovePinsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EliminarPinsComponent ]
+      declarations: [ RemovePinsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EliminarPinsComponent);
+    fixture = TestBed.createComponent(RemovePinsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

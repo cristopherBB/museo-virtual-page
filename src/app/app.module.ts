@@ -38,9 +38,9 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
 import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
 import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hotspot.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { ModalMinimapaComponent } from './tool-creator/modal_minimapa/modal_minimapa.component';
+import { ModalMinimapComponent } from './tool-creator/modal_minimap/modal_minimap.component';
 import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
-import { EliminarPinsComponent } from './tool-creator/eliminar_pins/eliminar_pins.component';
+import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +60,8 @@ import { EliminarPinsComponent } from './tool-creator/eliminar_pins/eliminar_pin
     DeleteComponent,
     ArtifactDetailsComponent,
     RemoveHotspotComponent,
-    ModalMinimapaComponent,
-    EliminarPinsComponent
+    ModalMinimapComponent,
+    RemovePinsComponent
   ],
   imports: [
     BrowserModule,
@@ -93,8 +93,8 @@ import { EliminarPinsComponent } from './tool-creator/eliminar_pins/eliminar_pin
     ArtifactDetailsComponent,
     ModalComponent,
     RemoveHotspotComponent,
-    ModalMinimapaComponent,
-    EliminarPinsComponent
+    ModalMinimapComponent,
+    RemovePinsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

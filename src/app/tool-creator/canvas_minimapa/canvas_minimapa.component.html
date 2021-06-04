@@ -1,5 +1,5 @@
 <div class="map-size">
-  <div class="map" [ngStyle]="{'background-image': 'url(' + enlace + ')'}" (click)="onMouseClick($event)">
+  <div class="map" [ngStyle]="{'background-image': 'url(' + link + ')'}" (click)="onMouseClick($event)">
     <div class="pin" *ngFor="let pin of pins; let i = index" id="{{'pin-'+i}}"
       [style.left]="pin.x + '%'"
       [style.top]="pin.y + '%'"

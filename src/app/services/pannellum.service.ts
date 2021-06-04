@@ -500,24 +500,38 @@ export class PannellumService {
     if (this.pannellumViewer) this.pannellumViewer.loadScene(sceneId);
   }
 
+  /**
+   * Nota: Para usar este service es necesario que el panellum este iniciado. El usuarlo sin que el panellum se encuentre instanciado puede
+   * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
+   * 
+   * getAllHotspots
+   * Obtiene todos los hotspots del recorrido
+   * @return arreglo con todos los hotspots del recorrido
+   */
   public getAllHotspots() {
 
-    let ListHotspots = [];
+    let hotspots = [];
     if ( this.sceneJson ){
 
       for (let i in this.scenes) {
-       // console.log(index2); // prints elements: 0, 1, 2, 3
         for (let j of this.sceneJson[this.scenes[i]]['hotSpots']){
-          ListHotspots.push(j)
+          hotspots.push(j)
         }
-        //console.log(this.sceneJson[this.scenes[i]]['hotSpots'])
       }
-      return ListHotspots;
+      return hotspots;
     }
     return []
   }
 
-  public getOneHotspots() {
+  /**
+   * Nota: Para usar este service es necesario que el panellum este iniciado. El usuarlo sin que el panellum se encuentre instanciado puede
+   * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
+   * 
+   * getCurrentSceneHotspots
+   * Obtiene la lista de hotspots de la escena actual
+   * @return arreglo con todos los hotspots de la escena
+   */
+  public getCurrentSceneHotspots() {
     if (this.pannellumViewer ){
       let p = this.pannellumViewer.getScene();
       return this.sceneJson[p]['hotSpots']
@@ -526,6 +540,9 @@ export class PannellumService {
   }
 
   /**
+  * Nota: Para usar este service es necesario que el panellum este iniciado. El usuarlo sin que el panellum se encuentre instanciado puede
+  * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
+  * 
   * getImageSource
   * Obtiene la ruta de la imagen de una escena
   * @param scene_id id de la escena
@@ -540,6 +557,9 @@ export class PannellumService {
   }
 
   /**
+  * Nota: Para usar este service es necesario que el panellum este iniciado. El usuarlo sin que el panellum se encuentre instanciado puede
+  * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
+  * 
   * getSceneTitle
   * Obtiene el título de una escena
   * @param scene_id id de la escena

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalMinimapaComponent } from './modal_minimapa.component';
+import { ModalMinimapComponent } from './modal_minimap.component';
 
-describe('ModalMinimapaComponent', () => {
-  let component: ModalMinimapaComponent;
-  let fixture: ComponentFixture<ModalMinimapaComponent>;
+describe('ModalMinimapComponent', () => {
+  let component: ModalMinimapComponent;
+  let fixture: ComponentFixture<ModalMinimapComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalMinimapaComponent ]
+      declarations: [ ModalMinimapComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalMinimapaComponent);
+    fixture = TestBed.createComponent(ModalMinimapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

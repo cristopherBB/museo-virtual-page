@@ -6,11 +6,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
-import { ModalMinimapaComponent } from './modal_minimapa/modal_minimapa.component';
-import { EliminarPinsComponent } from './eliminar_pins/eliminar_pins.component';
-
-declare var pannellum: any;
-
+import { ModalMinimapComponent } from './modal_minimap/modal_minimap.component';
+import { RemovePinsComponent } from './remove_pins/remove_pins.component';
 
 @Component({
   selector: 'app-tool-creator',
@@ -92,6 +89,8 @@ export class ToolCreatorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let local: any;
+    this.tour = local;
   }
 
 public cero() {
@@ -391,7 +390,7 @@ public goScene(scene) {
   */
   public addPin() {
     // abrimos el modal
-      const dialogRef = this.dialog.open(ModalMinimapaComponent, {
+      const dialogRef = this.dialog.open(ModalMinimapComponent, {
         width: '400px',
         data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
       });
@@ -423,7 +422,7 @@ public goScene(scene) {
   */
     public removePin() {
       // abrimos el modal
-        const dialogRef = this.dialog.open(EliminarPinsComponent, {
+        const dialogRef = this.dialog.open(RemovePinsComponent, {
           width: '400px',
           data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
         });

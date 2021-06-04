@@ -3,22 +3,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PannellumService } from 'src/app/services/pannellum.service';
 
 @Component({
-  selector: 'app-modal_minimapa',
-  templateUrl: './modal_minimapa.component.html',
-  styleUrls: ['./modal_minimapa.component.scss']
+  selector: 'app-modal_minimap',
+  templateUrl: './modal_minimap.component.html',
+  styleUrls: ['./modal_minimap.component.scss']
 })
-export class ModalMinimapaComponent implements OnInit {
-  seleccionado: string = "Escena a navegar";
+export class ModalMinimapComponent implements OnInit {
+  selected: string = "Escena a navegar";
   tour = { pins: [], views: [] };
   selectedView: string;
   selectedPin = 0;
   img: HTMLImageElement;
-  escenas_disponibles = [];
-  tamano_viejo = 0;
-  tamano_nuevo = 0;
+  scenesAvailable = [];
+  oldSize = 0;
+  newSize = 0;
 
   constructor(
-    public dialogRef: MatDialogRef<ModalMinimapaComponent>,
+    public dialogRef: MatDialogRef<ModalMinimapComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) { }
 
@@ -28,15 +28,15 @@ export class ModalMinimapaComponent implements OnInit {
     if(this.data.tour_actual){
       this.tour = this.data.tour_actual.result;
     }
-    this.tamano_viejo = this.tour.pins.length;
-    this.escenas_disponibles = this.data.escenas.filter(el => !this.tour.views.includes(el));
+    this.oldSize = this.tour.pins.length;
+    this.scenesAvailable = this.data.escenas.filter(el => !this.tour.views.includes(el));
 
   }
 
   close(){
     // verificamos el tamaño de los arreglos de pines para verificar si se agrego uno nuevo o no
-    this.tamano_nuevo = this.tour.pins.length
-    if(this.tamano_nuevo > this.tamano_viejo){
+    this.newSize = this.tour.pins.length
+    if(this.newSize > this.oldSize){
       this.tour.pins.pop()
     }
     this.dialogRef.close({
@@ -46,9 +46,9 @@ export class ModalMinimapaComponent implements OnInit {
 
   aceptar(){
     // verificamos el tamaño de los arreglos de pines para verificar si se agrego uno nuevo o no
-      this.tamano_nuevo = this.tour.pins.length
-    if(this.tamano_nuevo > this.tamano_viejo){
-      this.tour.views.push(this.seleccionado);
+      this.newSize = this.tour.pins.length
+    if(this.newSize > this.oldSize){
+      this.tour.views.push(this.selected);
     }
       this.dialogRef.close({
       result: this.tour,

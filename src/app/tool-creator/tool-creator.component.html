@@ -64,7 +64,7 @@
 
                     <!-- Lista de Hotspots de la Escena -->
                     <mat-tab label="Hotspots de la escena">
-                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getOneHotspots()"
+                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getCurrentSceneHotspots()"
                             (click)="removeHotspot(hotspot)">
                             <h4>{{hotspot.text}}</h4>
                             <p>{{hotspot.type}}</p>
@@ -326,7 +326,7 @@
                 <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)" style="margin-top: 15px;">
                 <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
                 <div class="croquis-content" *ngIf="nuevo_pin">
-                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [imagen]="minimapa" [lugar]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
+                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [img]="minimapa" [place]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
                     <ol>
                         <li  *ngFor="let pins of tour.result.views">
                             {{pins}}
