@@ -31,21 +31,25 @@
     display: flex;
 }
 
-#panorama{
+#panorama, #no_imagen{
     width: 70vw;
     height: 70vh;
 }
 
 #tools-view{
-    width: 30vw;
+    width: 31vw;
+    height: 80vh;
     margin: 5px;
-    border: 2px solid black;
-    background-color: #f3f3f3;
+    border: 2px solid #f3f3f3;
+    background-color: #ffffff;
     padding: 5px;
+    padding-top: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12) !important;  // no estaba
+    overflow-y: auto;
 }
 
 #tools-view form {
@@ -61,21 +65,28 @@ mat-form-field{
 
 #hotspots-view{
     width: 100vw;
-    height: 10vh;
-    border: 2px solid black;
-    background-color: #f3f3f3;
-    border-radius: 5px;
     padding: 5px;
     display: flex;
 }
 
 .hotspot-view-child{
-    width: 10vw;
+    width: 20vw;
+    height: 8vh;
     margin: 10px 5px;
-    border: 2px solid black;
-    border-radius: 5px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: rgba(96, 96, 96, 0.5);
+    color: #ffffff;
+    padding-top: 15px;
+    opacity: 0.7;
+}
+
+.hotspot-view-child:hover{
+    opacity: 1 !important;
+    box-shadow: 0 3px 3px 3px rgba(0,0,0,.2), 0 3px 3px 0 rgba(0,0,0,.14), 0 3px 3px 0 rgba(0,0,0,.12) !important;
 }
 
 .hotspots-fields{
@@ -87,4 +98,144 @@ mat-form-field{
 
 #hotspot-form{
     width: 100%;
+    padding-top: 40px;
 }
+
+.add-hotspot-button{
+    width: 16vw;
+}
+
+.accordion-form{
+    width: 16vw;
+}
+
+.form-field{
+    width: 16vw;
+}
+
+
+/* Carousel de escenas */
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.carousel-container{
+    width: 65vw;
+    margin: 0px;
+    padding-top: 5px;
+    position: relative;
+    overflow: hidden;
+    padding-left: 15px;
+}
+
+.carousel-container .carousel-inner{
+    overflow: hidden;
+}
+
+.carousel-container .track{
+    display: inline-flex;
+    transition: transform 0.5s;
+}
+
+.carousel-container .card-container{
+    width: 210px;
+    flex-shrink: 0;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+.carousel-container .card-container .card{
+    width: 100%;
+    height: 100%;
+    width: 190px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.carousel-container .card-container .card:hover{
+    opacity: 1;
+    box-shadow: 0 8px 8px 8px rgba(0,0,0,.2), 0 8px 8px 0 rgba(0,0,0,.14), 0 8px 8px 0 rgba(0,0,0,.12) !important;
+}
+
+.carousel-buttons button{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    background-color: #000000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.carousel-buttons button:hover{
+    background-color: #2E2B2B; 
+    border: 1px solid #2E2B2B;
+}
+
+.carousel-buttons .prev{
+    left: 15px;
+    display: none;
+    padding-left: 10px;
+}
+
+.carousel-buttons .next{
+    right: 0px;
+}
+
+.card > * {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card .img{
+    font-size: 30px;
+}
+
+.card .img .image{
+    object-fit: cover;
+    width: 190px;
+    height: 70px;
+    box-sizing: border-box;
+}
+
+.card .info{
+    flex-basis: 40px;
+    background: rgba(96, 96, 96, 0.5);
+    color: #ffffff;
+    flex-grow: 0;
+    box-sizing: border-box;
+}
+
+.material-icons{
+    font-size: 12px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Carta de título de agregar hotspot */
+
+.fixed-title-card{
+    position: sticky;
+    top: 0;
+    z-index: 1; 
+    width: 26vw;
+    height: 10px; 
+    border-radius: 0px; 
+    margin: 0px;
+    box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0.8px 0px 0 rgba(96,96,96,0.5), 0 0px 0px 0 rgba(0,0,0,0); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+

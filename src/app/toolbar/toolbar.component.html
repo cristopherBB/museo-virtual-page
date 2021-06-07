@@ -1,5 +1,6 @@
-<mat-toolbar>
-  <span>Museum</span>
+<!-- 
+<mat-toolbar color="primary">
+  <span>Museo Virtual</span>
   <span class="spacer"></span>
   <button mat-raised-button routerLink="/" routerLinkActive="active">
     <mat-icon>home</mat-icon>
@@ -9,3 +10,29 @@
     <mat-icon>build</mat-icon>
   </button>
 </mat-toolbar>
+-->
+
+<mat-toolbar color="primary">
+	<div style="height: 9vh">
+		<mat-toolbar-row style="display:flex; justify-content: center">
+			<span class="header-title">Museo</span>
+			<span class="header-title"><br/>Virtual</span>
+		</mat-toolbar-row>
+	</div>
+
+	<hr size="1" width="95%" class="title-line">
+
+	<mat-toolbar-row style="height: 7vh">
+
+		<span class="spacer"></span>
+	  	<button mat-raised-button class="button-toolbar" color="primary" routerLink="/" routerLinkActive="active">
+	    	INICIO
+	  	</button>
+
+	  	<span class="spacer2"></span>
+	  	<button mat-raised-button class="button-toolbar" color="primary" routerLink="/tool-creator" routerLinkActive="active">
+	    	EDITOR
+	  	</button>
+	</mat-toolbar-row>
+</mat-toolbar>
+

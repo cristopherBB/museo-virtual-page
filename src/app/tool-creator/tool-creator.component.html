@@ -1,258 +1,371 @@
-<!-- Boton para subir archivo -->
+<!--Inicio y botones de crear recorrido y subir JSON -->
 <div *ngIf="!showPano" class="empty-scene-container">
-    <button class="empty-scene" mat-stroked-button (click)="addScene()">
-        <h2>Para comenzar sube un archivo de Configuracion en <b>Formato JSON</b></h2>
-        <mat-icon>lightbulb</mat-icon>
-    </button>
-
+    <mat-card  class = "example-card"> 
+        <mat-card-header style="justify-content: center;" >  
+          <mat-card-title > <h2>Selecciona la opción de tu preferencia</h2> </mat-card-title>
+        </mat-card-header>  
+        <mat-card-content > 
+          <p >
+            Crea un recorrido desde cero o sube un archivo de configuración en formato JSON y continúa tu recorrido.
+          </p >
+        </mat-card-content > 
+        <mat-card-actions style="text-align: center;" > 
+          <button  mat-button (click)="cero()"> Crear recorrido </button> 
+          <button  mat-button (click)="addScene()"> Subir JSON </button > 
+        </mat-card-actions > 
+      </mat-card>
 </div>
 
 <div class="row">
-    <!-- Panorama -->
-    <div id="panorama" *ngIf="showPano"></div>
 
-    <!-- Toolbar -->
-    <div id="tools-view" *ngIf="showPano">
-        <h2>Tools</h2>
-        <form id="hotspot-form">
+    <!-- Panorama, Lista de Escenas, Listas de Hotspots -->
+    <div>
 
-            <button mat-raised-button color="{{pannellumService.mouseToogle ? 'primary' : ''}}"
-                (click)="addHotspot()">Agregar Hotspot</button>
-            <mat-form-field appearance="fill">
-                <mat-label>Tipo de HotSpot</mat-label>
-                <mat-select [formControl]="hotspotTypeInput">
-                    <mat-option *ngFor="let h of hotspots" [value]="h.value">
-                        {{h.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <div id="hotspot-scene" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'scene'">
-                <!-- TITULO -->
-                <h3>Hotspot de Cambio de Escena</h3>
-
-                <!-- TEXTO -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Texto</mat-label>
-                    <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
-                </mat-form-field>
-
-                <!-- ID -->
-                <mat-form-field appearance="fill">
-                    <mat-label>ID</mat-label>
-                    <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
-                </mat-form-field>
-
-                <!-- SIGUIENTE ESCENA -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Siguiente Scena</mat-label>
-                    <mat-select [formControl]="hotspotSceneIdInput">
-                        <mat-option value="">
-                            Selecciona una
-                        </mat-option>
-                        <mat-option *ngFor="let s of pannellumService.getScenes()" [value]="s">
-                            {{s}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <!-- CUSTOM ICON -->
-                <mat-accordion>
-                    <mat-expansion-panel (opened)="customIconField = true" (closed)="customIconField = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Icono Personalizado
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <!-- SRC -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>SRC</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconSrcInput" type="text"
-                                placeholder="Ruta del icono">
-                        </mat-form-field>
-
-                        <!-- ALT -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>ALT</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconAltInput" type="text"
-                                placeholder="Alt del icono">
-                        </mat-form-field>
-
-                        <!-- WIDTH -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Ancho</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconWidthInput" type="text"
-                                placeholder="Ancho del icono">
-                        </mat-form-field>
-
-                        <!-- HEIGHT -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Alto</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconHeightInput" type="text"
-                                placeholder="Alto del icono">
-                        </mat-form-field>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-
-                <!-- CSS Class -->
-                <mat-form-field appearance="fill">
-                    <mat-label>CSS Class</mat-label>
-                    <input matInput [formControl]="hotspotCssClassInput" type="text"
-                        placeholder="Custom Css class del hotspot">
-                </mat-form-field>
+        <!-- Panorama -->
+        <div id="panorama" style="width: 68.1vw; height: 60vh" *ngIf="showPano && !election"></div>
+        <div id="no_imagen" style="text-align: center;" *ngIf="election"> 
+            <img src="assets\images\no_escenas.png" style="margin-top: 120px; width: 50%;">
+        </div>
 
 
+        <!-- Tabs: Lista de Escenas, Lista de Hotspots de la Escena, Lista de Todos los Hotspots -->
+        <div class="row" style="width: 68.1vw; height: 22.5vh">
+            <div id="hotspots-view" class="background-color-primary" *ngIf="showPano">
+                <mat-tab-group animationDuration="100ms" [backgroundColor]="'primary'">
+                    
+                    <!-- Lista de Escenas (Carousel) -->
+                    <mat-tab label="Escenas del recorrido">
+                        <div id="carousel-container" class="carousel-container">
+                            <div class="carousel-inner">
+                                <div id = "track" class="track">
+                                    <div class="card-container" *ngFor="let scene of pannellumService.getScenes()"
+                                         (click)="goScene(scene)">
+                                        <div class="card">
+                                            <div class="img">
+                                                <img class="image" src="{{pannellumService.getImageSource(scene)}}" alt="">
+                                            </div>
+                                            <div class="info">{{pannellumService.getSceneTitle(scene)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-buttons">
+                                <button id="prev" class="prev" (click)="moveCarouselLeft()">
+                                    <i class="material-icons">arrow_back_ios</i>
+                                </button>
+                                <button id="next" class="next" (click)="moveCarouselRight()">
+                                    <i class="material-icons">arrow_forward_ios</i>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+
+                    <!-- Lista de Hotspots de la Escena -->
+                    <mat-tab label="Hotspots de la escena">
+                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getCurrentSceneHotspots()"
+                            (click)="removeHotspot(hotspot)">
+                            <h4>{{hotspot.text}}</h4>
+                            <p>{{hotspot.type}}</p>
+                        </div>
+                    </mat-tab>
+
+
+                    <!-- Lista de Todos los Hotspots -->
+                    <mat-tab label="Todos los Hotspots">
+                        <div class="hotspot-view-child" style="float: left;" *ngFor="let hotspot of pannellumService.getAllHotspots()"
+                            (click)="removeHotspot(hotspot)">
+                            <h4>{{hotspot.text}}</h4>
+                            <p>{{hotspot.type}}</p>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
             </div>
-
-            <div id="hotspot-info" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'info'">
-
-                <h3>Hotspot de Info</h3>
-
-
-                <!-- TEXTO -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Texto</mat-label>
-                    <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
-                </mat-form-field>
-
-                <!-- ID -->
-                <mat-form-field appearance="fill">
-                    <mat-label>ID</mat-label>
-                    <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
-                </mat-form-field>
-
-                <!-- URL -->
-                <mat-form-field appearance="fill">
-                    <mat-label>URL</mat-label>
-                    <input matInput [formControl]="hotspotURLInput" type="text" placeholder="URL del hotspot">
-                </mat-form-field>
-
-                <!-- CSS Class -->
-                <mat-form-field appearance="fill">
-                    <mat-label>CSS Class</mat-label>
-                    <input matInput [formControl]="hotspotCssClassInput" type="text"
-                        placeholder="Custom Css class del hotspot">
-                </mat-form-field>
-            </div>
-
-            <div id="hotspot-custom" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'custom'">
-
-                <h3>Hotspot Personalizado</h3>
-
-                <!-- TEXTO -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Texto</mat-label>
-                    <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
-                </mat-form-field>
-
-                <!-- ID -->
-                <mat-form-field appearance="fill">
-                    <mat-label>ID</mat-label>
-                    <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
-                </mat-form-field>
-
-                <!-- CUSTOM ICON -->
-                <mat-accordion>
-                    <mat-expansion-panel (opened)="customIconField = true" (closed)="customIconField = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Icono Personalizado
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <!-- SRC -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>SRC</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconSrcInput" type="text"
-                                placeholder="Ruta del icono">
-                        </mat-form-field>
-
-                        <!-- ALT -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>ALT</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconAltInput" type="text"
-                                placeholder="Alt del icono">
-                        </mat-form-field>
-
-                        <!-- WIDTH -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Ancho</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconWidthInput" type="text"
-                                placeholder="Ancho del icono">
-                        </mat-form-field>
-
-                        <!-- HEIGHT -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Alto</mat-label>
-                            <input matInput [formControl]="hotspotCustomIconHeightInput" type="text"
-                                placeholder="Alto del icono">
-                        </mat-form-field>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-
-                <!-- MODAL -->
-                <mat-accordion>
-                    <mat-expansion-panel (opened)="modalField = true" (closed)="modalField = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Ventana de Info (MODAL)
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <!-- TITLE -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Titulo</mat-label>
-                            <input matInput [formControl]="hotspotModalTitleInput" type="text"
-                                placeholder="Titulo del modal">
-                        </mat-form-field>
-
-                        <!-- DESCRIPTION -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Descripcion</mat-label>
-                            <input matInput [formControl]="hotspotModalDescriptionInput" type="text"
-                                placeholder="Escribe una descripcion">
-                        </mat-form-field>
-
-                        <!-- URL IMAGE -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Ruta</mat-label>
-                            <input matInput [formControl]="hotspotModalImageURLInput" type="text"
-                                placeholder="Ruta de la imagen del Modal">
-                        </mat-form-field>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-
-                <!-- CSS Class -->
-                <mat-form-field appearance="fill">
-                    <mat-label>CSS Class</mat-label>
-                    <input matInput [formControl]="hotspotCssClassInput" type="text"
-                        placeholder="Custom Css class del hotspot">
-                </mat-form-field>
-            </div>
-
-
-
-
-        </form>
-
-    </div>
-
-</div>
-
-<div class="row">
-    <div id="hotspots-view" *ngIf="showPano">
-        <div class="hotspot-view-child" *ngFor="let hotspot of pannellumService.getHotspots()"
-            (click)="removeHotspot(hotspot)">
-            <h4>{{hotspot.text}}</h4>
-            <p>{{hotspot.type}}</p>
         </div>
     </div>
 
+
+    <!-- Toolbar: Agregar Hotspot -->
+    <div id="tools-view" *ngIf="showPano">
+        
+        <!--<h2>Agregar Hotspot</h2>-->
+        <mat-tab-group animationDuration="100ms" style="text-align: center;">
+            <mat-tab label="Agregar Hotspot">
+                <!--<mat-card class="fixed-title-card">AGREGAR HOTSPOT</mat-card>-->
+                
+                <form id="hotspot-form">
+
+                    <mat-form-field appearance="fill" class="form-field">
+                        <mat-label>Tipo de HotSpot</mat-label>
+                        <mat-select [formControl]="hotspotTypeInput">
+                            <mat-option *ngFor="let h of hotspots" [value]="h.value">
+                                {{h.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div id="hotspot-scene" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'scene'">
+                        <!-- TITULO -->
+                        <h3>Hotspot de Cambio de Escena</h3>
+
+                        <!-- TEXTO -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Texto</mat-label>
+                            <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
+                        </mat-form-field>
+
+                        <!-- ID -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>ID</mat-label>
+                            <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
+                        </mat-form-field>
+
+                        <!-- SIGUIENTE ESCENA -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Siguiente escena</mat-label>
+                            <mat-select [formControl]="hotspotSceneIdInput">
+                                <mat-option value="">
+                                    Selecciona una escena
+                                </mat-option>
+                                <mat-option *ngFor="let s of pannellumService.getScenes()" [value]="s">
+                                    {{s}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- CUSTOM ICON -->
+                        <mat-accordion class="accordion-form">
+                            <mat-expansion-panel (opened)="customIconField = true" (closed)="customIconField = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Icono Personalizado
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <!-- SRC -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>SRC</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconSrcInput" type="text"
+                                        placeholder="Ruta del icono">
+                                </mat-form-field>
+
+                                <!-- ALT -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>ALT</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconAltInput" type="text"
+                                        placeholder="Alt del icono">
+                                </mat-form-field>
+
+                                <!-- WIDTH -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Ancho</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconWidthInput" type="text"
+                                        placeholder="Ancho del icono">
+                                </mat-form-field>
+
+                                <!-- HEIGHT -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Alto</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconHeightInput" type="text"
+                                        placeholder="Alto del icono">
+                                </mat-form-field>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <!-- CSS Class -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>CSS Class</mat-label>
+                            <input matInput [formControl]="hotspotCssClassInput" type="text"
+                                placeholder="Custom Css class del hotspot">
+                        </mat-form-field>
+
+
+                    </div>
+
+                    <div id="hotspot-info" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'info'">
+
+                        <h3>Hotspot de Info</h3>
+
+
+                        <!-- TEXTO -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Texto</mat-label>
+                            <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
+                        </mat-form-field>
+
+                        <!-- ID -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>ID</mat-label>
+                            <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
+                        </mat-form-field>
+
+                        <!-- URL -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>URL</mat-label>
+                            <input matInput [formControl]="hotspotURLInput" type="text" placeholder="URL del hotspot">
+                        </mat-form-field>
+
+                        <!-- CSS Class -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>CSS Class</mat-label>
+                            <input matInput [formControl]="hotspotCssClassInput" type="text"
+                                placeholder="Custom Css class del hotspot">
+                        </mat-form-field>
+                    </div>
+
+                    <div id="hotspot-custom" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'custom'">
+
+                        <h3>Hotspot Personalizado</h3>
+
+                        <!-- TEXTO -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Texto</mat-label>
+                            <input matInput [formControl]="hotspotTextInput" type="text" placeholder="Texto del hotspot">
+                        </mat-form-field>
+
+                        <!-- ID -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>ID</mat-label>
+                            <input matInput [formControl]="hotspotIdInput" type="text" placeholder="ID del hotspot">
+                        </mat-form-field>
+
+                        <!-- CUSTOM ICON -->
+                        <mat-accordion class="accordion-form">
+                            <mat-expansion-panel (opened)="customIconField = true" (closed)="customIconField = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Icono Personalizado
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <!-- SRC -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>SRC</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconSrcInput" type="text"
+                                        placeholder="Ruta del icono">
+                                </mat-form-field>
+
+                                <!-- ALT -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>ALT</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconAltInput" type="text"
+                                        placeholder="Alt del icono">
+                                </mat-form-field>
+
+                                <!-- WIDTH -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Ancho</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconWidthInput" type="text"
+                                        placeholder="Ancho del icono">
+                                </mat-form-field>
+
+                                <!-- HEIGHT -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Alto</mat-label>
+                                    <input matInput [formControl]="hotspotCustomIconHeightInput" type="text"
+                                        placeholder="Alto del icono">
+                                </mat-form-field>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <br />                
+
+                        <!-- MODAL -->
+                        <mat-accordion class="accordion-form">
+                            <mat-expansion-panel (opened)="modalField = true" (closed)="modalField = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Ventana de Info (MODAL)
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <!-- TITLE -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Titulo</mat-label>
+                                    <input matInput [formControl]="hotspotModalTitleInput" type="text"
+                                        placeholder="Titulo del modal">
+                                </mat-form-field>
+
+                                <!-- DESCRIPTION -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Descripcion</mat-label>
+                                    <input matInput [formControl]="hotspotModalDescriptionInput" type="text"
+                                        placeholder="Escribe una descripcion">
+                                </mat-form-field>
+
+                                <!-- URL IMAGE -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Ruta</mat-label>
+                                    <input matInput [formControl]="hotspotModalImageURLInput" type="text"
+                                        placeholder="Ruta de la imagen del Modal">
+                                </mat-form-field>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <!-- CSS Class -->
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>CSS Class</mat-label>
+                            <input matInput [formControl]="hotspotCssClassInput" type="text"
+                                placeholder="Custom Css class del hotspot">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Botón de Agregar Hotspot -->
+                    <button mat-raised-button color="{{pannellumService.mouseToogle ? 'primary' : ''}}" class="add-hotspot-button"
+                        (click)="addHotspot()">Agregar Hotspot</button>
+
+                </form>
+            </mat-tab>
+
+            <mat-tab label="Minimapa">
+                <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)" style="margin-top: 15px;">
+                <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
+                <div class="croquis-content" *ngIf="nuevo_pin">
+                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [img]="minimapa" [place]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
+                    <ol>
+                        <li  *ngFor="let pins of tour.result.views">
+                            {{pins}}
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <button  mat-button (click)="addPin()"> Agregar Pin </button >
+                    <button  mat-button (click)="removePin()"> Eliminar Pin </button >
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 </div>
+
+
+<!-- Mostrar sección de minimapa
+<div class="row">
+    <div id="hotspots-view" *ngIf="showPano">
+        <mat-tab-group animationDuration="100ms">
+            <mat-tab label="Minimapa">
+                <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)">
+                <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
+                <div class="croquis-content" *ngIf="nuevo_pin">
+                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [imagen]="minimapa" [lugar]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
+                    <ol>
+                        <li  *ngFor="let pins of tour.result.views">
+                            {{pins}}
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <button  mat-button (click)="addPin()"> Agregar Pin </button >
+                    <button  mat-button (click)="removePin()"> Eliminar Pin </button >
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>-->
 
 
 <input hidden type="file" id="file" (change)="onJsonFileChanged( $event )" />

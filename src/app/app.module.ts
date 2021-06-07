@@ -17,6 +17,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -36,6 +38,9 @@ import { DeleteComponent } from './components/dialogs/delete/delete.component';
 import { ArtifactDetailsComponent } from './components/dialogs/artifact-details/artifact-details.component';
 import { RemoveHotspotComponent } from './tool-creator/remove-hotspot/remove-hotspot.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ModalMinimapComponent } from './tool-creator/modal_minimap/modal_minimap.component';
+import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
+import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ToolbarComponent,
     VirtualMuseumComponent,
     CanvasComponent,
+    CanvasMinimapaComponent,
     VirtualViewComponent,
     LandingComponent,
     TourDetailsComponent,
@@ -53,7 +59,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AddMuseumComponent,
     DeleteComponent,
     ArtifactDetailsComponent,
-    RemoveHotspotComponent
+    RemoveHotspotComponent,
+    ModalMinimapComponent,
+    RemovePinsComponent
   ],
   imports: [
     BrowserModule,
@@ -75,14 +83,18 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatPaginatorModule,
     MatTableModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabsModule,
+    MatSnackBarModule
   ],
   entryComponents: [
     UploadImageComponent,
     DeleteComponent,
     ArtifactDetailsComponent,
     ModalComponent,
-    RemoveHotspotComponent
+    RemoveHotspotComponent,
+    ModalMinimapComponent,
+    RemovePinsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

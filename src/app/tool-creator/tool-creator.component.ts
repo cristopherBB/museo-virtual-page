@@ -1,13 +1,13 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
-
-declare var pannellum: any;
-
+import { ModalMinimapComponent } from './modal_minimap/modal_minimap.component';
+import { RemovePinsComponent } from './remove_pins/remove_pins.component';
 
 @Component({
   selector: 'app-tool-creator',
@@ -19,6 +19,12 @@ export class ToolCreatorComponent implements OnInit {
   showPano = false;
   customIconField = false;
   modalField = false;
+  election = false;
+  nuevo_pin = false;
+  minimapa = <HTMLImageElement>document.getElementById('minimapa');
+  tour;
+  selectedPin = 0;
+  selectedView: string;
 
   hotspots = [
     {value: '', name: "Elegir un tipo"},
@@ -78,12 +84,23 @@ export class ToolCreatorComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
+    let local: any;
+    this.tour = local;
   }
 
+public cero() {
+  this.showPano = true;
+  this.election = true;
+}
+
+public goScene(scene) {
+  this.pannellumService.setScene(scene);
+}
 
   /**
    * addScene
@@ -91,8 +108,9 @@ export class ToolCreatorComponent implements OnInit {
   public addScene() {
     let fileInput = document.getElementById('file')
     fileInput.click()
-
-    this.showPano = true
+    this.election = false;
+    this.showPano = true;
+    
   }
 
 
@@ -102,7 +120,7 @@ export class ToolCreatorComponent implements OnInit {
    * Maneja las configuraciones que viene en archivo Json
    */
    onJsonFileChanged(event) {
-    console.log("hola");
+    //console.log("hola");
     
     this.jsonFile = event.target.files[0];
     // Leer archivo como texto
@@ -169,6 +187,16 @@ export class ToolCreatorComponent implements OnInit {
     //   // reader.onload = (event) => {
     //   //   this.escenas.push(reader.result)
     //   // }
+  }
+
+  /**
+  * openSnackBar
+  *
+  * Muestra una barra de información para explicarle al usuario cómo agregar un nuevo hotspot
+  */
+  openSnackBar(message: string, action: string){
+    let snackbar_duration = 5000;
+    this._snackBar.open(message, action, {duration: snackbar_duration});
   }
 
   /**
@@ -299,7 +327,11 @@ export class ToolCreatorComponent implements OnInit {
       console.log("GUARDADO");
       
       // Habilitar el evento
-      this.pannellumService.enableAddHotspot(hotspotType, hotspot, useCustomFunction)
+      this.pannellumService.enableAddHotspot(hotspotType, hotspot, useCustomFunction);
+
+      // Mostrar mensaje guía al usuario para agregar el hotspot al recorrido
+      let snackbar_message = "Haz click sobre el área de la imagen en donde deseas agregar el nuevo hotspot";
+      this.openSnackBar(snackbar_message, "Ok")
     }
     else{
       console.log("ERROR");
@@ -329,5 +361,123 @@ export class ToolCreatorComponent implements OnInit {
 
   get_url(url){
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
+  }
+
+ /**
+  * onFileSelected(event)
+  *
+  * Funcion que permite abrir la imagen que se va a usar como minimapa
+  */
+  onFileSelected(event) {
+    // colocamos el tour en vacio
+    let local: any;
+    this.tour = local;
+
+    // permite verificar si ya se agrego un pin al minimapa
+    this.nuevo_pin = false;
+
+    // cambiamos el src para mostar la imagen
+    var image = <HTMLImageElement>document.getElementById('minimapa');
+    let nueva_url = URL.createObjectURL(event.target.files[0]);
+    image.src = nueva_url
+    this.minimapa = <HTMLImageElement>event.target.files[0];
+  }
+
+  /**
+  * addPin()
+  *
+  * Funcion que permite anadir un pin al minimapa
+  */
+  public addPin() {
+    // abrimos el modal
+      const dialogRef = this.dialog.open(ModalMinimapComponent, {
+        width: '400px',
+        data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.nuevo_pin = true;
+        this.tour = result;
+      });
+  }
+
+  /**
+  * onPinClick()
+  *
+  * Funcion que permite mostrar la escena cuando se toca un pin del minimapa
+  */
+  onPinClick = (viewPosition: number): void => {
+
+    this.selectedPin = viewPosition;
+    this.selectedView = this.tour.result.views[viewPosition];
+
+
+    this.pannellumService.setScene(this.selectedView);
+  };
+
+   /**
+  * removePin()
+  *
+  * Funcion que permite anadir un pin al minimapa
+  */
+    public removePin() {
+      // abrimos el modal
+        const dialogRef = this.dialog.open(RemovePinsComponent, {
+          width: '400px',
+          data: {escenas: this.pannellumService.getScenes(),minimapa: this.minimapa,tour_actual: this.tour}
+        });
+  
+        dialogRef.afterClosed().subscribe(result => {
+          this.tour = result;
+        });
+    }
+
+
+  /**
+   * ---Carousel de escenas---
+  */
+
+  index = 0;
+
+  /**
+  * moveCarouselRight: Mueve el carousel hacia la derecha
+  */
+  public moveCarouselRight(){
+
+    this.index++;
+
+    const carousel_width = document.getElementById("carousel-container").offsetWidth;
+    const cards_per_carousel = 5;
+    const card_width = carousel_width / cards_per_carousel;
+
+    let translation: number = this.index * card_width;
+    document.getElementById("prev").style.display = "block";                                  // Muestra el botón izquierdo
+    document.getElementById("track").style.transform = "translateX(-"+translation+"px)";      // Mueve el carousel
+
+    // Cuando el carousel llega al final se quita el botón de la derecha
+    if (document.getElementById("track").offsetWidth - (this.index * card_width) <= card_width * cards_per_carousel){
+      document.getElementById("next").style.display = "none";
+    }
+  }
+
+  /**
+  * moveCarouselLeft: Mueve el carousel hacia la izquierda
+  */
+  public moveCarouselLeft(){
+
+    this.index--;
+
+    const carousel_width = document.getElementById("carousel-container").offsetWidth;
+    const cards_per_carousel = 5;
+    const card_width = carousel_width / cards_per_carousel;
+
+    let translation: number = this.index * card_width;
+    document.getElementById("next").style.display = "block";                                  // Muestra el botón derecho
+    document.getElementById("track").style.transform = "translateX(-"+translation+"px)";      // Mueve el carousel
+
+    // Cuando el carousel llega al principio se quita el botón de la izquierda
+    if (this.index == 0){
+      document.getElementById("prev").style.display = "none";
+    }
   }
 }
