@@ -8,6 +8,7 @@ import { ApiService } from './api.service';
 
 import Ajv, {JSONSchemaType} from "ajv"
 import {DefinedError} from "ajv"
+import { HttpClient } from '@angular/common/http';
 const ajv = new Ajv()
 
 declare var pannellum
@@ -113,7 +114,8 @@ export class PannellumService {
 
   constructor(
     public dialog: MatDialog,
-    public apiServive: ApiService
+    public apiServive: ApiService,
+    public http: HttpClient
 
   ) { }
 
@@ -278,7 +280,6 @@ export class PannellumService {
 
       }
     )
-
     let scenes = [];
     for (const k in this.sceneJson) { scenes.push(this.sceneJson[k]) };
 
@@ -286,8 +287,13 @@ export class PannellumService {
       "scene": scenes
     }
 
-    this.validateSchema(json);
-    return this.sceneJson
+    let validateSchema = this.validateSchema(json);
+
+    if (!validateSchema[0]) {
+      return {error: validateSchema[1]};
+    }
+
+    return this.sceneJson;
   }
 
 
@@ -672,27 +678,19 @@ export class PannellumService {
     console.log(data);
     var validate = ajv.compile(this.schema);
     var valid = validate(data);
-    console.log(valid);
-    if (!valid) console.log(validate.errors);
   
-    if (validate(data)) {
+    if (valid) {
       // data is MyData here
       console.log('is valid');
       console.log(data)
+      return [true, ''];
     } else {
       // The type cast is needed, as Ajv uses a wider type to allow extension
       // You can extend this type to include your error types as needed.
       for (const err of validate.errors as DefinedError[]) {
         console.log('is not valid');
-        switch (err.keyword) {
-          case "type":
-            // err type is narrowed here to have "type" error params properties
-            console.log(err.params.type)
-          break
-            // ...
+        return [false, validate.errors[0].message]
         }
       }
     }
-  }
-
 }

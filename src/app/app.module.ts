@@ -41,6 +41,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { ModalMinimapComponent } from './tool-creator/modal_minimap/modal_minimap.component';
 import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
 import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.component';
+import { MsgErrorComponent } from './tool-creator/msg-error/msg-error.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.comp
     ArtifactDetailsComponent,
     RemoveHotspotComponent,
     ModalMinimapComponent,
-    RemovePinsComponent
+    RemovePinsComponent,
+    MsgErrorComponent
   ],
   imports: [
     BrowserModule,

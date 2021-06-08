@@ -6,14 +6,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { CustomHotspot, CustomImage, HotspotModal, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
-<<<<<<< 1d0b548199e97133a7d8804f30a1af19ce60a9d1
 import { ModalMinimapComponent } from './modal_minimap/modal_minimap.component';
 import { RemovePinsComponent } from './remove_pins/remove_pins.component';
-=======
-
-declare var pannellum: any;
-
->>>>>>> se eliminó la lgógica de validate schema en el toolcreator y se añadió al servicio de pannellum directamente
+import { MsgErrorComponent } from './msg-error/msg-error.component';
 
 @Component({
   selector: 'app-tool-creator',
@@ -95,11 +90,8 @@ export class ToolCreatorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-<<<<<<< 1d0b548199e97133a7d8804f30a1af19ce60a9d1
     let local: any;
     this.tour = local;
-=======
->>>>>>> se eliminó la lgógica de validate schema en el toolcreator y se añadió al servicio de pannellum directamente
   }
 
 public cero() {
@@ -116,10 +108,7 @@ public goScene(scene) {
    */
   public addScene() {
     let fileInput = document.getElementById('file')
-    fileInput.click()
-    this.election = false;
-    this.showPano = true;
-    
+    fileInput.click()    
   }
 
   /**
@@ -141,7 +130,9 @@ public goScene(scene) {
     this.jsonConfig = JSON.parse(String(e.target.result));
     
     // Contruir el panorama 
-     this.constructPannellum()
+      if(this.constructPannellum()) {
+        this.showPano = true;
+      }
     }
 
     // Si da error la carga
@@ -149,16 +140,25 @@ public goScene(scene) {
       console.log(error);
       alert("No se pudo cargar el config :(")
     }
+
+    this.election = false;
   }
 
   /**
    * constructPannellum
    * 
-   * Funcion para contruir un viewer a partir de un json
+   * Funcion para      this.showMessageErrorJson = true; contruir un viewer a partir de un json
    */
   public constructPannellum() {
     // Cargar las escenas con las configs obtenidas del json
-    let escenas = this.pannellumService.constructScenes(this.jsonConfig)
+    let escenas = this.pannellumService.constructScenes(this.jsonConfig);
+
+    console.log(escenas);
+
+    if(escenas['error']) {
+      this.showMsgJsonError(escenas['error']);
+      return false;
+    }
 
     // Obtener la escene inicial, por defecto el indice 0, es decir la primera escena
     let initialView: string = this.pannellumService.getInitialScene(0)
@@ -168,33 +168,8 @@ public goScene(scene) {
 
     // Mostrar el div de panorama y ocultar lo demas.
     this.showPano = true;
-  }
 
-
-  /**
-   * handleFileInput
-   * 
-   * Maneja las fotos de las esceneas que se suban
-   */
-  public handleFileInput(files: FileList) {
-    //   this.fileToUpload = files.item(0);
-      
-    //   console.log(this.fileToUpload);
-      
-    //   let imgFile = document.getElementById('img-file');
-    //   let url = URL.createObjectURL(this.fileToUpload)
-
-    //   // imgFile.src = url
-    //   this.urlA = url
-
-    //   console.log(this.urlA);
-      
-    //   this.escenas.push(url);
-    //   // let reader = new FileReader();
-    //   // reader.readAsDataURL(this.fileToUpload);
-    //   // reader.onload = (event) => {
-    //   //   this.escenas.push(reader.result)
-    //   // }
+    return true;
   }
 
   /**
@@ -487,5 +462,15 @@ public goScene(scene) {
     if (this.index == 0){
       document.getElementById("prev").style.display = "none";
     }
+  }
+
+  public showMsgJsonError(errMsg = '') {
+    // abrimos el modal
+      const dialogRef = this.dialog.open(MsgErrorComponent, {
+        width: '25rem',
+        data: {messageTitle: 'El archivo json no corresponde con el schema', messageBody: errMsg}
+      });
+
+      dialogRef.afterClosed().subscribe();
   }
 }
