@@ -82,6 +82,8 @@ export class ToolCreatorComponent implements OnInit {
   // Vista principal de pannellum
   pannellumViewer: any;
 
+  showMessageErrorJson = false;
+
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
@@ -108,7 +110,9 @@ public goScene(scene) {
    */
   public addScene() {
     let fileInput = document.getElementById('file')
-    fileInput.click()    
+    fileInput.click()
+    this.election = false;
+    this.showPano = true;
   }
 
   /**
@@ -130,9 +134,7 @@ public goScene(scene) {
     this.jsonConfig = JSON.parse(String(e.target.result));
     
     // Contruir el panorama 
-      if(this.constructPannellum()) {
-        this.showPano = true;
-      }
+     this.constructPannellum()
     }
 
     // Si da error la carga
@@ -140,24 +142,20 @@ public goScene(scene) {
       console.log(error);
       alert("No se pudo cargar el config :(")
     }
-
-    this.election = false;
   }
 
   /**
    * constructPannellum
    * 
-   * Funcion para      this.showMessageErrorJson = true; contruir un viewer a partir de un json
+   * Funcion para contruir un viewer a partir de un json
    */
   public constructPannellum() {
     // Cargar las escenas con las configs obtenidas del json
-    let escenas = this.pannellumService.constructScenes(this.jsonConfig);
-
-    console.log(escenas);
+    let escenas = this.pannellumService.constructScenes(this.jsonConfig)
 
     if(escenas['error']) {
       this.showMsgJsonError(escenas['error']);
-      return false;
+      this.showPano = false;
     }
 
     // Obtener la escene inicial, por defecto el indice 0, es decir la primera escena
@@ -165,12 +163,8 @@ public goScene(scene) {
 
     // Iniciar pannellum con las escenas obtenidas
     this.pannellumService.initPannellum('panorama', initialView, escenas, true)
-
-    // Mostrar el div de panorama y ocultar lo demas.
-    this.showPano = true;
-
-    return true;
   }
+
 
   /**
   * openSnackBar
@@ -464,13 +458,15 @@ public goScene(scene) {
     }
   }
 
-  public showMsgJsonError(errMsg = '') {
+  public showMsgJsonError(msgError = '') {
     // abrimos el modal
       const dialogRef = this.dialog.open(MsgErrorComponent, {
         width: '25rem',
-        data: {messageTitle: 'El archivo json no corresponde con el schema', messageBody: errMsg}
+        data: {messageTitle: 'El archivo json no corresponde con el schema', messageBody: msgError}
       });
 
-      dialogRef.afterClosed().subscribe();
+      dialogRef.afterClosed().subscribe(result => {
+        this.showMessageErrorJson = false;
+      });
   }
 }
