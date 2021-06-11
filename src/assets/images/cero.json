@@ -1,0 +1,17 @@
+{
+    "escenas":[
+        {
+            "id":"comienzo",
+            "titulo":"comienzo",
+            "img-360":"/assets/images/no_escenas.png",
+            "cantidad_hotspots":2,
+            "hotspots":[
+            ]
+        }
+    ]
+}
+
+
+
+
+
