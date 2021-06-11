@@ -42,9 +42,12 @@
                                          (click)="goScene(scene)">
                                         <div class="card">
                                             <div class="img">
-                                                <img class="image" src="{{pannellumService.getImageSource(scene)}}" alt="">
+                                                <img class="image" [attr.src]="pannellumService.getImageSource(scene)" alt="">
                                             </div>
                                             <div class="info">{{pannellumService.getSceneTitle(scene)}}</div>
+                                            <button class="button" (click)="removeScene(scene)" style="position: absolute; margin-left: 163px; background-color: rgb(37, 37, 37); margin-top: -2px; opacity: 0.9;">
+                                                <i class="material-icons" style="color: red;">close</i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -322,6 +325,7 @@
                 </form>
             </mat-tab>
 
+            <!-- Vista tab del minimapa -->
             <mat-tab label="Minimapa">
                 <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)" style="margin-top: 15px;">
                 <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
@@ -334,9 +338,30 @@
                     </ol>
                 </div>
                 <div>
-                    <button  mat-button (click)="addPin()"> Agregar Pin </button >
-                    <button  mat-button (click)="removePin()"> Eliminar Pin </button >
+                    <button  mat-button (click)="addPin()"  [disabled]="!newMinimap"> Agregar Pin </button >
+                    <button  mat-button (click)="removePin()" [disabled]="!newMinimap"> Eliminar Pin </button >
                 </div>
+            </mat-tab>
+
+            <!-- Vista tab para agregar escenas -->
+            <mat-tab label= "Agregar escena" >
+                <input type="file" id="image_upload" name="image_upload" accept=".jpg, .jpeg, .png" (change)="FileSelected($event)" style="margin-top: 15px;">
+                <div id="preview" style="height: 350px; width: 400px; background-image: url(/assets/images/no_escenas.png); background-size: 300px 400px; background-repeat: no-repeat; background-position: center; margin-left: 10%;"></div>
+                <form [formGroup]="formNewScene" (ngSubmit)="onSubmit()">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre de la escena</mat-label>
+                        <input matInput id="name" type="text" formControlName="name">
+                    </mat-form-field>
+                    <label *ngIf="errorNewScene" style="color: crimson;">Ya existe una escena con este nombre.</label>
+
+                    <div>
+                        <button  mat-button type="submit" [disabled]="!formNewScene.valid || !newScene"> Agregar escena </button >
+                    </div>
+                  
+                </form>
+                
+                
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -367,5 +392,5 @@
     </div>
 </div>-->
 
-
+<!-- Input para escoger el archivo json -->
 <input hidden type="file" id="file" (change)="onJsonFileChanged( $event )" />

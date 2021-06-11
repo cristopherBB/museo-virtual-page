@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CustomHotspot, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
 import { ApiService } from './api.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 declare var pannellum
@@ -26,6 +27,7 @@ export class PannellumService {
   nextAddHotspot: CustomHotspot | SceneHotspot | InfoHotspot;
 
   constructor(
+    private sanitizer: DomSanitizer,
     public dialog: MatDialog,
     public apiServive: ApiService
 
@@ -61,6 +63,7 @@ export class PannellumService {
 
     // leer el archivo de configuracion
     // Construir cada Escena
+    this.scenes = [];
     this.sceneJson = {};
     config.escenas.forEach(
       escena => {
@@ -212,6 +215,7 @@ export class PannellumService {
 
     // Guardar la escena activa
     this.activeScene = viewId
+    console.log("aqui estoy")
 
     // Iniciar pannellum
     this.pannellumViewer = pannellum.viewer(panoramaHTML, {
@@ -224,6 +228,7 @@ export class PannellumService {
       },
       "scenes": sceneJson
     })
+    console.log("aqui estoy")
 
 
     // Activar los eventos para agregar hotspots
@@ -323,7 +328,8 @@ export class PannellumService {
     }
 
     // Agregar el hotspot
-    this.pannellumViewer.addHotSpot(this.nextAddHotspot, this.activeScene)
+    let p = this.pannellumViewer.getScene();
+    this.pannellumViewer.addHotSpot(this.nextAddHotspot, p)
 
     console.log(this.sceneJson);
 
@@ -335,8 +341,8 @@ export class PannellumService {
    * @param id Id del hotspot a eliminar
    */
   public removeHotspot(id: string) {
-
-    this.pannellumViewer.removeHotSpot(id, this.activeScene)
+    let p = this.pannellumViewer.getScene();
+    this.pannellumViewer.removeHotSpot(id, p)
     console.log(this.sceneJson);
 
   }
@@ -550,7 +556,7 @@ export class PannellumService {
   public getImageSource(scene_id: string) {
     if ( this.sceneJson ){
       if( this.sceneJson[scene_id] ){
-        return this.sceneJson[scene_id]['panorama']
+        return this.sanitizer.bypassSecurityTrustUrl(this.sceneJson[scene_id]['panorama']);
       }
     }
     return []
@@ -571,5 +577,37 @@ export class PannellumService {
       }
     }
     return []
+  }
+
+  /**
+   * addSCene
+   * añadir escena
+   * @param scene_id Id de la escena a agregar
+   * @param confi arreglo con las configuraciones(titulo, url) de la nueva escena
+   */
+  public addSCene(scene_id: string, confi: [string,string]){
+    let escenaAux = {
+      "title": confi[0],
+      "hfov": 110,
+      "yaw": 150,
+      "panorama": confi[1],
+      "type": "equirectangular",
+      "hotSpots": [],
+    }
+    this.pannellumViewer.addScene(scene_id,escenaAux);
+    this.scenes.push(scene_id);
+  }
+
+  /**
+   * removeSCene
+   * Eliminar escena
+   * @param id Id de la escena a eliminar
+   */
+   public removeSCene(id: string) {
+    var index = this.scenes.indexOf(id);
+    this.pannellumViewer.removeScene(id);
+    this.scenes.splice(index, 1);
+    console.log(this.sceneJson);
+
   }
 }
