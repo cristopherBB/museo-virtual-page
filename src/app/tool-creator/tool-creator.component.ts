@@ -8,6 +8,7 @@ import { PannellumService } from '../services/pannellum.service';
 import { RemoveHotspotComponent } from './remove-hotspot/remove-hotspot.component';
 import { ModalMinimapComponent } from './modal_minimap/modal_minimap.component';
 import { RemovePinsComponent } from './remove_pins/remove_pins.component';
+import { MsgErrorComponent } from './msg-error/msg-error.component';
 
 @Component({
   selector: 'app-tool-creator',
@@ -81,6 +82,8 @@ export class ToolCreatorComponent implements OnInit {
   // Vista principal de pannellum
   pannellumViewer: any;
 
+  showMessageErrorJson = false;
+
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
@@ -110,9 +113,7 @@ public goScene(scene) {
     fileInput.click()
     this.election = false;
     this.showPano = true;
-    
   }
-
 
   /**
    * onJsonFileChanged
@@ -152,42 +153,18 @@ public goScene(scene) {
     // Cargar las escenas con las configs obtenidas del json
     let escenas = this.pannellumService.constructScenes(this.jsonConfig)
 
+    if(escenas['error']) {
+      this.showMsgJsonError(escenas['error']);
+      this.showPano = false;
+    }
+
     // Obtener la escene inicial, por defecto el indice 0, es decir la primera escena
     let initialView: string = this.pannellumService.getInitialScene(0)
 
     // Iniciar pannellum con las escenas obtenidas
     this.pannellumService.initPannellum('panorama', initialView, escenas, true)
-
-    // Mostrar el div de panorama y ocultar lo demas.
-    this.showPano = true;
   }
 
-
-  /**
-   * handleFileInput
-   * 
-   * Maneja las fotos de las esceneas que se suban
-   */
-  public handleFileInput(files: FileList) {
-    //   this.fileToUpload = files.item(0);
-      
-    //   console.log(this.fileToUpload);
-      
-    //   let imgFile = document.getElementById('img-file');
-    //   let url = URL.createObjectURL(this.fileToUpload)
-
-    //   // imgFile.src = url
-    //   this.urlA = url
-
-    //   console.log(this.urlA);
-      
-    //   this.escenas.push(url);
-    //   // let reader = new FileReader();
-    //   // reader.readAsDataURL(this.fileToUpload);
-    //   // reader.onload = (event) => {
-    //   //   this.escenas.push(reader.result)
-    //   // }
-  }
 
   /**
   * openSnackBar
@@ -479,5 +456,17 @@ public goScene(scene) {
     if (this.index == 0){
       document.getElementById("prev").style.display = "none";
     }
+  }
+
+  public showMsgJsonError(msgError = '') {
+    // abrimos el modal
+      const dialogRef = this.dialog.open(MsgErrorComponent, {
+        width: '25rem',
+        data: {messageTitle: 'El archivo json no corresponde con el schema', messageBody: msgError}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.showMessageErrorJson = false;
+      });
   }
 }
