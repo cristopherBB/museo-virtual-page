@@ -151,7 +151,7 @@ public goScene(scene) {
    */
   public constructPannellum() {
     // Cargar las escenas con las configs obtenidas del json
-    let escenas = this.pannellumService.constructScenes(this.jsonConfig)
+    let escenas = this.pannellumService.constructScenes(this.jsonConfig);
 
     if(escenas['error']) {
       this.showMsgJsonError(escenas['error']);
