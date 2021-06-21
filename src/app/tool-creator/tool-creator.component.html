@@ -20,6 +20,9 @@
 
     <!-- Panorama, Lista de Escenas, Listas de Hotspots -->
     <div>
+        <a *ngIf="showPano && !election" [href]="sanitizedBlobUrl" [download]="filename" type="button" class="btn btn-primary btn-sm mr-2" (click)="downloadJson()">
+            <button color="primary" mat-button>Descargar json</button>
+        </a>
 
         <!-- Panorama -->
         <div id="panorama" style="width: 68.1vw; height: 60vh" *ngIf="showPano && !election"></div>
@@ -367,30 +370,6 @@
     </div>
 </div>
 
-
-<!-- Mostrar sección de minimapa
-<div class="row">
-    <div id="hotspots-view" *ngIf="showPano">
-        <mat-tab-group animationDuration="100ms">
-            <mat-tab label="Minimapa">
-                <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)">
-                <div *ngIf="!nuevo_pin"><img id = "minimapa" src="assets\images\no_minimapa.png" width="400" height="400"></div>
-                <div class="croquis-content" *ngIf="nuevo_pin">
-                    <app-canvas_minimapa [pins]="tour.result.pins" [selectedPin]="selectedPin" [imagen]="minimapa" [lugar]= "false" (onClick)="onPinClick($event)" class="croquis"></app-canvas_minimapa>
-                    <ol>
-                        <li  *ngFor="let pins of tour.result.views">
-                            {{pins}}
-                        </li>
-                    </ol>
-                </div>
-                <div>
-                    <button  mat-button (click)="addPin()"> Agregar Pin </button >
-                    <button  mat-button (click)="removePin()"> Eliminar Pin </button >
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-</div>-->
 
 <!-- Input para escoger el archivo json -->
 <input hidden type="file" id="file" (change)="onJsonFileChanged( $event )" />

@@ -93,6 +93,11 @@ export class ToolCreatorComponent implements OnInit {
 
   showMessageErrorJson = false;
 
+  backupType: string; // 'bookmarks' | 'snippets';
+  blobUrl: any;
+  sanitizedBlobUrl: any;
+  filename: string;
+
   constructor(
     private sanitizer: DomSanitizer,
     public pannellumService: PannellumService,
@@ -594,5 +599,17 @@ public goScene(scene) {
         this.pannellumService.removeSCene(scene)
     });
 
+  }
+
+  public downloadJson() {
+    console.log('downloadJson');
+    console.log(this.jsonConfig);
+
+    const blob = new Blob([JSON.stringify(this.jsonConfig, null, 2)], {type: 'application/json'});
+
+    this.blobUrl = window.URL.createObjectURL(blob);
+    this.sanitizedBlobUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
+    const currentDate = new Date();
+    this.filename = `${currentDate.toISOString()}.json`;
   }
 }
