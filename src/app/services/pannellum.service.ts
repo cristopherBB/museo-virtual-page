@@ -431,7 +431,7 @@ export class PannellumService {
           data =>{
 
             let modalData = {
-              'title': data.result[0].artifactLabel.value || null,
+              'title': data.result[0].labelArtifact.value || null,
               'description': data.result[0].note.value || null,
               'imagen': {
                 'src': args.modal.imagen.src,
