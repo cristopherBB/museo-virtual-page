@@ -48,6 +48,7 @@ export class LandingComponent implements OnInit {
   }
 
   //--------------------------------------------------------
+  // variable para mostrar el landing correspondiente segun el tipo de usuario
   userRole = this.api.userRole;
   //--------------------------------------------------------
 }

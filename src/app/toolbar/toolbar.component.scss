@@ -34,3 +34,8 @@
 	border-right: 0px; 
 	border-left: 0px;
 }
+::ng-deep .custom-modalbox {
+	mat-dialog-container {
+		padding: 0;
+	}
+	}

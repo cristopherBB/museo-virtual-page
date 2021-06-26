@@ -30,6 +30,12 @@ const routes: Routes = [
     data: {toolbar:true},
   },
   {
+    path: 'landing',
+    component: LandingComponent,
+    pathMatch: 'full',
+    data: {toolbar:true},
+  },
+  {
     path: 'add-museum',
     component: AddMuseumComponent,
     data: {toolbar:true},

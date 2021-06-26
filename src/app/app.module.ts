@@ -41,6 +41,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { ModalMinimapComponent } from './tool-creator/modal_minimap/modal_minimap.component';
 import { CanvasMinimapaComponent } from './tool-creator/canvas_minimapa/canvas_minimapa.component';
 import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.component';
+import { LoginComponent,DialogErrorLogin } from './toolbar/login/login.component';
+import { SignUpComponent,DialogErrorSignUp, DialogSuccessSignUp } from './toolbar/signUp/signUp.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,12 @@ import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.comp
     ArtifactDetailsComponent,
     RemoveHotspotComponent,
     ModalMinimapComponent,
-    RemovePinsComponent
+    RemovePinsComponent,
+    LoginComponent,
+    DialogErrorLogin,
+    SignUpComponent,
+    DialogErrorSignUp,
+    DialogSuccessSignUp,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +92,7 @@ import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.comp
     MatListModule,
     MatExpansionModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   entryComponents: [
     UploadImageComponent,
@@ -94,7 +101,12 @@ import { RemovePinsComponent } from './tool-creator/remove_pins/remove_pins.comp
     ModalComponent,
     RemoveHotspotComponent,
     ModalMinimapComponent,
-    RemovePinsComponent
+    RemovePinsComponent,
+    LoginComponent,
+    DialogErrorLogin,
+    SignUpComponent,
+    DialogSuccessSignUp,
+    DialogErrorSignUp,
   ],
   providers: [],
   bootstrap: [AppComponent]
