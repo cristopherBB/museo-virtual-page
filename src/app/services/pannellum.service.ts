@@ -7,7 +7,8 @@ import { ModalComponent } from '../virtual-museum/modal/modal.component';
 import { ApiService } from './api.service';
 
 import Ajv, {JSONSchemaType} from "ajv"
-import {DefinedError} from "ajv"
+import {DefinedError} from "ajv";
+import {DomSanitizer} from '@angular/platform-browser';
 const ajv = new Ajv()
 
 declare var pannellum
@@ -112,9 +113,9 @@ export class PannellumService {
   }
 
   constructor(
+    private sanitizer: DomSanitizer,
     public dialog: MatDialog,
     public apiServive: ApiService
-
   ) { }
 
   /**
@@ -240,23 +241,21 @@ export class PannellumService {
 
     return this.sceneJson
   }
-
-
-  /**
-   * initPannellum
-   *
-   * iniciar pannellum
-   * @param panoramaHTML id del elemento panorama en el DOM
-   * @param viewId primera escena a mostrar
-   * @param sceneJson json formateado de manera que sea legible para pannellum para poder construir el tour
-   * @param edit determina si el tour sera editable o no
-   */
+  // * initPannellum
+  //  *
+  //  * iniciar pannellum
+  //  * @param panoramaHTML id del elemento panorama en el DOM
+  //  * @param viewId primera escena a mostrar
+  //  * @param sceneJson json formateado de manera que sea legible para pannellum para poder construir el tour
+  //  * @param edit determina si el tour sera editable o no
+  //  */
   public initPannellum(panoramaHTML, viewId, sceneJson, edit = null) {
 
     console.info("Iniciando pannellum");
 
     // Guardar la escena activa
     this.activeScene = viewId
+    console.log("aqui estoy")
 
     // Iniciar pannellum
     this.pannellumViewer = pannellum.viewer(panoramaHTML, {
@@ -269,6 +268,7 @@ export class PannellumService {
       },
       "scenes": sceneJson
     })
+    console.log("aqui estoy")
 
 
     // Activar los eventos para agregar hotspots
@@ -368,7 +368,8 @@ export class PannellumService {
     }
 
     // Agregar el hotspot
-    this.pannellumViewer.addHotSpot(this.nextAddHotspot, this.activeScene)
+    let p = this.pannellumViewer.getScene();
+    this.pannellumViewer.addHotSpot(this.nextAddHotspot, p)
 
     console.log(this.sceneJson);
 
@@ -380,8 +381,8 @@ export class PannellumService {
    * @param id Id del hotspot a eliminar
    */
   public removeHotspot(id: string) {
-
-    this.pannellumViewer.removeHotSpot(id, this.activeScene)
+    let p = this.pannellumViewer.getScene();
+    this.pannellumViewer.removeHotSpot(id, p)
     console.log(this.sceneJson);
 
   }
@@ -470,7 +471,7 @@ export class PannellumService {
           data =>{
 
             let modalData = {
-              'title': data.result[0].artifactLabel.value || null,
+              'title': data.result[0].labelArtifact.value || null,
               'description': data.result[0].note.value || null,
               'imagen': {
                 'src': args.modal.imagen.src,
@@ -595,7 +596,7 @@ export class PannellumService {
   public getImageSource(scene_id: string) {
     if ( this.sceneJson ){
       if( this.sceneJson[scene_id] ){
-        return this.sceneJson[scene_id]['panorama']
+        return this.sanitizer.bypassSecurityTrustUrl(this.sceneJson[scene_id]['panorama']);
       }
     }
     return []
@@ -616,6 +617,38 @@ export class PannellumService {
       }
     }
     return []
+  }
+
+  /**
+   * addSCene
+   * añadir escena
+   * @param scene_id Id de la escena a agregar
+   * @param confi arreglo con las configuraciones(titulo, url) de la nueva escena
+   */
+  public addSCene(scene_id: string, confi: [string,string]){
+    let escenaAux = {
+      "title": confi[0],
+      "hfov": 110,
+      "yaw": 150,
+      "panorama": confi[1],
+      "type": "equirectangular",
+      "hotSpots": [],
+    }
+    this.pannellumViewer.addScene(scene_id,escenaAux);
+    this.scenes.push(scene_id);
+  }
+
+  /**
+   * removeSCene
+   * Eliminar escena
+   * @param id Id de la escena a eliminar
+   */
+   public removeSCene(id: string) {
+    var index = this.scenes.indexOf(id);
+    this.pannellumViewer.removeScene(id);
+    this.scenes.splice(index, 1);
+    console.log(this.sceneJson);
+
   }
 
   public validateSchema(data) {

@@ -48,7 +48,7 @@
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
-    box-shadow: 0 1px 1px 1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12) !important;  // no estaba
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12) !important;
     overflow-y: auto;
 }
 
@@ -99,6 +99,7 @@ mat-form-field{
 #hotspot-form{
     width: 100%;
     padding-top: 40px;
+    padding-bottom: 20px;
 }
 
 .add-hotspot-button{

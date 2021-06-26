@@ -25,6 +25,14 @@ export class ApiService {
     private http: HttpClient,
   ) { }
 
+
+
+  //---------------------------------------------------------------------------------
+  userRole = 'visitante';
+  //---------------------------------------------------------------------------------
+
+
+
   /**
    * Fetches a museum and it's details.
    * @param label - Museum identifier.
@@ -63,6 +71,18 @@ export class ApiService {
     const url = environment.apiUrl + `/artifact/${id}`;
     return this.http.get<MuseumArtifactsResponse>(url).pipe(tap(console.log));
   };
+
+
+  /**
+    * Fetches an artifact image url.
+    * @param id - Artifact identifier.
+    * @returns The url of the artifact image.
+    */
+  getArtifactImage(id: string){
+    const url = environment.apiUrl + `/image/${id}`;
+    return url;
+  };
+
 
   /**
    * Executes an http get request.

@@ -12,8 +12,8 @@ En el Json de escenas se van a agregar todas las escenas del tour. Esta seccion 
 
             "id": El id que tendra la escena dentro del tour. Siempre que se quiera hacer referencia a una escena, usar el id.
             "titulo": El titulo que tendra la escena para el usuario dentro del tour.
-            "img-360": Ruta a la imagen en 360 grados de la escena.
-            "cantidad_hotspots": La cantidad de hotspots en la escena.
+            "panorama": Ruta a la imagen en 360 grados de la escena.
+            " ": La cantidad de hotspots en la escena.
             "hotspots": Array de hotspots dentro de la escena que tendran la siguiente estructura:
 
                 "hotspots":[
@@ -26,7 +26,7 @@ En el Json de escenas se van a agregar todas las escenas del tour. Esta seccion 
                 ]
 
                 Los hostpots tendran los siguientes parametros:
-                    "tipo": El tipo de hotspot. Puede tener valores como:
+                     "type": El tipo de hotspot. Puede tener valores como:
                         'scene': para hotspots que sirven como transicion de una escena a otra.
                         'info': para hostpots que sirven como link para una pagina externa al tour.
                         'custom': para hostpots personalizados que tengan un icono especifico o un modal.
