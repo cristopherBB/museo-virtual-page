@@ -5,10 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { CustomHotspot, InfoHotspot, SceneHotspot } from '../models/hotspot';
 import { ModalComponent } from '../virtual-museum/modal/modal.component';
 import { ApiService } from './api.service';
-
+import {DomSanitizer} from '@angular/platform-browser';
 import Ajv, {JSONSchemaType} from "ajv"
 import {DefinedError} from "ajv";
-import {DomSanitizer} from '@angular/platform-browser';
 const ajv = new Ajv()
 
 declare var pannellum
@@ -150,6 +149,7 @@ export class PannellumService {
     
     // leer el archivo de configuracion
     // Construir cada Escena
+    this.scenes = [];
     this.sceneJson = {};
     config.scenes.forEach(
       scene => {
@@ -221,24 +221,11 @@ export class PannellumService {
 
       }
     )
-    let scenes = [];
-    for (const k in this.sceneJson) { scenes.push(this.sceneJson[k]) };
 
-    let json = {
-      "scene": scenes
-    }
-
-    let validate = this.validateSchema(json);
+    let validate = this.validateSchema(this.parseSchenesJson());
     if(validate){
       return {error: validate};
     }
-    console.log('json: ');
-    console.log(json);
-
-
-
-
-
     return this.sceneJson
   }
   // * initPannellum
@@ -274,7 +261,7 @@ export class PannellumService {
     // Activar los eventos para agregar hotspots
     if (edit) {
 
-      // Evento para click del mouse agregar un nuevo hotspot
+      // Evento para click del mouse agregar un nuevo addHotspothotspot
       this.pannellumViewer.on('mousedown',
         (e) => {
           if (this.mouseToogle) {
@@ -308,7 +295,7 @@ export class PannellumService {
    * @param customFun para usar la funcion custom o no
    */
   public enableAddHotspot(hotspotType, hotspot, customFun = false) {
-
+    hotspotType
     // Activar el evento
     this.toogleAddHotspot(true)
 
@@ -320,7 +307,9 @@ export class PannellumService {
 
     // Si se va a usar la funcion custom
     this.customFunction = customFun
-
+    console.log('eableAddHotspot function');
+    console.log(this.sceneJson);
+    console.log(this.scenes);
   }
 
   /**
@@ -371,8 +360,9 @@ export class PannellumService {
     let p = this.pannellumViewer.getScene();
     this.pannellumViewer.addHotSpot(this.nextAddHotspot, p)
 
+    console.log('add hotpost function pannellum')
     console.log(this.sceneJson);
-
+    console.log(this.scenes);
   }
 
   /**
@@ -660,5 +650,16 @@ export class PannellumService {
     } else {
       return validate.errors[0].message;
     }
+  }
+
+  public parseSchenesJson() {
+    let scenes = [];
+    for (const k in this.sceneJson) { scenes.push(this.sceneJson[k]) };
+
+    let json = {
+      "scene": scenes
+    }
+
+    return json;
   }
 }
