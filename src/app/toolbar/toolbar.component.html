@@ -21,14 +21,20 @@
 	  	</button>
 
 	  	<span *ngIf="userRole=='visitante'" class="spacer2"></span>
-	  	<button mat-raised-button *ngIf="userRole=='visitante'" class="button-toolbar" color="accent" style="border-radius: 9999px">
+	  	<button mat-raised-button *ngIf="userRole=='visitante'" class="button-toolbar" color="accent" style="border-radius: 9999px" (click)="openLogin()">
 	    	INICIAR SESIÓN
 	  	</button>
 
+		<span *ngIf="userRole=='admin'" class="spacer2"></span>
+	  	<button mat-raised-button *ngIf="userRole=='admin'" class="button-toolbar" color="accent" style="border-radius: 9999px" (click)="openRegister()">
+	    	REGISTRAR ADMIN
+	  	</button>
+
 	  	<span *ngIf="userRole=='admin'" class="spacer2"></span>
-	  	<button mat-raised-button *ngIf="userRole=='admin'" class="button-toolbar" color="accent" style="border-radius: 9999px">
+	  	<button mat-raised-button *ngIf="userRole=='admin'" class="button-toolbar" color="accent" style="border-radius: 9999px" (click)="signOff()">
 	    	CERRAR SESIÓN
 	  	</button>
+
 	</mat-toolbar-row>
 	
 </mat-toolbar>
