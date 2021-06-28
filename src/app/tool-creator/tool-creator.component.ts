@@ -36,7 +36,7 @@ export class ToolCreatorComponent implements OnInit {
     name: new FormControl('', Validators.required),
   });
 
-  hotspots = [
+  hotSpots = [
     {value: '', name: "Elegir un tipo"},
     {value: 'scene', name: 'Escena'},
     {value: 'info', name: 'Info'},

@@ -5,7 +5,7 @@
             "titulo":"Pasillo 1",
             "panorama":"/assets/titles/hacienda/pasillo-1/pasillo-1-4x-qudratic.jpg",
              
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,

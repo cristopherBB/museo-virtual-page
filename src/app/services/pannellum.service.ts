@@ -81,7 +81,6 @@ export class PannellumService {
             "type": {"type": "string"},
             "yaw": {"type": "number"},
             "createTooltipArgs":  { "$ref": "#/definitions/createTooltipArgs"},
-            "createTooltipFunc": {"type": "string"},
             "div": {"type": "string"},
             "url": {"type": "string"}
           },
@@ -89,15 +88,14 @@ export class PannellumService {
         },
         "default": []
       },
-      "scene": {
+      "scenes": {
         "type": "array",
         "items": {
           "properties": {
             "title": {"type": "string"},
             "panorama": {"type": "string"},
-            "type": {"type": "string"},
             "yaw": {"type": "number"},
-            "hotspots": { "$ref": "#/definitions/hotspot"}
+            "hotSpots": { "$ref": "#/definitions/hotspot"}
           },
           "required": ["title"]
         },
@@ -106,9 +104,9 @@ export class PannellumService {
     },
     "type": "object",
     "properties": {
-      "scene": { "$ref": "#/definitions/scene" }
+      "scenes": { "$ref": "#/definitions/scenes" }
     },
-    "required": ["scene"]
+    "required": ["scenes"]
   }
 
   constructor(
@@ -158,7 +156,7 @@ export class PannellumService {
 
         // Construir cada Hotspot con la config
         let hotspotsArray = [];
-        scene.hotspots.forEach(
+        scene.hotSpots.forEach(
           hotspot => {
             // Crear los hotspot segun el tipo
             let aux;
@@ -209,6 +207,7 @@ export class PannellumService {
 
         // Construccion de la Scena
         let sceneAux = {
+          "id": scene['id'],
           "title": scene['title'],
           "hfov": scene['hfov'] || 110,
           "yaw": scene['yaw'] || 150,
@@ -258,7 +257,7 @@ export class PannellumService {
     console.log("aqui estoy")
 
 
-    // Activar los eventos para agregar hotspots
+    // Activar los eventos para agregar hotSpots
     if (edit) {
 
       // Evento para click del mouse agregar un nuevo addHotspothotspot
@@ -388,7 +387,7 @@ export class PannellumService {
 
   /**
    * getHotspots
-   * Devuelve los hotspots de la escena activa
+   * Devuelve los hotSpots de la escena activa
    * @returns lista de hostspot en caso de existir
    */
   public getHotspots() {
@@ -541,20 +540,20 @@ export class PannellumService {
    * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
    * 
    * getAllHotspots
-   * Obtiene todos los hotspots del recorrido
-   * @return arreglo con todos los hotspots del recorrido
+   * Obtiene todos los hotSpots del recorrido
+   * @return arreglo con todos los hotSpots del recorrido
    */
   public getAllHotspots() {
 
-    let hotspots = [];
+    let hotSpots = [];
     if ( this.sceneJson ){
 
       for (let i in this.scenes) {
         for (let j of this.sceneJson[this.scenes[i]]['hotSpots']){
-          hotspots.push(j)
+          hotSpots.push(j)
         }
       }
-      return hotspots;
+      return hotSpots;
     }
     return []
   }
@@ -564,8 +563,8 @@ export class PannellumService {
    * traer como consecuencia la aparicion de errores referentes a que las escenas no tienen ningun hotpots.
    * 
    * getCurrentSceneHotspots
-   * Obtiene la lista de hotspots de la escena actual
-   * @return arreglo con todos los hotspots de la escena
+   * Obtiene la lista de hotSpots de la escena actual
+   * @return arreglo con todos los hotSpots de la escena
    */
   public getCurrentSceneHotspots() {
     if (this.pannellumViewer ){
@@ -644,6 +643,7 @@ export class PannellumService {
   public validateSchema(data) {
     var validate = ajv.compile(this.schema);
     var valid = validate(data);
+    console.log(validate.errors);
   
     if (valid) {
       return false;
@@ -657,7 +657,7 @@ export class PannellumService {
     for (const k in this.sceneJson) { scenes.push(this.sceneJson[k]) };
 
     let json = {
-      "scene": scenes
+      "scenes": scenes
     }
 
     return json;

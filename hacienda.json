@@ -5,7 +5,7 @@
             "titulo":"Pasillo 1",
             "panorama":"/assets/titles/hacienda/pasillo-1/pasillo-1-4x-qudratic.jpg",
              
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -37,7 +37,7 @@
             "id":"pasillo-2",
             "titulo":"Pasillo 2",
             "panorama":"/assets/titles/hacienda/pasillo-2.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -60,7 +60,7 @@
             "id":"pasillo-3",
             "titulo":"Pasillo 3",
             "panorama":"/assets/titles/hacienda/pasillo-3.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -95,7 +95,7 @@
             "id":"sala-2",
             "titulo":"Sala de Secado 2",
             "panorama":"/assets/titles/hacienda/sala-2/sala-2_digital_art_x4.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": -8,
@@ -149,7 +149,7 @@
             "id": "pasillo-4",
             "titulo": "Pasillo 4",
             "panorama": "/assets/titles/hacienda/pasillo-4.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -180,7 +180,7 @@
             "id":"pasillo-5",
             "titulo":"Pasillo 5",
             "panorama":"/assets/titles/hacienda/pasillo-5.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -211,7 +211,7 @@
             "id": "tienda-chocolate",
             "titulo": "Tienda de Chocolate",
             "panorama": "assets/titles/hacienda/cacao/cacao_photos_v2_faces_x4_toned.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": -3,
@@ -230,7 +230,7 @@
             "id":"pasillo-6",
             "titulo":"Pasillo 6",
             "panorama": "/assets/titles/hacienda/pasillo-6.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,
@@ -261,7 +261,7 @@
             "id": "sala-fotografia",
             "titulo": "Sala de Curso Fotografia",
             "panorama": "/assets/titles/hacienda/fotoclase.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": -3,
@@ -276,7 +276,7 @@
             "id": "pasillo-7",
             "titulo": "Pasillo 7",
             "panorama": "/assets/titles/hacienda/pasillo-final.jpg",
-            "hotspots":[
+            "hotSpots":[
                 {
                      "type":"scene",
                     "valor_angulo_y": 1,

@@ -33,7 +33,7 @@
 
         <!-- Tabs: Lista de Escenas, Lista de Hotspots de la Escena, Lista de Todos los Hotspots -->
         <div class="row" style="width: 68.1vw; height: 22.5vh">
-            <div id="hotspots-view" class="background-color-primary" *ngIf="showPano">
+            <div id="hotSpots-view" class="background-color-primary" *ngIf="showPano">
                 <mat-tab-group animationDuration="100ms" [backgroundColor]="'primary'">
                     
                     <!-- Lista de Escenas (Carousel) -->
@@ -106,13 +106,13 @@
                     <mat-form-field appearance="fill" class="form-field">
                         <mat-label>Tipo de HotSpot</mat-label>
                         <mat-select [formControl]="hotspotTypeInput">
-                            <mat-option *ngFor="let h of hotspots" [value]="h.value">
+                            <mat-option *ngFor="let h of hotSpots" [value]="h.value">
                                 {{h.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
 
-                    <div id="hotspot-scene" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'scene'">
+                    <div id="hotspot-scene" class="hotSpots-fields" *ngIf="hotspotTypeInput.value == 'scene'">
                         <!-- TITULO -->
                         <h3>Hotspot de Cambio de Escena</h3>
 
@@ -191,7 +191,7 @@
 
                     </div>
 
-                    <div id="hotspot-info" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'info'">
+                    <div id="hotspot-info" class="hotSpots-fields" *ngIf="hotspotTypeInput.value == 'info'">
 
                         <h3>Hotspot de Info</h3>
 
@@ -222,7 +222,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div id="hotspot-custom" class="hotspots-fields" *ngIf="hotspotTypeInput.value == 'custom'">
+                    <div id="hotspot-custom" class="hotSpots-fields" *ngIf="hotspotTypeInput.value == 'custom'">
 
                         <h3>Hotspot Personalizado</h3>
 
