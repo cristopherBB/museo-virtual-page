@@ -11,6 +11,10 @@ export interface MuseumsResponse {
   result: MuseumOverview[],
 }
 
+export interface updateDescription {
+  ok:boolean
+}
+
 export interface userLogin {
   ok: boolean;
   message: string
@@ -151,4 +155,23 @@ export class ApiService {
     const options = headers ? { headers } : undefined;
     return this.http.get<T>(url, options);
   };
+
+  /** Servicio para realizar login de un usuario.
+   * @param {string} id id del museo
+   * @param {string} oldDescription descripcion anterior del museo
+   * @param {string} newDescription descripcion nueva del museo
+   * @returns
+   */
+   updateDescription(id: string, oldDescription0: string, newDescription0: string): Observable<updateDescription> {
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNhcmxvc0BjYXJsaXRvcy5jb20iLCJpYXQiOjE2MjY5NTk2MzAsImV4cCI6MTYyOTU1MTYzMH0.ouyOUrrB8eDqfYZ90I5Un4MaNwz8eB5GlTgTckosF6s";
+    const header = new HttpHeaders({
+      "Authorization": token,
+    });
+    const url = environment.apiUrl + `/museum/update/${id}`;
+    console.log(url)
+    const payload = { oldDescription: oldDescription0 , newDescription: newDescription0 };
+    return this.http
+      .put<updateDescription>(url, { oldDescription: oldDescription0, newDescription: newDescription0 }, { headers: header })
+      .pipe(tap(console.log));
+  }
 }
