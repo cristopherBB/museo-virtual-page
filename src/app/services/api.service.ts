@@ -22,6 +22,11 @@ export interface userLogin {
   token: string
 }
 
+export interface imgMuseum {
+  ok: boolean;
+  result: any;
+}
+
 export interface userRegister {
   ok: boolean;
   registered: string
@@ -174,4 +179,16 @@ export class ApiService {
       .put<updateDescription>(url, { oldDescription: oldDescription0, newDescription: newDescription0 }, { headers: header })
       .pipe(tap(console.log));
   }
+
+  /** Servicio para obtener las imagenes de los recorridos de un museo.
+   * @param {string} id id del museo
+   * @returns
+   */
+   getMuseumImg(id0: string): Observable<imgMuseum> {
+    const url = environment.apiUrl + `/image/museums/${id0}`;
+    return this.http
+      .get<imgMuseum>(url)
+      .pipe(tap(console.log));
+  }
+
 }
