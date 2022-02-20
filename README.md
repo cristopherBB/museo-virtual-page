@@ -29,17 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # Documentacion Museo Virtual
 
-## Integrantes
-
-Alvaro Avila
-
-David Rodriguez 
-
-Javier Medina
-
-Maria Fernanda Machado
-
-
 ## Introduccion
 
 El proyecto de Museo Virtual se establecio como idea del miniproyecto de desarrollo de software de la profesora Yudith Cardinale de la Universidad Símon 
