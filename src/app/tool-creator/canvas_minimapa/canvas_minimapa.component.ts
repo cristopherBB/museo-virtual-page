@@ -19,7 +19,8 @@ export class CanvasMinimapaComponent implements OnInit {
 
   ngOnInit(): void {
     // Mostramos la imagen del minimapa
-    this.link = URL.createObjectURL(this.img);
+    //this.link = URL.createObjectURL(this.img.src);
+    this.link = this.img.src
   }
 
   /**
